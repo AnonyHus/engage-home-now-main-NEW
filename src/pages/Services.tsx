@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Globe, Palette, BarChart3, Smartphone, ShoppingCart, Cloud, Users, ArrowRight, Sparkles, Zap, Target, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
+import { motion } from "framer-motion";
 
 const Services = () => {
   const allServices = [
@@ -93,106 +94,107 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Header */}
-      <section className="relative py-24 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#C30010]/20 via-black to-[#A1000E]/20"></div>
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-[#D40011]/10 to-[#E50012]/10 rounded-full blur-3xl"></div>
-        
+    <div className="min-h-screen bg-white">
+      {/* Header with Icon */}
+      <section className="relative py-28 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
+        {/* Abstract SVG or Gradient Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 w-full h-full opacity-30">
+            <path fill="#C30010" fillOpacity="0.07" d="M0,160L60,170.7C120,181,240,203,360,197.3C480,192,600,160,720,133.3C840,107,960,85,1080,101.3C1200,117,1320,171,1380,197.3L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"></path>
+          </svg>
+        </div>
         <div className="relative max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
+          <div className="text-center mb-14">
             <Button 
               variant="ghost" 
               onClick={() => window.history.back()}
-              className="mb-8 group text-gray-300 hover:text-white"
+              className="mb-8 group text-gray-600 hover:text-[#C30010]"
             >
               <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Home
             </Button>
-            
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C30010]/20 to-[#D40011]/20 border border-[#C30010]/30 rounded-full px-4 py-2 mb-6">
-              <Sparkles className="h-4 w-4 text-[#C30010]" />
-              <span className="text-sm font-medium text-[#C30010]">Our Services</span>
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 border border-[#C30010]/10 rounded-full px-5 py-2 mb-7 shadow-md animate-pulse">
+              <Sparkles className="h-5 w-5 text-[#C30010] drop-shadow" />
+              <span className="text-base font-semibold text-[#C30010] tracking-wide">Our Services</span>
             </div>
-            
-            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-[#C30010] via-[#D40011] to-[#E50012] bg-clip-text text-transparent mb-8 leading-tight">
+            <h1 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-[#C30010] via-[#D40011] to-[#E50012] bg-clip-text text-transparent mb-7 leading-tight drop-shadow-lg">
               Digital Solutions
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
               We craft exceptional digital experiences that drive growth and innovation for forward-thinking businesses.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Services Grid - Dark Design */}
-      <section className="py-20 relative">
+      {/* Services Grid - Modern Design */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <h2 className="text-5xl font-bold text-white mb-6">
+            <h2 className="text-5xl font-bold text-gray-900 mb-6">
               Complete Digital Ecosystem
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               From concept to deployment, we provide end-to-end digital services that transform your business.
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allServices.map((service) => (
-              <Card key={service.id} className="group relative h-full overflow-hidden border border-gray-800 bg-gray-900/50 backdrop-blur-sm hover:bg-gray-900/80 transition-all duration-500 hover:-translate-y-2 cursor-pointer shadow-2xl hover:shadow-[#C30010]/20">
-                <CardContent className="p-0 h-full flex flex-col">
-                  {/* Header with Icon */}
-                  <div className={`relative p-8 bg-gradient-to-br ${service.bgColor} border-b border-gray-800`}>
-                    {/* Animated Background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C30010]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-                    
-                    {/* Icon */}
-                    <div className="relative z-10">
-                      <div className={`w-20 h-20 bg-gradient-to-r ${service.color} rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg`}>
-                        <service.icon className="h-10 w-10 text-white" />
-                      </div>
-                      
-                      <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-[#C30010] transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-lg text-gray-300 font-medium">
-                        {service.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Content */}
-                  <div className="p-8 flex flex-col flex-grow">
-                    <p className="text-gray-300 leading-relaxed mb-8 text-base">
-                      {service.description}
-                    </p>
-                    
-                    {/* Features */}
-                    <div className="space-y-4 mb-8">
-                      {service.features.map((feature, index) => (
-                        <div key={index} className="flex items-center gap-3">
-                          <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full`}></div>
-                          <span className="text-sm text-gray-300 font-medium">{feature}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {allServices.map((service, idx) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+              >
+                <Card className="group relative h-full overflow-hidden border border-gray-200 bg-white hover:bg-gray-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer">
+                  <CardContent className="p-0 h-full flex flex-col">
+                    {/* Header with Icon */}
+                    <div className={`relative p-8 bg-gradient-to-br ${service.bgColor} border-b border-gray-100 rounded-t-2xl`}>
+                      {/* Animated Background */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#C30010]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                      {/* Icon */}
+                      <div className="relative z-10">
+                        <div className={`w-20 h-20 bg-gradient-to-r ${service.color} rounded-3xl flex items-center justify-center mb-6 group-hover:scale-110 transition-all duration-500 shadow-lg`}>
+                          <service.icon className="h-10 w-10 text-white" />
                         </div>
-                      ))}
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#C30010] transition-colors">
+                          {service.title}
+                        </h3>
+                        <p className="text-lg text-gray-600 font-medium">
+                          {service.subtitle}
+                        </p>
+                      </div>
                     </div>
-                    
-                    {/* Explore More Button */}
-                    <div className="mt-auto">
-                      <Link to={service.path}>
-                        <Button 
-                          className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold group-hover:scale-105 border-0`}
-                        >
-                          <span>Explore More</span>
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Button>
-                      </Link>
+                    {/* Content */}
+                    <div className="p-8 flex flex-col flex-grow">
+                      <p className="text-gray-700 leading-relaxed mb-8 text-base">
+                        {service.description}
+                      </p>
+                      {/* Features */}
+                      <div className="space-y-4 mb-8">
+                        {service.features.map((feature, index) => (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full`}></div>
+                            <span className="text-sm text-gray-600 font-medium">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {/* Explore More Button */}
+                      <div className="mt-auto">
+                        <Link to={service.path}>
+                          <Button 
+                            className={`w-full bg-gradient-to-r ${service.gradient} hover:opacity-90 text-white py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold group-hover:scale-105 border-0`}
+                          >
+                            <span>Explore More</span>
+                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
