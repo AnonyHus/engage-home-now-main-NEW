@@ -28,8 +28,8 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-lg"></div>
-            <span className="text-xl font-bold bg-gradient-to-r from-[#C30010] to-[#D40011] bg-clip-text text-transparent">
-              EngageHome
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#C30010] to-[#D40011] bg-clip-text text-transparent">
+              Opz
             </span>
           </Link>
 

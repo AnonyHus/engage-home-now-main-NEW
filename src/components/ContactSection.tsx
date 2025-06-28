@@ -129,7 +129,7 @@ const ContactSection = () => {
                   <h4 className="font-semibold text-gray-900 mb-2">Contact Info</h4>
                   <div className="text-gray-700 space-y-1">
                     <p>Phone: (555) 123-4567</p>
-                    <p>Email: info@engagehome.com</p>
+                    <p>Email: info@opz.com</p>
                   </div>
                 </div>
               </div>
