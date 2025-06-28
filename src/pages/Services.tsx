@@ -108,7 +108,7 @@ const Services = () => {
             <Button 
               variant="ghost" 
               onClick={() => window.history.back()}
-              className="mb-8 group text-gray-600 hover:text-[#C30010]"
+              className="mb-8 group text-gray-700 hover:text-[#C30010]"
             >
               <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Home
@@ -120,7 +120,7 @@ const Services = () => {
             <h1 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-[#C30010] via-[#D40011] to-[#E50012] bg-clip-text text-transparent mb-7 leading-tight drop-shadow-lg">
               Digital Solutions
             </h1>
-            <p className="text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
+            <p className="text-2xl text-gray-800 max-w-3xl mx-auto leading-relaxed font-medium">
               We craft exceptional digital experiences that drive growth and innovation for forward-thinking businesses.
             </p>
           </div>
@@ -134,7 +134,7 @@ const Services = () => {
             <h2 className="text-5xl font-bold text-gray-900 mb-6">
               Complete Digital Ecosystem
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               From concept to deployment, we provide end-to-end digital services that transform your business.
             </p>
           </div>
@@ -161,14 +161,14 @@ const Services = () => {
                         <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-[#C30010] transition-colors">
                           {service.title}
                         </h3>
-                        <p className="text-lg text-gray-600 font-medium">
+                        <p className="text-lg text-gray-700 font-medium">
                           {service.subtitle}
                         </p>
                       </div>
                     </div>
                     {/* Content */}
                     <div className="p-8 flex flex-col flex-grow">
-                      <p className="text-gray-700 leading-relaxed mb-8 text-base">
+                      <p className="text-gray-800 leading-relaxed mb-8 text-base">
                         {service.description}
                       </p>
                       {/* Features */}
@@ -176,7 +176,7 @@ const Services = () => {
                         {service.features.map((feature, index) => (
                           <div key={index} className="flex items-center gap-3">
                             <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full`}></div>
-                            <span className="text-sm text-gray-600 font-medium">{feature}</span>
+                            <span className="text-sm text-gray-700 font-medium">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -201,17 +201,18 @@ const Services = () => {
       </section>
 
       {/* Dark Process Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-900 via-black to-[#C30010]/30 relative overflow-hidden">
+      <section className="py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-[#C30010]/20 relative overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#C30010]/10 to-transparent"></div>
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#C30010]/20 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-[#C30010]/10 to-transparent"></div>
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="text-center mb-20">
-            <div className="inline-flex items-center gap-2 bg-[#C30010]/10 backdrop-blur-sm border border-[#C30010]/20 rounded-full px-4 py-2 mb-6">
-              <Zap className="h-4 w-4 text-[#C30010]" />
-              <span className="text-sm font-medium text-[#C30010]">Our Process</span>
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 mb-6">
+              <Zap className="h-4 w-4 text-white" />
+              <span className="text-sm font-medium text-white">Our Process</span>
             </div>
             <h2 className="text-5xl font-bold text-white mb-6">
               How We Work
@@ -224,10 +225,10 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="text-center group">
               <div className="relative mb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
                   <Target className="h-8 w-8 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   1
                 </div>
               </div>
@@ -237,10 +238,10 @@ const Services = () => {
             
             <div className="text-center group">
               <div className="relative mb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
                   <Rocket className="h-8 w-8 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   2
                 </div>
               </div>
@@ -250,10 +251,10 @@ const Services = () => {
             
             <div className="text-center group">
               <div className="relative mb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
                   <Zap className="h-8 w-8 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   3
                 </div>
               </div>
@@ -263,10 +264,10 @@ const Services = () => {
             
             <div className="text-center group">
               <div className="relative mb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
                   <Sparkles className="h-8 w-8 text-white" />
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   4
                 </div>
               </div>
@@ -295,9 +296,9 @@ const Services = () => {
             <Link to="/contact">
               <Button 
                 size="lg" 
-                className="bg-black text-white hover:bg-gray-900 px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold border border-[#C30010]/30"
+                className="bg-white text-[#C30010] hover:bg-gray-100 px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold border border-[#C30010]/30"
               >
-                Start Your Project
+                Get Started
               </Button>
             </Link>
             <Link to="/about">

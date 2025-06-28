@@ -1,4 +1,3 @@
-
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const Gallery = () => {
@@ -44,10 +43,10 @@ const Gallery = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Work
+            Our Work Gallery
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Explore our portfolio of successful projects and digital solutions
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
+            Explore our portfolio of successful projects and creative solutions
           </p>
         </div>
         

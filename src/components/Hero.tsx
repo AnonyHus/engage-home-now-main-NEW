@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#C30010] rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
@@ -18,7 +18,7 @@ const Hero = () => {
           <br />
           Digital Future
         </h1>
-        <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in delay-200">
+        <p className="text-xl md:text-2xl text-gray-800 mb-8 max-w-2xl mx-auto animate-fade-in delay-200">
           We create exceptional digital experiences that drive growth and engage your audience with cutting-edge solutions.
         </p>
         <Button 

@@ -58,11 +58,11 @@ const DigitalMarketing = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 to-black">
+      <section className="py-20 bg-gradient-to-br from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <Link to="/services">
-              <Button variant="ghost" className="mb-6 text-white hover:text-[#C30010] bg-white/10 hover:bg-white/20">
+              <Button variant="ghost" className="mb-6 text-gray-700 hover:text-[#C30010] bg-white/10 hover:bg-white/20">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Services
               </Button>
@@ -73,10 +73,10 @@ const DigitalMarketing = () => {
             <div className="inline-block bg-[#C30010] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
               Digital Marketing
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               Digital Marketing Services
             </h1>
-            <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               We create data-driven digital marketing strategies that drive growth, increase brand awareness, and deliver measurable results.
             </p>
           </div>
@@ -88,7 +88,7 @@ const DigitalMarketing = () => {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Choose Your Marketing Focus</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Explore our two main digital marketing approaches - each designed to achieve specific business objectives.
             </p>
           </div>
@@ -109,7 +109,7 @@ const DigitalMarketing = () => {
                   </div>
                   
                   {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white p-8">
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-gray-900 p-8">
                     <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                       <Monitor className="h-10 w-10" />
                     </div>
@@ -143,7 +143,7 @@ const DigitalMarketing = () => {
                   </div>
                   
                   {/* Content */}
-                  <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white p-8">
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-gray-900 p-8">
                     <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                       <BarChart3 className="h-10 w-10" />
                     </div>
@@ -174,7 +174,7 @@ const DigitalMarketing = () => {
               Multi-Screen Marketing
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Screens Marketing Strategy</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Engage your audience across all devices and platforms with our comprehensive multi-screen marketing approach.
             </p>
           </div>
@@ -200,7 +200,7 @@ const DigitalMarketing = () => {
           <div className="text-center mb-16">
             <div className="max-w-4xl mx-auto">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Comprehensive Multi-Screen Approach</h3>
-              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              <p className="text-lg text-gray-700 leading-relaxed mb-8">
                 Our screens marketing strategy focuses on creating seamless experiences across all devices and platforms. 
                 We develop targeted campaigns that engage your audience whether they're on mobile, tablet, desktop, or smart TV. 
                 This approach ensures maximum reach and engagement through consistent messaging and optimized content delivery.
@@ -211,21 +211,21 @@ const DigitalMarketing = () => {
                     <Target className="h-6 w-6 text-white" />
                   </div>
                   <h4 className="font-semibold text-gray-900 mb-2">Cross-Platform</h4>
-                  <p className="text-sm text-gray-600">Seamless experience across all devices</p>
+                  <p className="text-sm text-gray-700">Seamless experience across all devices</p>
                 </div>
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#C30010] rounded-full flex items-center justify-center mx-auto mb-3">
                     <TrendingUp className="h-6 w-6 text-white" />
                   </div>
                   <h4 className="font-semibold text-gray-900 mb-2">Performance</h4>
-                  <p className="text-sm text-gray-600">Optimized for each platform's strengths</p>
+                  <p className="text-sm text-gray-700">Optimized for each platform's strengths</p>
                 </div>
                 <div className="text-center">
                   <div className="w-12 h-12 bg-[#C30010] rounded-full flex items-center justify-center mx-auto mb-3">
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   <h4 className="font-semibold text-gray-900 mb-2">Engagement</h4>
-                  <p className="text-sm text-gray-600">Interactive content that converts</p>
+                  <p className="text-sm text-gray-700">Interactive content that converts</p>
                 </div>
               </div>
             </div>
@@ -234,7 +234,7 @@ const DigitalMarketing = () => {
           {/* Screens Portfolio */}
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">Screens Marketing Portfolio</h3>
-            <p className="text-lg text-gray-600">Examples of our multi-screen marketing campaigns</p>
+            <p className="text-lg text-gray-700">Examples of our multi-screen marketing campaigns</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -242,7 +242,7 @@ const DigitalMarketing = () => {
               <Card key={image.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-200 bg-white">
                 <CardContent className="p-0">
                   <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
-                    <div className="text-center text-white">
+                    <div className="text-center text-gray-900">
                       <div className="text-2xl font-bold mb-2">{image.title}</div>
                       <div className="text-sm opacity-90">{image.description}</div>
                     </div>
@@ -277,7 +277,7 @@ const DigitalMarketing = () => {
               Content Marketing
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Static Marketing Strategy</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Build lasting authority and drive sustainable growth with our static content marketing strategies.
             </p>
           </div>
@@ -303,7 +303,7 @@ const DigitalMarketing = () => {
           <div className="text-center mb-16">
             <div className="max-w-4xl mx-auto">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Strategic Content Marketing</h3>
-              <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              <p className="text-lg text-gray-700 leading-relaxed mb-8">
                 Our static marketing strategy focuses on creating valuable, evergreen content that builds authority and drives 
                 long-term organic growth. We develop comprehensive content plans that educate your audience, improve search rankings, 
                 and establish your brand as a thought leader in your industry.
@@ -345,7 +345,7 @@ const DigitalMarketing = () => {
               <Card key={image.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-200 bg-gray-50">
                 <CardContent className="p-0">
                   <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
-                    <div className="text-center text-white">
+                    <div className="text-center text-gray-900">
                       <div className="text-2xl font-bold mb-2">{image.title}</div>
                       <div className="text-sm opacity-90">{image.description}</div>
                     </div>

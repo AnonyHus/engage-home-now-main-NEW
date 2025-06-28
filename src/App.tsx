@@ -39,7 +39,7 @@ const App = () => (
         <ScrollToTop />
         <Navigation />
         <div className="pt-16">
-          <Suspense fallback={<div className="w-full flex justify-center items-center py-20 text-xl text-gray-400">Loading...</div>}>
+          <Suspense fallback={<div className="w-full flex justify-center items-center py-20 text-xl text-gray-600">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />

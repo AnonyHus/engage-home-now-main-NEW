@@ -108,13 +108,13 @@ const WebDevelopment = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <Link to="/services">
-              <Button variant="ghost" className="mb-6 text-gray-300 hover:text-[#C30010]">
+              <Button variant="ghost" className="mb-6 text-gray-700 hover:text-[#C30010]">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Services
               </Button>
@@ -128,7 +128,7 @@ const WebDevelopment = () => {
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#C30010] to-[#D40011] bg-clip-text text-transparent mb-6">
               Web Development Services
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               We create exceptional web experiences that drive growth and engage your audience with cutting-edge technologies.
             </p>
           </div>
@@ -138,14 +138,14 @@ const WebDevelopment = () => {
       {/* Video Section */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-gray-900/50 rounded-2xl shadow-2xl overflow-hidden border border-gray-800">
+          <div className="bg-white/50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
             <div className="aspect-video bg-gradient-to-br from-[#C30010] to-[#D40011] relative">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center text-white">
                   <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
                     <Play className="h-8 w-8 ml-1" />
                   </div>
-                  <h2 className="text-2xl font-bold mb-2">Web Development Overview</h2>
+                  <h3 className="text-2xl font-bold mb-2">Web Development Overview</h3>
                   <p className="text-lg opacity-90">Watch our comprehensive guide to modern web development</p>
                 </div>
               </div>
@@ -155,11 +155,11 @@ const WebDevelopment = () => {
       </section>
 
       {/* Description Section */}
-      <section className="py-16 bg-gray-900">
+      <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-6">Why Choose Our Web Development?</h2>
-            <p className="text-xl text-gray-300 leading-relaxed">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Why Choose Our Web Development?</h2>
+            <p className="text-xl text-gray-700 leading-relaxed">
               Our web development services combine cutting-edge technology with proven methodologies to deliver 
               websites and web applications that not only look stunning but also perform exceptionally well. 
               We focus on creating user-centered experiences that drive engagement and achieve your business goals.
@@ -168,15 +168,15 @@ const WebDevelopment = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">Custom Solutions</h3>
-              <p className="text-gray-300 leading-relaxed">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Custom Solutions</h3>
+              <p className="text-gray-700 leading-relaxed">
                 Every project is unique, and we believe in creating custom solutions tailored to your specific needs. 
                 From simple landing pages to complex web applications, we build solutions that scale with your business.
               </p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">Modern Technologies</h3>
-              <p className="text-gray-300 leading-relaxed">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Modern Technologies</h3>
+              <p className="text-gray-700 leading-relaxed">
                 We use the latest technologies and frameworks including React, Vue.js, Node.js, and more to ensure 
                 your website is fast, secure, and future-proof. Our development process follows industry best practices.
               </p>
@@ -187,11 +187,11 @@ const WebDevelopment = () => {
 
 
       {/* 10 Pictures Section - Full Width */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-white">
         <div className="w-full px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">Our Web Development Portfolio</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Web Development Portfolio</h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Explore our diverse collection of web development projects showcasing different industries and technologies.
             </p>
           </div>
@@ -214,36 +214,27 @@ const WebDevelopment = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-6">Key Features & Technologies</h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Key Features & Technologies</h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               We leverage cutting-edge technologies and best practices to deliver exceptional web solutions.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-800 bg-gray-800/50 hover:bg-gray-800/80">
-                <CardContent className="p-8">
-                  <div className="mb-6 flex justify-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <feature.icon className="h-8 w-8 text-white" />
-                    </div>
+              <Card 
+                key={index} 
+                className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 hover:shadow-[#C30010]/20 border border-gray-200 bg-white/50"
+              >
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 bg-[#C30010] rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <feature.icon className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4 text-center">{feature.title}</h3>
-                  <p className="text-gray-300 text-center leading-relaxed mb-6">{feature.description}</p>
-                  
-                  {/* Video Placeholder */}
-                  <div className="aspect-video bg-gradient-to-br from-[#C30010]/20 to-[#D40011]/20 rounded-lg flex items-center justify-center border border-[#C30010]/30">
-                    <div className="text-center">
-                      <div className="w-12 h-12 bg-[#C30010] rounded-full flex items-center justify-center mb-2 mx-auto">
-                        <Play className="h-6 w-6 text-white ml-0.5" />
-                      </div>
-                      <p className="text-sm text-[#C30010] font-medium">Watch Demo</p>
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
+                  <p className="text-gray-700 leading-relaxed">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -264,7 +255,7 @@ const WebDevelopment = () => {
             <Link to="/contact">
               <Button 
                 size="lg" 
-                className="bg-black text-white hover:bg-gray-900 px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold"
+                className="bg-white text-[#C30010] hover:bg-gray-100 px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold"
               >
                 Start Your Project
               </Button>

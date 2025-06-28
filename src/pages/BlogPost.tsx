@@ -98,26 +98,23 @@ const BlogPost = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Article Not Found</h1>
-          <p className="text-gray-300 mb-8">The article you're looking for doesn't exist.</p>
-          <Link to="/blog">
-            <Button className="bg-[#C30010] hover:bg-[#D40011]">Back to Blog</Button>
-          </Link>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Loading...</h1>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C30010] mx-auto"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <div className="mb-8">
             <Link to="/blog">
-              <Button variant="ghost" className="mb-6 text-gray-300 hover:text-[#C30010]">
+              <Button variant="ghost" className="mb-6 text-gray-700 hover:text-[#C30010]">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Blog
               </Button>
@@ -129,10 +126,10 @@ const BlogPost = () => {
               <Tag className="h-4 w-4 inline mr-2" />
               {post.category}
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               {post.title}
             </h1>
-            <div className="flex items-center justify-center gap-6 text-gray-300 mb-6">
+            <div className="flex items-center justify-center gap-6 text-gray-700 mb-6">
               <div className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 <span>{post.author}</span>
@@ -153,21 +150,20 @@ const BlogPost = () => {
       {/* Article Content */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4">
-          <Card className="shadow-xl border border-gray-800 bg-gray-900/50">
-            <CardContent className="p-8 md:p-12">
-              <div 
-                className="prose prose-lg max-w-none prose-invert prose-headings:text-white prose-p:text-gray-300 prose-strong:text-white prose-a:text-[#C30010]"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+          <Card className="shadow-xl border border-gray-200 bg-white/50">
+            <CardContent className="p-8">
+              <div className="prose prose-lg max-w-none">
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              </div>
             </CardContent>
           </Card>
         </div>
       </section>
 
       {/* Related Articles */}
-      <section className="py-16 bg-gray-900">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-white mb-12">Related Articles</h2>
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Related Articles</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogPosts
               .filter(p => p.id !== post.id)
@@ -177,14 +173,14 @@ const BlogPost = () => {
                   <Card className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer border border-gray-800 bg-gray-800/50 hover:bg-gray-800/80">
                     <CardContent className="p-6">
                       <div className={`h-32 ${relatedPost.image} rounded-lg mb-4 flex items-center justify-center`}>
-                        <div className="text-center text-white">
+                        <div className="text-center text-gray-900">
                           <div className="text-sm font-medium opacity-90">{relatedPost.category}</div>
                         </div>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
                         {relatedPost.title}
                       </h3>
-                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
                         <span>{relatedPost.author}</span>
                         <span>{relatedPost.readTime}</span>
                       </div>

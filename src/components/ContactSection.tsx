@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,8 +37,8 @@ const ContactSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Get In Touch
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Ready to start your project? Let's discuss how we can help you achieve your goals.
+          <p className="text-xl text-gray-700 max-w-2xl mx-auto">
+            Ready to start your next project? Let's discuss how we can help bring your vision to life.
           </p>
         </div>
 
@@ -104,25 +103,22 @@ const ContactSection = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-600 font-medium">
-                Interactive Map Placeholder
-                <br />
-                <span className="text-sm">(Google Maps integration)</span>
+              <div className="bg-gray-200 rounded-lg h-64 flex items-center justify-center text-gray-700 font-medium">
+                Map placeholder
               </div>
               
               <div className="space-y-4">
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Address</h4>
-                  <p className="text-gray-600">
-                    123 Innovation Drive<br />
-                    Tech City, TC 12345<br />
-                    United States
+                  <p className="text-gray-700">
+                    123 Business Street, Suite 100<br />
+                    City, State 12345
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Office Hours</h4>
-                  <div className="text-gray-600 space-y-1">
+                  <div className="text-gray-700 space-y-1">
                     <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
                     <p>Saturday: 10:00 AM - 4:00 PM</p>
                     <p>Sunday: Closed</p>
@@ -131,9 +127,9 @@ const ContactSection = () => {
 
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Contact Info</h4>
-                  <div className="text-gray-600 space-y-1">
-                    <p>Phone: +1 (555) 123-4567</p>
-                    <p>Email: hello@company.com</p>
+                  <div className="text-gray-700 space-y-1">
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@engagehome.com</p>
                   </div>
                 </div>
               </div>

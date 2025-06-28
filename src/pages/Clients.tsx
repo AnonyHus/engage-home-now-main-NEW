@@ -24,8 +24,8 @@ const Clients = () => {
             <h1 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-[#C30010] via-[#D40011] to-[#E50012] bg-clip-text text-transparent mb-7 leading-tight drop-shadow-lg">
               Our Clients
             </h1>
-            <p className="text-2xl text-gray-700 max-w-3xl mx-auto leading-relaxed font-medium">
-              We've had the privilege of working with amazing clients across various industries. Our partnerships have helped us grow and deliver exceptional results while building lasting relationships based on trust, innovation, and mutual success.
+            <p className="text-2xl text-gray-800 max-w-3xl mx-auto leading-relaxed font-medium">
+              We've had the privilege of working with amazing clients across various industries, helping them achieve their digital goals and drive business growth.
             </p>
           </div>
         </div>
@@ -73,7 +73,7 @@ const Clients = () => {
           {/* Additional Info */}
           <div className="text-center mt-16">
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Each client represents a unique challenge and opportunity for us to demonstrate our expertise and commitment to excellence. We're proud of the work we've done together and excited about future collaborations.
+              Our client success stories showcase the transformative impact of our digital solutions.
             </p>
           </div>
         </div>

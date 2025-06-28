@@ -21,7 +21,7 @@ const AboutUs = () => {
             <Button 
               variant="ghost" 
               onClick={() => window.history.back()}
-              className="mb-8 group text-gray-600 hover:text-[#C30010]"
+              className="mb-8 group text-gray-700 hover:text-[#C30010]"
             >
               <ArrowLeft className="h-4 w-4 mr-2 group-hover:-translate-x-1 transition-transform" />
               Back to Home
