@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone } from "lucide-react";
+import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { useState } from "react";
@@ -251,6 +251,20 @@ const DigitalMarketing = () => {
               </Card>
             ))}
           </div>
+
+          {/* Navigation Button for Screens Section */}
+          <div className="text-center mt-12">
+            <Link to="/our-locations">
+              <Button 
+                size="lg" 
+                className="bg-[#C30010] hover:bg-[#D40011] text-white px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold group"
+              >
+                <Globe className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                Explore Our Screens Locations
+                <ArrowLeft className="h-5 w-5 ml-2 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -339,6 +353,20 @@ const DigitalMarketing = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Navigation Button for Static Section */}
+          <div className="text-center mt-12">
+            <Link to="/our-locations">
+              <Button 
+                size="lg" 
+                className="bg-[#D40011] hover:bg-[#E50012] text-white px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold group"
+              >
+                <Globe className="h-5 w-5 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                Discover Our Screens Network
+                <ArrowLeft className="h-5 w-5 ml-2 rotate-180 group-hover:translate-x-1 transition-transform duration-300" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

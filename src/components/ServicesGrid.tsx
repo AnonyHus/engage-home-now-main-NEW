@@ -56,13 +56,13 @@ const ServicesGrid = () => {
   ];
 
   return (
-    <section className="py-20 bg-black">
+    <section className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Our Services
           </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Comprehensive digital solutions tailored to your business needs
           </p>
         </div>
@@ -71,16 +71,16 @@ const ServicesGrid = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer border border-gray-800 bg-gray-900/50 backdrop-blur-sm hover:bg-gray-900/80 hover:shadow-[#C30010]/20"
+              className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer bg-card hover:bg-accent hover:shadow-primary/20"
             >
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-[#C30010] transition-colors">
+                <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-gray-300 leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {service.description}
                 </p>
               </CardContent>
