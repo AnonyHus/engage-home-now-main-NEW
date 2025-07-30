@@ -53,7 +53,7 @@ const ServicesGrid = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Link to={`/services/${service.slug}`}>
+            <Link key={service.id} to={`/services/${service.slug}`}>
             <Card 
               key={index} 
               className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer bg-card hover:bg-accent hover:shadow-primary/20"

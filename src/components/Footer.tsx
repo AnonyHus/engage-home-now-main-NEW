@@ -77,7 +77,7 @@ const Footer = () => {
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service.name}>
-                  <Link 
+                  <Link key={service.id}
                     to={`/services/${service.slug}`}
                     className="text-muted-foreground hover:text-primary transition-colors duration-200"
                   >

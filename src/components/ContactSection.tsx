@@ -93,7 +93,6 @@ const handleSubmit = async (e) => {
               placeholder="Enter your message"
                name="message" 
                id="message" 
-               defaultValue={""}
                value={message}
                onChange={e => setMessage(e.target.value)}          
                required />

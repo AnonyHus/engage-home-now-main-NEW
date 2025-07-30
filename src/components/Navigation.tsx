@@ -82,7 +82,7 @@ const Navigation = () => {
                     <ul>
                       {services.map((service) => (
                         <li key={service.name}>
-                          <Link
+                          <Link key={service.id}
                             to={`/services/${service.slug}`}
                             className="block px-5 py-3 text-gray-700 hover:bg-[#F6F6F6] hover:text-[#C30010] rounded-lg transition-colors"
                           >
