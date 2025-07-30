@@ -1,88 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, MapPin, Monitor, Smartphone, Tv, Building2 } from "lucide-react";
+import { ArrowLeft, MapPin, Monitor, Smartphone, Tv, Building2, ArrowRightToLine } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import locationsData from "../data/our-locations.json";
 import Footer from "@/components/Footer";
 
-const OurLocations = () => {
-  const screens = [
-    {
-      id: 1,
-      name: "Times Square Digital Billboard",
-      location: "Times Square, Manhattan, NY",
-      street: "Broadway & 7th Avenue",
-      type: "Large LED Display",
-      description: "Massive 4K digital billboard in the heart of Times Square, reaching millions of daily commuters and tourists.",
-      image: "https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "50ft x 30ft, 4K Resolution"
-    },
-    {
-      id: 2,
-      name: "Silicon Valley Tech Hub Screen",
-      location: "Palo Alto, CA",
-      street: "University Avenue & High Street",
-      type: "Interactive Touch Screen",
-      description: "Interactive digital kiosk serving the tech community with real-time updates and local business information.",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "8ft x 5ft, Touch Enabled"
-    },
-    {
-      id: 3,
-      name: "London Underground Digital Network",
-      location: "London, UK",
-      street: "Oxford Circus Station",
-      type: "Subway Display Network",
-      description: "Network of digital screens throughout the London Underground, providing real-time updates and advertising.",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "Multiple 4K Screens"
-    },
-    {
-      id: 4,
-      name: "Toronto Financial District LED",
-      location: "Toronto, ON",
-      street: "Bay Street & King Street",
-      type: "Financial District Display",
-      description: "High-resolution LED display in Toronto's financial district, targeting business professionals and commuters.",
-      image: "https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "40ft x 25ft, HD+ Resolution"
-    },
-    {
-      id: 5,
-      name: "Sydney Harbour Bridge Screen",
-      location: "Sydney, NSW",
-      street: "Harbour Bridge Approach",
-      type: "Iconic Landmark Display",
-      description: "Spectacular digital screen integrated into the Sydney Harbour Bridge, visible from across the harbor.",
-      image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "60ft x 35ft, Ultra HD"
-    },
-    {
-      id: 6,
-      name: "Berlin Startup District Kiosk",
-      location: "Berlin, Germany",
-      street: "Kreuzberg District",
-      type: "Startup Community Screen",
-      description: "Community-focused digital kiosk in Berlin's vibrant startup district, connecting local entrepreneurs.",
-      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      specs: "6ft x 4ft, Interactive"
-    }
-  ];
 
-  const getTypeIcon = (type: string) => {
-    switch (type.toLowerCase()) {
-      case 'large led display':
-      case 'billboard':
-        return <Building2 className="h-5 w-5" />;
-      case 'interactive touch screen':
-      case 'kiosk':
-        return <Monitor className="h-5 w-5" />;
-      case 'subway display network':
-      case 'network':
-        return <Tv className="h-5 w-5" />;
-      default:
-        return <Smartphone className="h-5 w-5" />;
-    }
-  };
+export default function OurLocations() {
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    setLocations(locationsData);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -147,62 +77,38 @@ const OurLocations = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {screens.map((screen) => (
-              <Card 
-                key={screen.id} 
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border-0 bg-card shadow-lg hover:shadow-primary/20"
-              >
-                <CardContent className="p-0">
-                  {/* Image */}
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={screen.image} 
-                      alt={screen.name}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-xl font-bold text-white mb-1">{screen.name}</h3>
-                      <p className="text-white/90 text-sm">{screen.type}</p>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-start gap-3">
-                      <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                      <div>
-                        <p className="text-sm font-medium text-foreground">{screen.location}</p>
-                        <p className="text-xs text-muted-foreground">{screen.street}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-3">
-                      <div className="text-primary">
-                        {getTypeIcon(screen.type)}
-                      </div>
-                      <p className="text-sm text-muted-foreground">{screen.type}</p>
-                    </div>
-                    
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {screen.description}
-                    </p>
-
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <p className="text-xs font-medium text-primary">{screen.specs}</p>
-                    </div>
-
-                    <Button 
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 group-hover:shadow-lg"
-                    >
-                      <Monitor className="h-4 w-4 mr-2" />
-                      View Screen Details
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+  {locations.map((loc, idx) => (
+    <Card
+      key={idx}
+      className="group relative overflow-hidden rounded-2xl shadow-lg border border-gray-200 bg-white transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl"
+    >
+      <div className="relative">
+        <img
+          src={loc.photo}
+          alt={loc.location}
+          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold shadow">
+          {loc.type}
+        </div>
+      </div>
+      <CardContent className="p-6 flex flex-col items-center text-center">
+        <h3 className="text-2xl font-bold text-primary mb-2">{loc.location}</h3>
+        <div className="flex flex-wrap gap-2 justify-center mb-3">
+          <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+            <strong>Size:</strong> {loc.size}
+          </span>
+          <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+            <strong>Pixel:</strong> {loc.pixel}
+          </span>
+          <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+            <strong>Duration:</strong> {loc.duration}
+          </span>
+        </div>
+      </CardContent>
+    </Card>
+  ))}
+</div>
         </div>
       </section>
 
@@ -228,9 +134,10 @@ const OurLocations = () => {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg rounded-full transition-all duration-300 font-semibold"
+                className="border-white text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg rounded-full transition-all duration-300 font-semibold"
               >
                 View All Services
+                <ArrowRightToLine></ArrowRightToLine>
               </Button>
             </Link>
           </div>
@@ -238,8 +145,8 @@ const OurLocations = () => {
       </section>
 
       <Footer />
-    </div>
-  );
-};
 
-export default OurLocations; 
+    </div>
+    
+  );
+} 

@@ -1,91 +1,76 @@
-import { 
-  ArrowRight, 
-  ArrowUp, 
-  ArrowDown, 
-  ArrowLeft 
-} from "lucide-react";
+import { useEffect, useState } from "react";
+import { fetchServices } from "../services/fetchServices";
 import { Card, CardContent } from "@/components/ui/card";
+import { Link, useLocation } from "react-router-dom";
 
 const ServicesGrid = () => {
-  const services = [
+
+ 
+  const [services, setServices] = useState([]);
+  useEffect(() => {
+    fetchServices().then((data) => setServices(Array.isArray(data) ? data : []));
+  }, []);
+
+ /* const services = [
     {
-      icon: <ArrowUp className="h-8 w-8 text-[#C30010]" />,
-      title: "Web Development",
-      description: "Custom websites built with modern technologies and best practices."
+      icon: <span className="h-8 w-8 text-[#C30010] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20v-8m0 0V4m0 8H4m8 0h8" /><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" fill="none" /><path d="M8 16l8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>,
+      title: "Creative",
+      description: "Innovative creative strategies that bring brands to life."
     },
     {
-      icon: <ArrowRight className="h-8 w-8 text-[#D40011]" />,
-      title: "Mobile Apps",
-      description: "Native and cross-platform mobile applications for iOS and Android."
+      icon: <span className="h-8 w-8 text-[#D40011] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M7 7V5a5 5 0 0 1 10 0v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg></span>,
+      title: "Events & Branding",
+      description: "Complete event management and branding solutions for all occasions."
     },
     {
-      icon: <ArrowDown className="h-8 w-8 text-[#E50012]" />,
-      title: "UI/UX Design",
-      description: "Beautiful, user-centered designs that convert and engage."
-    },
-    {
-      icon: <ArrowLeft className="h-8 w-8 text-[#F60013]" />,
-      title: "E-commerce",
-      description: "Scalable online stores with seamless shopping experiences."
-    },
-    {
-      icon: <ArrowUp className="h-8 w-8 text-[#FF0014]" />,
-      title: "Cloud Solutions",
-      description: "Secure and scalable cloud infrastructure for your business."
-    },
-    {
-      icon: <ArrowRight className="h-8 w-8 text-[#B2000F]" />,
+      icon: <span className="h-8 w-8 text-[#E50012] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 4h16v16H4z" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M8 12h8M8 16h5M8 8h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg></span>,
       title: "Digital Marketing",
-      description: "Data-driven marketing strategies that drive real results."
+      description: "Data-driven digital strategies to grow your online presence."
     },
     {
-      icon: <ArrowDown className="h-8 w-8 text-[#A1000E]" />,
-      title: "Analytics",
-      description: "Deep insights into your business performance and user behavior."
+      icon: <span className="h-8 w-8 text-[#F60013] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="7" width="18" height="10" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M8 7V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><rect x="9" y="10" width="6" height="4" rx="1" fill="currentColor"/></svg></span>,
+      title: "Production & Broadcasting",
+      description: "End-to-end TV and radio production with creative excellence."
     },
     {
-      icon: <ArrowLeft className="h-8 w-8 text-[#90000D]" />,
-      title: "Consulting",
-      description: "Strategic guidance to help your business grow and succeed."
-    },
-    {
-      icon: <ArrowUp className="h-8 w-8 text-[#7F000C]" />,
-      title: "Support",
-      description: "24/7 technical support and maintenance for peace of mind."
+      icon: <span className="h-8 w-8 text-[#FF0014] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M7 5v-2h10v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M7 19v2h10v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M8 9h8v6H8z" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M4 12h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></span>,
+      title: "Outdoor Advertising",
+      description: "Maximize brand visibility with impactful outdoor advertising campaigns."
     }
   ];
-
+*/
   return (
-    <section className="py-20 bg-background">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="py-10 bg-background">
+      <div className="max-w-100% mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Our Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive digital solutions tailored to your business needs
+            Comprehensive Advertise solutions tailored to your business needs
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
+            <Link to={`/services/${service.slug}`}>
             <Card 
               key={index} 
               className="group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer bg-card hover:bg-accent hover:shadow-primary/20"
             >
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
+                <span className="h-8 w-8 text-[#FF0014] flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M7 5v-2h10v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M7 19v2h10v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M8 9h8v6H8z" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M4 12h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></span>
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
-                  {service.title}
+                  {service.name}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  {service.description}
+                  {service.Home_Desc}
                 </p>
               </CardContent>
             </Card>
-          ))}
+            </Link>))}
         </div>
       </div>
     </section>

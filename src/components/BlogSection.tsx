@@ -38,14 +38,14 @@ const BlogSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-slate-50 to-slate-100">
+    <section className="py-10 bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6">
             Latest Insights
           </h2>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-slate-600 max-w-5xl mx-auto leading-relaxed">
             Stay updated with the latest trends, insights, and best practices in digital technology, 
             design, and business growth.
           </p>
@@ -101,7 +101,7 @@ const BlogSection = () => {
           <Link to="/blog">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-gradient-to-r from-[#C30010] to-[#D40011] hover:from-[#D40011] hover:to-[#E50012] text-white px-8 py-3 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
             >
               View All Articles
               <ArrowRight className="ml-2 h-5 w-5" />

@@ -1,0 +1,26 @@
+[
+    {
+      "photo": "/locations/location1.jpg",
+      "location": "New Cairo North 90th St. “Water Way 2” LED Screen",
+      "size": "5m. (H) X 25m. (W) ( 2 faces ) & 6m. (H) x 3m. (W) ( 4 faces ) ",
+      "pixel": " 720 (H) x 3600 (W) & 864 (H) x 432 (W)",
+      "duration": "10” (Repeated Every 2 min.)",
+      "type": "Mirror Screen + T.Pole Screen"
+    },
+    {
+      "photo": "/locations/location2.jpg",
+      "location": "Mohamed Nagib St el rehab bridge.",
+      "size": "5m. (H) x 25m. (W)",
+      "pixel": " 720(H) x 3600(W)/ ",
+      "duration": "10” (Repeated Every 2 min.)",
+      "type": "Digital Screen"
+    },
+    {
+      "photo": "/locations/location3.jpg",
+      "location": "Suez Road Tag City Chill Out Ring Road Entrance To New Cairo ",
+      "size": "6m. (H) x 3m. (W) / ( 40 faces ) ",
+      "pixel": "720(h)*360(w)",
+      "duration": "6s",
+      "type": "T.Pole Screen"
+    }
+  ]

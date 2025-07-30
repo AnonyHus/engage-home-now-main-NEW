@@ -1,0 +1,48 @@
+
+      {
+        "branding": {
+          "title": "BRANDING",
+          "description": "Corporate Identity CIM Brochures, Flyers,Posters, Billboard .. Audit Design . EtC Reputation",
+          "image": "https://drive.google.com/uc?export=view&id=12b3U-nt1u7nmJv1z9S8S8ff1baykYHtu",
+          "link": "/services/digital-marketing"
+
+        },
+  
+        "creative": {
+          "title": "CREATIVE",
+          "description": "Duties include developing ideas on how to advertise, to work on ideas to create a shared vision and lead a design team to complete projects.",
+          "image": "https://drive.google.com/file/d/12b3U-nt1u7nmJv1z9S8S8ff1baykYHtu/view?usp=drive_link",
+          "link": "/services/web-development"
+
+        },
+        "public-relations": {
+            "title": "PUBLIC RELATIONS",
+            "description": "Press release Report writing Sponsored Event Blogs Crisis Management Media Relation.",
+            "image": "/services/public-relations.png",
+            "link": "/services/public-relations"
+        },
+          "production-buying": {
+            "title": "PRODUCTION & BUYING",
+            "description": "Production Services TV ,Radio, Outdoor Social Media Documentaries ",
+            "image": "/services/public-relations.png",
+            "link": "/services/production-buying"
+        },
+        "social-media": {
+            "title": "SOCIAL MEDIA",
+            "description": "Community Management And Social Media Strategy Our Social Media Team Knows The  Importance Of Creating Different Marketing Strategies For Each Channel Like Facebook And Instagram .",
+            "image": "/services/public-relations.png",
+            "link": "/services/social-media"
+        },
+        "media-buying": {
+            "title": "MEDIA BUYING",
+            "description": "Media buying is at the heart of everything we do To help take our clients from A to Z and guide them throughout the entire pro-cases is key to us. To help make sense of what’s happening and top present you with the most practical methods to work , we do the best we can.",
+            "image": "../services/public-relations.png",
+            "link": "/services/media-buying"
+        },
+         "events": {
+            "title": "EVENTS",
+            "description": "We organize conferences, and implement By the format of the event, we supplies all artists, organize the event with the best possibilities, and do all kinds of exhibitions in the entire event.",
+            "image": "/services/public-relations.png",
+            "link": "/services/events"
+        }
+      }

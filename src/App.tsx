@@ -2,11 +2,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect, Suspense, lazy } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Navigation from "./components/Navigation";
+import { RequireAuth } from "./components/RequireAuth";
+import ServiceDetail from "./pages/services/ServiceDetail";
+
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
@@ -14,10 +17,13 @@ const Clients = lazy(() => import("./pages/Clients"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
-const WebDevelopment = lazy(() => import("./pages/services/WebDevelopment"));
-const DigitalMarketing = lazy(() => import("./pages/services/DigitalMarketing"));
+const WebDevelopment = lazy(() => import("./pages/services/ServiceDetail"));
+const OutdoorAdvertising = lazy(() => import("./pages/services/OutdoorAdvertising"));
 const OurLocations = lazy(() => import("./pages/OurLocations"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const ImageUploadPage = lazy(() => import("./pages/admin/ImageUploadPage"));
+const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
+
 
 const queryClient = new QueryClient();
 
@@ -45,13 +51,17 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />
-              <Route path="/services/web-development" element={<WebDevelopment />} />
-              <Route path="/services/digital-marketing" element={<DigitalMarketing />} />
+              <Route path="/services/:slug" element={<ServiceDetail />} />
+              <Route path="/services/Outdoor-Advertising" element={<OutdoorAdvertising />} />
               <Route path="/our-locations" element={<OurLocations />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
+
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin/upload" element={<RequireAuth><ImageUploadPage /></RequireAuth> }/>
+
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

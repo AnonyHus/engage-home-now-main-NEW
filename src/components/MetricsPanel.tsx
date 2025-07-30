@@ -6,17 +6,15 @@ const MetricsPanel = () => {
   const [counts, setCounts] = useState({
     projects: 0,
     clients: 0,
-    years: 0,
-    team: 0
+    years: 0
   });
   
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const finalCounts = {
-    projects: 1200,
-    clients: 500,
-    years: 8,
-    team: 50
+    projects: 500,
+    clients: 150,
+    years:4
   };
 
   useEffect(() => {
@@ -48,11 +46,11 @@ const MetricsPanel = () => {
       setCounts({
         projects: Math.floor(finalCounts.projects * progress),
         clients: Math.floor(finalCounts.clients * progress),
-        years: Math.floor(finalCounts.years * progress),
-        team: Math.floor(finalCounts.team * progress)
-      });
+        years: Math.floor(finalCounts.years * progress)  
+          });
 
       if (progress < 1) {
+
         requestAnimationFrame(animate);
       }
     };
@@ -75,22 +73,16 @@ const MetricsPanel = () => {
     },
     {
       number: counts.years,
-      suffix: "",
+      suffix: "+",
       label: "Years Experience",
       description: "In the digital industry"
-    },
-    {
-      number: counts.team,
-      suffix: "+",
-      label: "Team Members",
-      description: "Expert professionals"
     }
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+    <section ref={sectionRef} className="bg-gradient-to-r from-[#ffb88e] to-[#ea5753] bg-opacity-50 py-20 ">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {metrics.map((metric, index) => (
             <div 
               key={index} 

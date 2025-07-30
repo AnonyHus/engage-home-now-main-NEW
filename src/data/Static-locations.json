@@ -1,0 +1,115 @@
+[
+    {
+      "photo": "/staticLocations/Locations1.png",
+      "location": "EL SHAHED TRIANGAL Zeon TO 6 October Bridge & Naser city",
+      "size": "8m. (H) x 45m. (W) Banner / 2 Faces  + 8m. (H) x 24m. (W)  Back Lit / 2 Faces ",
+      "type": "Mega"
+    },
+    {
+      "photo": "/staticLocations/Locations2.png",
+      "location": "Mosher Axis coming to Nasr city TO 6 October & Nasr city ",
+      "size": "8m. (H) x 14.5m. (W) Back Lit / 1 Face  + 10m. (H) x 18m. (W) Back Lit / 1 Face ",
+      "type": "Mega"
+    },
+    {
+      "photo": "/staticLocations/Locations3.png",
+      "location": "Mehwar El-Mosher To Al 90st & New Cairo ",
+      "size": "6m. (H) x 3m. (W) Back Lit  20 Unit / 40 Faces",
+      "type": "T.Pole"
+    },
+    {
+      "photo": "/staticLocations/Locations4.png",
+      "location": "Na Road El Mosher Axis, Coming From Nasr City& October Bridge To 90st ",
+      "size": "8m. (H) x 24m. (W) Back Lit / 2 Faces ",
+      "type": "Uni-Pole Curve"
+    },
+    {
+      "photo": "/staticLocations/Locations5.png",
+      "location": "New Cairo 90th North Before shifa Hospital ",
+      "size": "8m. (H) x 16m. (W) ( 2 faces )",
+      "type": "Uni-Pole"
+    },
+    {
+      "photo": "/staticLocations/Locations6.png",
+      "location": "New Cairo 90th North Before Petro sport ",
+      "size": " 8m ( H ) x 16m ( W ) 2 Faces + 6 m. (H) x 3 m. (W) Back Lit  6 Unit / 12 Faces",
+      "type": "Uni-Pole + T.Pole"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations7.png",
+      "location": "New Cairo North 90th St. “Water Way 2” ",
+      "size": "2m ( H ) x 1.5m ( W ) Back Lit  22 Unit / 44 Faces",
+      "type": "suits"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations8.png",
+      "location": "New Cairo 90thNorth-( Water Way 2 )",
+      "size": "5m. (H) X 20m. (W) Back Lit ( 2 faces )",
+      "type": "Mirror"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations9.png",
+      "location": "New Cairo Mehwar Gamal Abdel Naser Arbella plaza",
+      "size": "6m. (H) X 3m. (W) Back Lit / 33 Unit - 66 faces Sequence",
+      "type": "T.Pole"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations10.png",
+      "location": "New Cairo M-Naguib ( River woke )",
+      "size": "8m. (H) x 24m. (W) Back Lit ( 2 faces )",
+      "type": "Uni-Pole"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations11.png",
+      "location": "New Cairo Golden Square, 90th South",
+      "size": "8m. (H) X 16m. (W) Back Lit /  1  face",   
+      "type": "Uni-Pole"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations12.png",
+      "location": "Ring Road Katameya Tawkilat Skoda – To Maadi",
+      "size": "8m. (H) x 24m. (W) Back Lit /( 8 faces )",
+      "type": "Uni-Pole Curve 2 Gate"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations13.png",
+      "location": "Ring Road (90st. Entrance) Setup ",
+      "size": "8m. (H) x 24m. (W) Back Lit / ( 2 faces )",
+      "type": "Mirror + Uni-Pole"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations14.png",
+      "location": "Suez Road City Center Almaza Al Thawra Road , To Heliopolis",
+      "size": "8m. (H) x 24m. (W) Back Lit / ( 4 faces )  ",
+      "type": "2 Uni-Pole Curve"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations15.png",
+      "location": "Suez Road ,To Ring Road ",
+      "size": "8m. (H) x 24m. (W) Back Lit / ( 2 faces )",
+      "type": "Uni-Pole Curve"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations16.png",
+      "location": "Nasr City Makram Ebaid to City stars Mall ",
+      "size": "5 m ( H ) x 40 m ( W )  ( 2 Faces )",
+      "type": "Mirror"
+    }
+    ,
+    {
+      "photo": "/staticLocations/Locations17.png",
+      "location": "Nasr City Abas El Alkad To Rab3a Nozha",
+      "size": "5 m ( H ) x 32 m ( W ) ( 2 Faces )",
+      "type": "Mirror"
+    }
+  ]
