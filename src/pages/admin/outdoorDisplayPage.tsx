@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import "../../styles/OutdoorDisplayPage.css";
 import { supabase } from "../../services/supabaseClient";
-
-
+import { FaImage, FaDesktop } from "react-icons/fa";
 
 interface OutdoorLocation {
   id: number;
   img_url: string;
   location: string;
   size: string;
-  type: string;
-  outdoor_slug: string;
+  outdoor_slug: 'static' | 'screen';
+  type : string;
   img_order: number;
 }
+
+type TabType = 'static' | 'screen';
 
 const OutdoorDisplayPage = () => {
   const [locations, setLocations] = useState<OutdoorLocation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<TabType>('static');
 
   useEffect(() => {
     fetchLocations();
@@ -40,46 +41,71 @@ const OutdoorDisplayPage = () => {
     }
   };
 
+  const filteredLocations = locations.filter(loc => loc.outdoor_slug === activeTab);
+
   if (loading) {
     return <div className="loading-container">Loading locations...</div>;
-  }
-
-  if (locations.length === 0) {
-    return <div className="no-locations">No locations available</div>;
   }
 
   return (
     <div className="display-container">
       <h1 className="page-title">Outdoor Locations</h1>
       
-      <div className="locations-grid">
-        {locations.map((location) => (
-          <div key={location.id} className="location-card">
-            {location.img_url ? (
-              <img
-                src={location.img_url}
-                alt={location.location}
-                className="location-image"
-              />
-            ) : (
-              <div className="image-placeholder">No Image Available</div>
-            )}
-            
-            <div className="location-details">
-              <h2 className="location-name">{location.location}</h2>
-              <div className="location-meta">
-                <span className="location-type">
-                  Type: {location.outdoor_slug}
-                </span>
-                <span className="location-size">Size: {location.size}</span>
-                <span className="location-category">
-                  Category: {location.type}
-                </span>
-              </div>
-              <div className="order-badge">Order: #{location.img_order}</div>
-            </div>
+      {/* Tab Navigation */}
+      <div className="tab-navigation">
+        <button
+          className={`tab-btn ${activeTab === 'static' ? 'active' : ''}`}
+          onClick={() => setActiveTab('static')}
+        >
+          <FaImage className="tab-icon" />
+          Static Locations ({locations.filter(l => l.outdoor_slug === 'static').length})
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'screen' ? 'active' : ''}`}
+          onClick={() => setActiveTab('screen')}
+        >
+          <FaDesktop className="tab-icon" />
+          Screen Locations ({locations.filter(l => l.outdoor_slug === 'screen').length})
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      <div className="tab-content">
+        {filteredLocations.length === 0 ? (
+          <div className="no-locations">
+            No {activeTab} locations available
           </div>
-        ))}
+        ) : (
+          <div className="locations-grid">
+            {filteredLocations.map((location) => (
+              <div key={location.id} className="location-card">
+                {location.img_url ? (
+                  <img
+                    src={location.img_url}
+                    alt={location.location}
+                    className="location-image"
+                  />
+                ) : (
+                  <div className="image-placeholder">No Image Available</div>
+                )}
+                
+                <div className="location-details">
+                  <h2 className="location-name">{location.location}</h2>
+                  <div className="location-meta">
+                    <span className="location-type">
+                      Type: {location.type}
+                    </span>
+                    <span className="location-size">Size: {location.size}</span>
+                    <span className="location-category">
+                      Category: {location.outdoor_slug}
+                    </span>
+                  </div>
+                  <div className="order-badge">Order: #{location.img_order}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

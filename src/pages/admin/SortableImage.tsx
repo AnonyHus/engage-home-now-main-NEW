@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import Swal from "sweetalert2";
-import { FaArrowUp, FaArrowDown, FaSave } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown, FaSave, FaImage, FaDesktop } from "react-icons/fa";
 import "../../styles/orderManagement.css";
 import { supabase } from "../../services/supabaseClient";
 
@@ -9,14 +8,16 @@ interface OutdoorLocation {
   id: number;
   img_url: string;
   location: string;
-  outdoor_slug: string;
+  outdoor_slug: 'static' | 'screen'; 
   img_order: number;
 }
+type TabType = 'static' | 'screen';
 
 const OutdoorOrderManagement = () => {
   const [locations, setLocations] = useState<OutdoorLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabType>('static');
 
   useEffect(() => {
     fetchLocations();
@@ -39,10 +40,13 @@ const OutdoorOrderManagement = () => {
     }
   };
 
+  const filteredLocations = locations.filter(loc => loc.outdoor_slug === activeTab);
+
   const moveItem = async (index: number, direction: "up" | "down") => {
+    const currentTypeLocations = filteredLocations;
     if (
       (direction === "up" && index === 0) ||
-      (direction === "down" && index === locations.length - 1)
+      (direction === "down" && index === currentTypeLocations.length - 1)
     ) {
       return;
     }
@@ -50,23 +54,24 @@ const OutdoorOrderManagement = () => {
     setSaving(true);
     
     try {
-      const newLocations = [...locations];
+      // const newLocations = [...locations];
       const targetIndex = direction === "up" ? index - 1 : index + 1;
       
       // Get the current items
-      const currentItem = newLocations[index];
-      const targetItem = newLocations[targetIndex];
+      const currentItem = currentTypeLocations[index];
+      const targetItem = currentTypeLocations[targetIndex];
       
       // Swap the img_order values
       const tempOrder = currentItem.img_order;
       currentItem.img_order = targetItem.img_order;
       targetItem.img_order = tempOrder;
       
-      // Swap positions in array
-      [newLocations[index], newLocations[targetIndex]] = [
-        newLocations[targetIndex],
-        newLocations[index],
-      ];
+        // Update the main locations array
+        const newLocations = locations.map(loc => {
+          if (loc.id === currentItem.id) return currentItem;
+          if (loc.id === targetItem.id) return targetItem;
+          return loc;
+        });
 
       // Update state immediately for UI feedback
       setLocations(newLocations);
@@ -92,7 +97,8 @@ const OutdoorOrderManagement = () => {
       }
 
       // Optionally show success message for individual moves
-      // Swal.fire("Success!", "Order updated successfully!", "success");
+       Swal.fire("Success!", "Order updated successfully!", "success");
+       
 
     } catch (error) {
       console.error("Error updating order:", error);
@@ -108,7 +114,8 @@ const OutdoorOrderManagement = () => {
   const saveAllOrder = async () => {
     setSaving(true);
     try {
-      const updates = locations.map((loc, index) =>
+      const currentTypeLocations = filteredLocations;
+      const updates = currentTypeLocations.map((loc, index) =>
         supabase
           .from("outdoor_locations")
           .update({ img_order: index + 1 })
@@ -123,8 +130,8 @@ const OutdoorOrderManagement = () => {
         throw new Error("Some updates failed");
       }
 
-      Swal.fire("Success!", "Order saved successfully!", "success");
-      await fetchLocations();
+      Swal.fire("Success!", `${activeTab} order saved successfully!`, "success");
+       await fetchLocations();
 
     } catch (error) {
       console.error("Error saving order:", error);
@@ -146,19 +153,45 @@ const OutdoorOrderManagement = () => {
     <div className="order-management-container">
       <div className="header-section">
         <h1>Manage Outdoor Locations Order</h1>
+
+        {/* Tab Navigation */}
+        <div className="tab-navigation">
+            <button
+            className={`tab-btn ${activeTab === 'static' ? 'active' : ''}`}
+            onClick={() => setActiveTab('static')}
+            disabled={saving}
+          >
+            <FaImage className="tab-icon" />
+            Static Locations ({locations.filter(l => l.outdoor_slug === 'static').length})
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'screen' ? 'active' : ''}`}
+            onClick={() => setActiveTab('screen')}
+            disabled={saving}
+          >
+            <FaDesktop className="tab-icon" />
+            Screen Locations ({locations.filter(l => l.outdoor_slug === 'screen').length})
+          </button>
+        </div>
+
         <button
           className="save-order-btn"
           onClick={saveAllOrder}
-          disabled={saving}
+          disabled={saving || filteredLocations.length === 0}
         >
           <FaSave className="icon" />
-          {saving ? "Saving..." : "Save All Order"}
+          {saving ? "Saving..." : `Save ${activeTab} Order`}
         </button>
       </div>
-
+      <div className="tab-content">
+        {filteredLocations.length === 0 ? (
+          <div className="no-locations">
+            No {activeTab} locations found
+          </div>
+        ) : (
       <div className="locations-grid">
-        {locations.map((location, index) => (
-          <div key={location.id} className="location-card">
+        {filteredLocations.map((location, index) => (
+          <div key={location.id} className="location-card" style={{ order: location.img_order }}>
             <div className="image-container">
               {location.img_url ? (
                 <img
@@ -189,7 +222,7 @@ const OutdoorOrderManagement = () => {
               </button>
               <button
                 onClick={() => moveItem(index, "down")}
-                disabled={index === locations.length - 1 || saving}
+                disabled={index === filteredLocations.length - 1 || saving}
                 className="move-btn"
               >
                 <FaArrowDown />
@@ -198,7 +231,10 @@ const OutdoorOrderManagement = () => {
           </div>
         ))}
       </div>
+        )}
     </div>
+    </div>
+
   );
 };
 
