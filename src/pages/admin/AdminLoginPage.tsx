@@ -12,34 +12,37 @@ const AdminLoginPage: React.FC = () => {
   const login = async () => {
     setLoading(true);
     setError("");
+  
     try {
-        const res = await fetch("https://localhost:7129/auth/userlogin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem("token", data.token);
+      // Static credentials
+      const validUsername = "admin";
+      const validPassword = "123456"; // <-- your static password
+  
+      if (username === validUsername && password === validPassword) {
+        // Simulate a token
+        const fakeToken = "fake-jwt-token-123";
+        localStorage.setItem("token", fakeToken);
         nav("/admin/upload");
       } else {
         setError("Invalid username or password.");
       }
     } catch (e) {
-      setError("Network error. Please try again.");
+      setError("Unexpected error.");
     } finally {
       setLoading(false);
     }
   };
-
+  
   return (
+    
+
     <div style={{ maxWidth: 320, margin: "40px auto", padding: 24, border: "1px solid #eee", borderRadius: 8 }}>
       <h2 style={{ textAlign: "center", marginBottom: 24 }}>Admin Login</h2>
       <div style={{ marginBottom: 12 }}>
+       
         <label>
           Username
-          <input
+          <input 
             value={username}
             onChange={e => setUsername(e.target.value)}
             placeholder="Admin"

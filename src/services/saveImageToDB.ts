@@ -7,7 +7,8 @@ const saveImageToDB = async (imageUrl, serviceid,title) => {
     .insert([{ image_url: imageUrl, title: title,service_id: serviceid }]);
 
     if (error) {
-      console.error("Insert error:", error);
+      
+      console.error("Insert error:",  error.message, error.details);
       return { success: false, error };
     }
     

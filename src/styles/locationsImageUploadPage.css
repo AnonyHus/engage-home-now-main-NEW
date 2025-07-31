@@ -1,0 +1,40 @@
+.upload-container {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.modern-input,
+.modern-select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+}
+
+.upload-label {
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.upload-btn {
+  background-color: #c30010;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.preview-card {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.preview-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}

@@ -23,6 +23,10 @@ const OurLocations = lazy(() => import("./pages/OurLocations"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ImageUploadPage = lazy(() => import("./pages/admin/ImageUploadPage"));
 const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
+const OutdoorImageUploadPage = lazy(() => import("./pages/admin/OutdoorImageUploadPage"));
+const OutdoorDisplayPage = lazy(() => import("./pages/admin/outdoorDisplayPage"));
+const OutdoorOrderPage = lazy(() => import("./pages/admin/SortableImage"));
+
 
 
 const queryClient = new QueryClient();
@@ -61,6 +65,11 @@ const App = () => (
 
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/upload" element={<RequireAuth><ImageUploadPage /></RequireAuth> }/>
+              <Route path="/admin/OutdoorImageUploadPage" element={<OutdoorImageUploadPage/>} />
+              <Route path="/admin/OutdoorOrderManagement" element={<OutdoorOrderPage/>} />
+              <Route path="/admin/outdoorDisplay" element={<OutdoorDisplayPage/>} />
+
+
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

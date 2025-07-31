@@ -104,7 +104,7 @@ const OutdoorAdvertising = () => {
               onClick={() => scrollToSection('static-section')}
             >
               <CardContent className="p-0">
-                <div className="aspect-[3/2] relative overflow-hidden group rounded-3xl">
+                <div className=" relative overflow-hidden group rounded-3xl">
                   {/* Gradient Background */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#ce414d] via-[#E50012] to-[#fbb034] transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 rounded-3xl"></div>
                   {/* SVG Pattern Overlay */}
@@ -134,11 +134,11 @@ const OutdoorAdvertising = () => {
             </Card>
             {/* second Square - Screens */}
             <Card 
-              className="aspect-[3/2] group cursor-pointer overflow-hidden bg-white transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#C30010]/20"
+              className="group cursor-pointer overflow-hidden bg-white transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#C30010]/20"
               onClick={() => scrollToSection('screens-section')}
             >
               <CardContent className="p-0">
-                <div className="aspect-[3/2] relative overflow-hidden group rounded-3xl">
+                <div className=" relative overflow-hidden group rounded-3xl">
                   {/* Gradient Background */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#C30010] via-[#D40011] to-[#ffb347] transition-all duration-500 group-hover:scale-105 group-hover:rotate-1 rounded-3xl"></div>
                   {/* SVG Pattern Overlay */}

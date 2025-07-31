@@ -29,7 +29,7 @@ export const getServiceById = async (slug: string ) => {
   try {
     const { data, error } = await supabase
       .from("services")
-      .select(`
+      .select(` 
         id,
         name,
         slug,

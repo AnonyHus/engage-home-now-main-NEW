@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import saveImageToDB from "../../services/saveImageToDB";
 import { fetchServices } from "../../services/fetchServices";
 import Swal from "sweetalert2";
-import "./ImageUploadPage.css"; // (create for custom styles)
+import "../../styles/ImageUploadPage.css"; // (create for custom styles)
 
 const ImageUploadPage = () => {
   const [services, setServices] = useState([]);

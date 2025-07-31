@@ -7,6 +7,7 @@ import webDevLocations from "../../data/Static-locations.json";
 import { useEffect, useState } from "react";
 import { getServiceById } from "../../services/fetchServices";
 import { useParams } from "react-router-dom";
+import fetchImagesByService from "../../services/fetchImagesByService";
 
 
 const ServiceDetail  = () => {
@@ -14,31 +15,44 @@ const ServiceDetail  = () => {
   const [serviceData, setServiceData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
+  const [Images, setImages] = useState([]);
+
+  
 
   useEffect(() => {
     setLocations(webDevLocations);
-
-    // Fetch service data by ID (you'll need to specify the correct ID for Web Development)
-    const loadServiceData = async () => {
+  
+    const loadAllData = async () => {
       try {
         setLoading(true);
-        console.log("🔍 Starting to fetch service data for slug:",{slug});
+  
         if (!slug) return;
+    
+        // 1. Get service data (including id)
+        const serviceData = await getServiceById(slug);
+        setServiceData(serviceData);
+  
+        console.error("❌ id: ", serviceData.id);
 
-        const data = await getServiceById(slug);
-        console.log("📦 Received service data:", data);
-        setServiceData(data);
+        // 2. Then fetch images using service ID
+        if (serviceData?.id) {
+          const Images = await fetchImagesByService(serviceData.id);
+        console.error("❌ images: ", Images);
+
+          setImages(Images);
+        }
+  
       } catch (error) {
-        console.error("❌ Error loading service data:", error);
+        console.error("❌ Error loading data:", error);
       } finally {
         setLoading(false);
         console.log("✅ Loading finished");
       }
     };
-
-    loadServiceData();
+  
+    loadAllData();
   }, [slug]);
-
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -129,8 +143,14 @@ const ServiceDetail  = () => {
 
 
       {/* 10 Pictures Section */}
-      <section className="py-20 bg-white">
-     <h1 className="text-lg font-extrabold-bold text-center">Service Images</h1>
+      <section className="py-20 items-center justify-center">
+        <div className="space-y-8 px-4">
+      {Images.map((img, index) => (
+        <img className="w-full max-w-full mx-auto rounded shadow-md" key={index} 
+        src={img.image_url} 
+        alt={`Service Image ${index + 1}`} />
+      ))}
+      </div>
       </section>
 
     
