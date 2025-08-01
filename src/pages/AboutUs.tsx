@@ -9,7 +9,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header with Icon */}
-      <section className="relative py-10 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
+      <section className="relative py-10 mt-20 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
         {/* Abstract SVG or Gradient Background */}
         <div className="absolute inset-0 pointer-events-none">
           <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 w-full h-full opacity-30">
@@ -19,7 +19,7 @@ const AboutUs = () => {
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="text-center mb-14">
            
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 border border-[#C30010]/10 rounded-full px-5 py-2 mb-7 shadow-md animate-pulse">
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 border border-[#C30010]/10 rounded-full px-5 py-2 mb-7 shadow-md animate-fade-in">
               <Sparkles className="h-5 w-5 text-[#C30010] drop-shadow" />
               <span className="text-base font-semibold text-[#C30010] tracking-wide">About Us</span>
             </div>

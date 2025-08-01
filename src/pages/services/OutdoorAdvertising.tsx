@@ -62,7 +62,7 @@ const OutdoorAdvertising = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="py-10 bg-gradient-to-br from-white via-[#FFF5F5] to-[#e3b7b7]">
+      <section className="py-10 mt-16 bg-gradient-to-br from-white via-[#FFF5F5] to-[#e3b7b7]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <Link to="/services">

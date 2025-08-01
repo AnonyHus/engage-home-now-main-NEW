@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { fetchServices } from "../services/fetchServices";
+import LoadingComp from "../components/Loading"
 
 const Services = () => {
   const [allServices, setServices] = useState([]);
@@ -44,7 +45,7 @@ const Services = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header with Icon */}
-      <section className="relative py-10 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
+      <section className="relative py-10 mt-20 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
         {/* Abstract SVG or Gradient Background */}
         <div className="absolute inset-0 pointer-events-none">
           <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 w-full h-full opacity-30">
@@ -81,7 +82,7 @@ const Services = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {loading ? (
               <div className="col-span-full text-center py-10">
-                <p className="text-gray-500">Loading services...</p>
+                 <LoadingComp/>
               </div>
             ) : error ? (
               <div className="col-span-full text-center py-10">

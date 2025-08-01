@@ -41,7 +41,8 @@ export const getServiceById = async (slug: string ) => {
         headline1,
         headline1_desc,
         headline2,
-        headline2_desc
+        headline2_desc,
+        video_url
       `)
       .eq("slug", slug)
       .single();

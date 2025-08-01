@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Play, Globe, Code, Smartphone, Database, Shield, Zap, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
@@ -8,7 +7,7 @@ import { useEffect, useState } from "react";
 import { getServiceById } from "../../services/fetchServices";
 import { useParams } from "react-router-dom";
 import fetchImagesByService from "../../services/fetchImagesByService";
-
+import LoadingComp from "../../components/Loading"
 
 const ServiceDetail  = () => {
   const [locations, setLocations] = useState([]);
@@ -58,7 +57,7 @@ const ServiceDetail  = () => {
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C30010] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading service information...</p>
+         <LoadingComp/>
         </div>
       </div>
     );
@@ -72,7 +71,7 @@ const ServiceDetail  = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="py-20 bg-white">
+      <section className="py-20 mt-10 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="mb-8">
             <Link to="/services">
@@ -102,13 +101,18 @@ const ServiceDetail  = () => {
         <div className="max-w-full mx-auto px-4">
           <div className="bg-white/50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
             <div className="aspect-video bg-gradient-to-br from-[#d35c66] to-[#a5646a] relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center text-white">
-                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <Play className="h-8 w-8 ml-1" />
-                  </div>
-                </div>
-              </div>
+              <video   
+                  autoPlay
+                  muted
+                  loop
+                  playsInline 
+                  
+                  >
+                    <source src={serviceData.video_url}  type="video/mp4" /> 
+                    <source src="/path/to/video.webm" type="video/webm" />
+                    <source src="/videos/Home-Page-opzoptimize-agency.mov" type="video/quicktime" />
+                    Your browser does not support the video tag.
+                    </video> 
             </div>
           </div>
         </div>

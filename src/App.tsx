@@ -42,16 +42,21 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App = () => (
+const App = () => {
+  const isAdminPage = location.pathname.startsWith("/admin");
+return  (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <Navigation />
-        <div className="pt-16">
-          <Suspense fallback={<div className="w-full flex justify-center items-center py-20 text-xl text-gray-600">Loading...</div>}>
+
+        {!isAdminPage && <Navigation />} {/* 🔥 Hide navbar on admin pages */}
+
+        
+        <div className="pt-0">
+          <Suspense fallback={<div className="w-full flex justify-center items-center py-5 text-xl text-gray-600">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />
@@ -82,5 +87,6 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
+};
 
 export default App;

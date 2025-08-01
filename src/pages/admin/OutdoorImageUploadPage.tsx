@@ -134,6 +134,7 @@ const OutdoorImageUploadPage = () => {
             type="number"
             placeholder="Image Order"
             value={imgOrder}
+            readOnly
             onChange={(e) => setImgOrder(Number(e.target.value))}
             className="w-full p-3 border border-gray-300 rounded-lg"
           />

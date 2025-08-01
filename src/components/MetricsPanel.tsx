@@ -80,33 +80,34 @@ const MetricsPanel = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-r from-[#ffb88e] to-[#ea5753] bg-opacity-50 py-20 ">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {metrics.map((metric, index) => (
-            <div 
-              key={index} 
-              className="text-center text-white transform hover:scale-105 transition-transform duration-300"
-            >
-              <div className="mb-4">
-                <span className="text-5xl md:text-6xl font-bold">
-                  {metric.number.toLocaleString()}
-                </span>
-                <span className="text-3xl font-bold">
-                  {metric.suffix}
-                </span>
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                {metric.label}
-              </h3>
-              <p className="text-blue-100 opacity-90">
-                {metric.description}
-              </p>
-            </div>
-          ))}
+    <section ref={sectionRef} className="bg-gradient-to-r from-[#ffb88e] to-[#ea5753] bg-opacity-50 py-12">
+  <div className="max-w-7xl mx-auto px-2">
+    <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+      {metrics.map((metric, index) => (
+        <div 
+          key={index}
+          className="text-center text-white transform hover:scale-105 transition-transform duration-300 px-1"
+        >
+          <div className="mb-2 sm:mb-3">
+            <span className="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-bold ">
+              {metric.number.toLocaleString()}
+            </span>
+            <span className="text-xl sm:text-2xl md:text-3xl font-bold">
+              {metric.suffix}
+            </span>
+          </div>
+          <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">
+            {metric.label}
+          </h3>
+          <p className="text-xs sm:text-sm md:text-base text-blue-100 opacity-90 leading-tight">
+            {metric.description}
+          </p>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
+  </div>
+</section>
+
   );
 };
 
