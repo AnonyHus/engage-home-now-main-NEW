@@ -8,6 +8,7 @@ import { getServiceById } from "../../services/fetchServices";
 import { useParams } from "react-router-dom";
 import fetchImagesByService from "../../services/fetchImagesByService";
 import LoadingComp from "../../components/Loading"
+import Breadcrumb from "../../components/Breadcrumb";
 
 const ServiceDetail  = () => {
   const [locations, setLocations] = useState([]);
@@ -71,50 +72,38 @@ const ServiceDetail  = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="py-20 mt-10 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-8">
-            <Link to="/services">
-              <Button variant="ghost" className="mb-6 text-gray-700 hover:text-[#C30010]">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Services
-              </Button>
-            </Link>
-          </div>
+      <section className="py-0 mt-0 bg-white">        <Breadcrumb 
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Services", to:"/services" }, 
+          { label: serviceData?.name  }, 
+        ]}
+      />
           
-          <div className="text-center mb-6">
-          <div className="inline-block bg-[#C30010] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
+          <div className="text-center mb-2">
+          <div className="inline-block bg-[#C30010] text-white px-4 py-2 rounded-full text-sm font-medium ">
              {serviceData?.name || "  "}
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className=" text-5xl md:text-6xl sm:text-md font-bold text-gray-900 mb-2">
                {serviceData?.headline || ""}
             </h1>
-            <p className="text-xl text-gray-700 max-w-6xl mx-auto">
-              {serviceData?.headline_desc ||"" }
-            </p>
           </div>
-        </div>
       </section>
 
       {/* Video Section */}
       <section className="py-1">
         <div className="max-w-full mx-auto px-4">
           <div className="bg-white/50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-            <div className="aspect-video bg-gradient-to-br from-[#d35c66] to-[#a5646a] relative">
-              <video   
+              <video   className="w-full"
                   autoPlay
                   muted
                   loop
                   playsInline 
-                  
                   >
                     <source src={serviceData.video_url}  type="video/mp4" /> 
-                    <source src="/path/to/video.webm" type="video/webm" />
-                    <source src="/videos/Home-Page-opzoptimize-agency.mov" type="video/quicktime" />
                     Your browser does not support the video tag.
                     </video> 
             </div>
-          </div>
         </div>
       </section>
 
@@ -122,9 +111,9 @@ const ServiceDetail  = () => {
       <section className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">{serviceData?.headline1 || "Why Choose Our Web Development?"}</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Service Descreption</h2>
             <p className="text-xl text-gray-700 leading-relaxed">
-              {serviceData?.headline1_desc || "Our web development services combine cutting-edge technology with proven methodologies to deliver websites and web applications that not only look stunning but also perform exceptionally well. We focus on creating user-centered experiences that drive engagement and achieve your business goals."}
+              {serviceData?.headline_desc || "Our web development services combine cutting-edge technology with proven methodologies to deliver websites and web applications that not only look stunning but also perform exceptionally well. We focus on creating user-centered experiences that drive engagement and achieve your business goals."}
             </p>
           </div>
 

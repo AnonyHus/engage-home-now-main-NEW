@@ -6,7 +6,7 @@ export const fetchServices = async () => {
   try {
     const { data, error } = await supabase
       .from("services")
-      .select("id,name,slug,Home_Desc,path,features");
+      .select("id,name,slug,Home_Desc,Services_page_desc,features");
 
     console.log("Supabase response:", { data, error }); // Debug log
 
@@ -34,7 +34,7 @@ export const getServiceById = async (slug: string ) => {
         name,
         slug,
         Home_Desc,
-        path,
+        Services_page_desc,
         features,
         headline,
         headline_desc,

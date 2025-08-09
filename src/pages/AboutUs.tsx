@@ -4,12 +4,21 @@ import { ArrowLeft, Users, Target, Award, Heart, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
+import Breadcrumb from "../components/Breadcrumb";
 
 const AboutUs = () => {
+
+  
   return (
     <div className="min-h-screen bg-white">
+        <Breadcrumb 
+        items={[
+          { label: "Home", to: "/" },
+          { label: "About Us" }, // no "to" means it's the current page
+        ]}
+      />
       {/* Header with Icon */}
-      <section className="relative py-10 mt-20 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
+      <section className="relative py-0 mt-0 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
         {/* Abstract SVG or Gradient Background */}
         <div className="absolute inset-0 pointer-events-none">
           <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 w-full h-full opacity-30">
@@ -71,24 +80,40 @@ const AboutUs = () => {
       </section>
       {/* Mission & Vision */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0 }}>
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
-              <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-              Our mission is to based on garnering the most credibility and value of any marketing agency by 2024. We aim to establish valuable long-lasting relationships  within the market so as to be able to create inspired content and  hand  client’s work in a way that best suits their needs
-              </p>
-         
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.1 }} className="bg-gradient-to-br from-[#C30010] to-[#D40011] rounded-2xl p-8 text-white shadow-lg">
-              <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
-              <p className="text-lg opacity-90 leading-relaxed">
-              Our vision is to incorporate well-established ideas with the products/services of our clientele and take them to the cybertronic for  marketing world.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+  <div className="max-w-7xl mx-auto px-4">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      {/* Our Mission Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.5, delay: 0 }} 
+        className="bg-white backdrop-filter backdrop-blur-lg rounded-2xl p-8 shadow-lg"
+      >
+        <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
+        <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+          Our mission is to garner the most credibility and value of any marketing agency by 2024. We aim to establish valuable long-lasting relationships within the market to create inspired content and hand client’s work in a way that best suits their needs.
+        </p>
+      </motion.div>
+
+      {/* Our Vision Section */}
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }} 
+        whileInView={{ opacity: 1, y: 0 }} 
+        viewport={{ once: true, amount: 0.2 }} 
+        transition={{ duration: 0.5, delay: 0.1 }} 
+        className="bg-gradient-to-br from-[#C30010] to-[#D40011] rounded-2xl p-8 text-white shadow-lg"
+      >
+        <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+        <p className="text-lg opacity-90 leading-relaxed">
+          Our vision is to incorporate well-established ideas with the products/services of our clientele and take them to the cybertronic marketing world.
+        </p>
+      </motion.div>
+    </div>
+  </div>
+</section>
+
       {/* Values */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">

@@ -8,14 +8,21 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import ContactSection from "../components/ContactSection";
 import '../styles/globals.css';
+import Breadcrumb from "../components/Breadcrumb";
 
 const Clients = () => {
   const [showContact, setShowContact] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
+      <Breadcrumb 
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Clients" }, // no "to" means it's the current page
+        ]}
+      />
       {/* Header with Icon */}
-      <section className="relative pt-10 mt-20 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
+      <section className="relative pt-10 mt-10 overflow-hidden bg-gradient-to-br from-white via-[#FFF5F5] to-[#FDF6F6]">
         {/* Abstract SVG or Gradient Background */}
         <div className="absolute inset-0 pointer-events-none">
           <svg width="100%" height="100%" viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-0 left-0 w-full h-full opacity-30">
@@ -72,7 +79,7 @@ const Clients = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-5xl mx-auto"
+            className="text-center max-w-full mx-auto"
           >
             <div className="bg-gradient-to-r from-[#C30010]/5 to-[#D40011]/5 border border-[#C30010]/10 rounded-3xl p-8 md:p-12">
               <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">

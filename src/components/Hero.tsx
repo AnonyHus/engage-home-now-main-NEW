@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-white">
       {/* Animated background elements */}
           <video
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -12,20 +12,12 @@ const Hero = () => {
           loop
           playsInline
         >
-          <source src="/videos/Home-Page-opzoptimize-agency.mp4" type="video/mp4" />
-          <source src="/path/to/video.webm" type="video/webm" />
-          <source src="/videos/Home-Page-opzoptimize-agency.mov" type="video/quicktime" />
+          <source src="/videos/HOME-PAGE-FINAL.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
-        <div className="relative z-10 flex flex-col justify-center items-center h-full text-[#C30010] px-4 text-center">
-    <h1 className="text-3xl sm:text-5xl font-bold">Transform Your
-          <br />
-          Digital Future
-          </h1>
-    <p className="text-base text-white sm:text-xl my-4  animate-fade-in ">  We create exceptional digital experiences that drive growth and engage your audience with cutting-edge solutions.
-    </p>
-    <Button 
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+            <Button 
           size="lg" 
           className="bg-gradient-to-r from-[#C30010] to-[#D40011] hover:from-[#D40011] hover:to-[#E50012] text-white px-8 py-6 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 animate-fade-in delay-400"
         >

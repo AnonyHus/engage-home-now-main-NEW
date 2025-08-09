@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import { useState } from "react";
 import ContactSection from "../../components/ContactSection";
 import '../../styles/globals.css';
+import Breadcrumb from "../../components/Breadcrumb";
+
 
 
 const OutdoorAdvertising = () => {
@@ -62,16 +64,14 @@ const OutdoorAdvertising = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="py-10 mt-16 bg-gradient-to-br from-white via-[#FFF5F5] to-[#e3b7b7]">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="mb-8">
-            <Link to="/services">
-            <Button variant="ghost" className="mb-6 text-gray-700 hover:text-[#C30010]">
-                              <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Services
-              </Button>
-            </Link>
-          </div>
+      <section className="py-10 mt-0 bg-gradient-to-br from-white via-[#FFF5F5] to-[#e3b7b7]">
+        <Breadcrumb 
+        items={[
+          { label: "Home", to: "/" },
+          { label: "Services", to:"/services" }, 
+          { label: "Outdoor Advertising" }, 
+        ]}
+      />
           
           <div className="text-center mb-8">
             <div className="inline-block bg-[#C30010] text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
@@ -84,7 +84,6 @@ const OutdoorAdvertising = () => {
             We create impactful outdoor campaigns with strategic placement and creative visuals to ensure your brand stands out. 
             </p>
           </div>
-        </div>
       </section>
 
       {/* Two Clickable Squares Section */}
@@ -189,15 +188,17 @@ const OutdoorAdvertising = () => {
               {/* Video Section */}
               <div className="mb-10">
                 <div className="bg-gray-50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-                  <div className="aspect-video bg-gradient-to-br from-[#D40011] to-[#E50012] relative">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center text-white">
-                        <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
-                          <Play className="h-8 w-8 ml-1" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    {/* Video Section */}
+                      <video
+                      className=""
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    >
+                      <source src="/videos/outdoor-static-opzoptimize.mp4" type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                 </div>
               </div>
 
@@ -269,7 +270,7 @@ const OutdoorAdvertising = () => {
                 </Link>
               </div>
             </div>
-          </section>
+    </section>
 
 
 
@@ -289,19 +290,21 @@ const OutdoorAdvertising = () => {
           </div>
 
           {/* Video Section */}
-          <div className="mb-16">
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
-              <div className="aspect-video bg-gradient-to-br from-[#C30010] to-[#D40011] relative">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-4 mx-auto">
-                      <Play className="h-8 w-8 ml-1" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div className="mb-10">
+                <div className="bg-gray-50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+
+          <video
+          className=""
+          autoPlay
+          muted
+          loop
+          playsInline
+        >
+          <source src="/videos/outdoor-screen-opzoptimize.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        </div>
+        </div>
 
           {/* Description */}
           <div className="text-center mb-10">
@@ -383,32 +386,41 @@ const OutdoorAdvertising = () => {
             Let's discuss your marketing goals and create a strategy that drives real results for your business.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            
-              <Button 
-               onClick={() => setShowContact(true)}
-                size="lg" 
-                className="bg-white text-[#C30010] hover:bg-gray-100 px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold"
-              >
-                Start Your Campaign
-              </Button>
-              {showContact && (
-            <div className="modal-backdrop">
-              <div className="modal-content">
-                <button className="modal-close" onClick={() => setShowContact(false)}>×</button>
-                <ContactSection hideVisitCard onSuccess={() => setShowContact(false)} />
-              </div>
-            </div>      )}
-            <Link to="/services">
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="bg-white text-[#C30010] hover:bg-[#C30010] hover:text-white px-8 py-4 text-lg rounded-full transition-all duration-300 font-semibold"
-              >
-                View All Services
-                <ArrowRight></ArrowRight>
-              </Button>
-            </Link>
-          </div>
+  <Button 
+    onClick={() => setShowContact(true)}
+    size="lg" 
+    className="bg-white text-[#C30010] hover:bg-gray-100 px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold"
+  >
+    Start Your Campaign
+  </Button>
+  
+  {showContact && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-0 sm:p-4">
+      <div className="w-full h-full sm:w-auto sm:h-auto sm:max-w-3xl sm:max-h-[90vh] bg-white sm:rounded-xl overflow-auto relative">
+        <button 
+          className="sticky top-4 right-4 ml-auto text-3xl text-gray-600 hover:text-gray-900 z-10 bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-md"
+          onClick={() => setShowContact(false)}
+        >
+          ×
+        </button>
+        <div className="p-4 sm:p-6">
+          <ContactSection hideVisitCard onSuccess={() => setShowContact(false)} />
+        </div>
+      </div>
+    </div>
+  )}
+  
+  <Link to="/services">
+    <Button 
+      size="lg" 
+      variant="outline"
+      className="bg-white text-[#C30010] hover:bg-[#C30010] hover:text-white px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 font-semibold"
+    >
+      View All Services
+      <ArrowRight className="ml-2" />
+    </Button>
+  </Link>
+</div>
         </div>
       </section>
 

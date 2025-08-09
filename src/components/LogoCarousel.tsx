@@ -1,21 +1,21 @@
 const LogoCarousel = () => {
   const logos = [
-    { src: "public/homelogos/bahya.png", alt: "Bahya" },
-    { src: "public/homelogos/dice.png", alt: "Dice" },
-    { src: "public/homelogos/indrive.png", alt: "Indrive" },
-    { src: "public/homelogos/manaj.png", alt: "Manaj" },
-    { src: "public/homelogos/max.png", alt: "MAX" },
-    { src: "public/homelogos/nbe.png", alt: "NBE" },
-    { src: "public/homelogos/schwarz.png", alt: "Schwarz" },
-    { src: "public/homelogos/skoda.png", alt: "Skoda" },
-    { src: "public/homelogos/tajmisr.png", alt: "TajMisr" }
+    { src: "/Homelogos/bahya.png", alt: "Bahya" },
+    { src: "/Homelogos/dice.png", alt: "Dice" },
+    { src: "/Homelogos/indrive.png", alt: "Indrive" },
+    { src: "/Homelogos/manaj.png", alt: "Manaj" },
+    { src: "/Homelogos/max.png", alt: "MAX" },
+    { src: "/Homelogos/nbe.png", alt: "NBE" },
+    { src: "/Homelogos/schwarz.png", alt: "Schwarz" },
+    { src: "/Homelogos/skoda.png", alt: "Skoda" },
+    { src: "/Homelogos/tajmisr.png", alt: "TajMisr" }
   ];
 
   return (
     <section className="py-10 bg-white border-y border-gray-200">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-center text-gray-700 text-lg mb-12 font-medium">
-          Trusted by leading brands worldwide
+      <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4 text-center pb-10">
+                  Trusted by leading brands worldwide
         </h2>
         </div>
         
@@ -37,5 +37,6 @@ const LogoCarousel = () => {
     </section>
   );
 };
+
 
 export default LogoCarousel;

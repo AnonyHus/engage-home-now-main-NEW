@@ -99,9 +99,7 @@ const MetricsPanel = () => {
           <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-1">
             {metric.label}
           </h3>
-          <p className="text-xs sm:text-sm md:text-base text-blue-100 opacity-90 leading-tight">
-            {metric.description}
-          </p>
+
         </div>
       ))}
     </div>
