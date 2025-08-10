@@ -12,10 +12,10 @@ interface BreadcrumbProps {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
-    <div className="pt-24 bg-white dark:bg-dark">
+    <div className="pt-24 bg-transparent dark:bg-dark">
       <div className="container">
         <div className="w-full mb-8">
-          <div className="py-4 border-b border-stroke dark:border-dark-3 md:py-5">
+          <div className="py-0 border-b border-stroke dark:border-dark-3 md:py-5">
             <ul className="flex items-center">
 
               {items.map((item, index) => {

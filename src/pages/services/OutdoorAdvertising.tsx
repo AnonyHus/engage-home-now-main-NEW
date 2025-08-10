@@ -258,7 +258,7 @@ const OutdoorAdvertising = () => {
 
               {/* Navigation Button for Static Section */}
               <div className="text-center mt-12">
-              <Link to="/our-locations">
+              <Link to="/our-locations/static">
                   <Button 
                     size="lg" 
                     className="bg-[#D40011] hover:bg-[#E50012] text-white px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold group"
@@ -362,7 +362,7 @@ const OutdoorAdvertising = () => {
 
           {/* Navigation Button for Screens Section */}
           <div className="text-center mt-12">
-            <Link to="/our-locations">
+          <Link to="/our-locations/screen">
               <Button 
                 size="lg" 
                 className="bg-[#C30010] hover:bg-[#D40011] text-white px-8 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold group"

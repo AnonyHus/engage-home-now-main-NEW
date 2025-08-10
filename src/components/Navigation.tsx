@@ -28,7 +28,7 @@ const Navigation = () => {
     { name: "Services", path: "/services" },
     { name: "Clients", path: "/clients" },
     { name: "About Us", path: "/about" },
-    { name: "Blog", path: "/blog" },
+    { name: "Market News", path: "/MarketNews" },
   ];
 
   const isActive = (path: string) => {

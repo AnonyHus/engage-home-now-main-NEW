@@ -72,7 +72,8 @@ const ServiceDetail  = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <section className="py-0 mt-0 bg-white">        <Breadcrumb 
+      <section className="py-0 mt-0 bg-white">      
+        <Breadcrumb 
         items={[
           { label: "Home", to: "/" },
           { label: "Services", to:"/services" }, 

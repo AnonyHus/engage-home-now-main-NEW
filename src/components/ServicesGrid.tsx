@@ -8,7 +8,12 @@ const ServicesGrid = () => {
  
   const [services, setServices] = useState([]);
   useEffect(() => {
-    fetchServices().then((data) => setServices(Array.isArray(data) ? data : []));
+    fetchServices().then((data) => {
+      const filtered = Array.isArray(data)  
+      ? data.filter(s => s.show_home_page)
+      : [];
+      setServices(filtered);
+    });
   }, []);
 
   return (

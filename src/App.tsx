@@ -8,16 +8,19 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Navigation from "./components/Navigation";
 import { RequireAuth } from "./components/RequireAuth";
+import AdminNav from "./components/AdminNavbar";
+
 import ServiceDetail from "./pages/services/ServiceDetail";
+import CreateMarketNews from "./pages/admin/CreateMarketNews";
+import ManageMarketNews from "./pages/admin/ManageMarketNews";
 
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
 const Clients = lazy(() => import("./pages/Clients"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const WebDevelopment = lazy(() => import("./pages/services/ServiceDetail"));
+const MarketNews = lazy(() => import("./pages/MarketNews"));
+const MarketNewsPost = lazy(() => import("./pages/MarketNewsPost"));
 const OutdoorAdvertising = lazy(() => import("./pages/services/OutdoorAdvertising"));
 const OurLocations = lazy(() => import("./pages/OurLocations"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -52,7 +55,9 @@ return  (
       <BrowserRouter>
         <ScrollToTop />
 
-        {!isAdminPage && <Navigation />} {/* 🔥 Hide navbar on admin pages */}
+        {!isAdminPage ? <Navigation /> : <AdminNav />}
+
+
 
         
         <div className="pt-0">
@@ -62,17 +67,21 @@ return  (
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
               <Route path="/services/Outdoor-Advertising" element={<OutdoorAdvertising />} />
-              <Route path="/our-locations" element={<OurLocations />} />
+              <Route path="/our-locations/:type" element={<OurLocations />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/about" element={<AboutUs />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/MarketNews" element={<MarketNews />} />
+              <Route path="/MarketNews/:id" element={<MarketNewsPost />} />
 
               <Route path="/admin/login" element={<AdminLoginPage />} />
               <Route path="/admin/upload" element={<RequireAuth><ImageUploadPage /></RequireAuth> }/>
               <Route path="/admin/OutdoorImageUploadPage" element={<OutdoorImageUploadPage/>} />
               <Route path="/admin/OutdoorOrderManagement" element={<OutdoorOrderPage/>} />
               <Route path="/admin/outdoorDisplay" element={<OutdoorDisplayPage/>} />
+              <Route path="/admin/CreateMarketNews" element={<CreateMarketNews/>} />
+              <Route path="/admin/ManageMarketNews" element={<ManageMarketNews/>} />
+
+
 
 
 

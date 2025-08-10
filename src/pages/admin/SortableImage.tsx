@@ -22,7 +22,38 @@ const OutdoorOrderManagement = () => {
   useEffect(() => {
     fetchLocations();
   }, []);
-
+  
+  const deleteLocation = async (id: number) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This will permanently delete the location image.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    });
+  
+    if (!confirm.isConfirmed) return;
+  
+    try {
+      const { error } = await supabase
+        .from("outdoor_locations")
+        .delete()
+        .eq("id", id);
+  
+      if (error) throw error;
+  
+      // Remove from UI without re-fetch
+      setLocations(prev => prev.filter(loc => loc.id !== id));
+  
+      Swal.fire("Deleted!", "The location image has been removed.", "success");
+    } catch (err) {
+      console.error(err);
+      Swal.fire("Error", "Failed to delete location", "error");
+    }
+  };
+  
   const fetchLocations = async () => {
     setLoading(true);
     try {
@@ -227,6 +258,14 @@ const OutdoorOrderManagement = () => {
               >
                 <FaArrowDown />
               </button>
+              <button
+              onClick={() => deleteLocation(location.id)}
+              disabled={saving}
+              className="delete-btn"
+              style={{ background: "#dc2626", color: "#fff", padding: "6px 10px", borderRadius: "4px" }}
+              >
+              Delete
+            </button>
             </div>
           </div>
         ))}

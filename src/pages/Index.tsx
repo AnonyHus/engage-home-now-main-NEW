@@ -3,10 +3,11 @@ import LogoCarousel from "@/components/LogoCarousel";
 import ServicesGrid from "@/components/ServicesGrid";
 import Gallery from "@/components/Gallery";
 import MetricsPanel from "@/components/MetricsPanel";
-import BlogSection from "@/components/BlogSection";
+import BlogSection from "@/components/MarketNewsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import MarketNewsSection from "@/components/MarketNewsSection";
 
 const Index = () => {
   return (
@@ -24,7 +25,7 @@ const Index = () => {
         <MetricsPanel />
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.5 }}>
-        <BlogSection />
+      <MarketNewsSection />
       </motion.div>
       <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.6 }}>
       <ContactSection onSuccess={() => {}} />

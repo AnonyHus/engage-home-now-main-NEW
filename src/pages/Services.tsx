@@ -8,9 +8,11 @@ import { useEffect, useState } from "react";
 import { fetchServices } from "../services/fetchServices";
 import LoadingComp from "../components/Loading"
 import Breadcrumb from "../components/Breadcrumb";
+import ContactSection from "../components/ContactSection";
 
 
 const Services = () => {
+  const [showContact, setShowContact] = useState(false);
   const [allServices, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -274,14 +276,21 @@ const Services = () => {
             Let's discuss your project and create something extraordinary together.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/contact">
-              <Button 
+          <Button 
+              onClick={() => setShowContact(true)}
                 size="lg" 
                 className="bg-white text-[#C30010] hover:bg-gray-100 px-10 py-4 text-lg rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 font-semibold border border-[#C30010]/30"
               >
-                Get Started
+                Contact Us   
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </Link>
+              {showContact && (
+            <div className="modal-backdrop">
+              <div className="modal-content">
+                <button className="modal-close" onClick={() => setShowContact(false)}>×</button>
+                <ContactSection hideVisitCard onSuccess={() => setShowContact(false)} />
+              </div>
+            </div>      )}
             <Link to="/about">
               <Button 
                 size="lg" 

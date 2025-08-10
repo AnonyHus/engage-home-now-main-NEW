@@ -37,6 +37,7 @@ const AdminLoginPage: React.FC = () => {
     
 
     <div style={{ maxWidth: 320, margin: "40px auto", padding: 24, border: "1px solid #eee", borderRadius: 8 }}>
+      
       <h2 style={{ textAlign: "center", marginBottom: 24 }}>Admin Login</h2>
       <div style={{ marginBottom: 12 }}>
        

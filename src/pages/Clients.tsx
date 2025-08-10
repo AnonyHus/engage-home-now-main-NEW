@@ -93,7 +93,7 @@ const Clients = () => {
                 size="lg" 
                 className="bg-gradient-to-r from-[#C30010] to-[#D40011] hover:from-[#D40011] hover:to-[#E50012] text-white px-8 py-4 text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
               >
-                Contact Us   
+                Get Started   
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               {showContact && (
