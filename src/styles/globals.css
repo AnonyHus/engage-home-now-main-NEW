@@ -42,3 +42,9 @@
 .animate-scroll {
   animation: scroll 15s linear infinite;
 }
+.rounded-headline {
+  border-radius: 50px; /* Adjust as needed */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 10px 20px; /* Padding for spacing */
+}
+

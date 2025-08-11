@@ -54,14 +54,14 @@ const AboutUs = () => {
               {/* Text Side */}
               <div className="flex-1 p-8 flex flex-col justify-center bg-transparent">
                 <span className="inline-block bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 text-[#C30010] font-semibold px-4 py-2 rounded-full text-sm tracking-wider border border-[#C30010]/20 mb-4">
-                  Since 2018
+                  Since 2021
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                   Building Brands, Creating Impact
                 </h2>
                 <div className="space-y-3">
                   <p className="text-gray-700 text-base leading-relaxed">
-                    Since 2018, Opz has proven its solid position in the market, led by our CEO and Marketing Team. Hard work and proven results are what helped Opz craft its way through the advertising and marketing world, creating a loyal and steady clients' platform.
+                    Since 2021, Opz has proven its solid position in the market, led by our CEO and Marketing Team. Hard work and proven results are what helped Opz craft its way through the advertising and marketing world, creating a loyal and steady clients' platform.
                   </p>
                   <p className="text-gray-600 text-base leading-relaxed">
                     Opz specializes in outdoor advertising and activation (road shows, events and production & media buying TV Ad & Radio Ad strategic planning, Marketing strategy).
@@ -71,7 +71,7 @@ const AboutUs = () => {
                   </p>
                 </div>
                 <div className="mt-4 p-4 bg-gradient-to-r from-[#C30010]/5 to-[#D40011]/5 border-l-4 border-[#C30010] rounded-lg text-gray-700 text-sm">
-                  <strong>Founded in 2014:</strong> By a team with 20+ years of experience in the media & advertising field. Our team has a variety of media experience, and each member comes from a different background.
+                  <strong>Founded in 2021:</strong> By a team with 20+ years of experience in the media & advertising field. Our team has a variety of media experience, and each member comes from a different background.
                 </div>
               </div>
             </motion.div>
@@ -93,7 +93,7 @@ const AboutUs = () => {
       >
         <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
         <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-          Our mission is to garner the most credibility and value of any marketing agency by 2024. We aim to establish valuable long-lasting relationships within the market to create inspired content and hand client’s work in a way that best suits their needs.
+          Our mission is to garner the most credibility and value of any marketing agency. We aim to establish valuable long-lasting relationships within the market to create inspired content and hand client’s work in a way that best suits their needs.
         </p>
       </motion.div>
 

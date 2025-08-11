@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Play, Globe, Code, Smartphone, Database, Shield, Zap, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
-import webDevLocations from "../../data/Static-locations.json";
 import { useEffect, useState } from "react";
 import { getServiceById } from "../../services/fetchServices";
 import { useParams } from "react-router-dom";
@@ -11,7 +10,6 @@ import LoadingComp from "../../components/Loading"
 import Breadcrumb from "../../components/Breadcrumb";
 
 const ServiceDetail  = () => {
-  const [locations, setLocations] = useState([]);
   const [serviceData, setServiceData] = useState(null);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
@@ -20,7 +18,6 @@ const ServiceDetail  = () => {
   
 
   useEffect(() => {
-    setLocations(webDevLocations);
   
     const loadAllData = async () => {
       try {
@@ -91,7 +88,9 @@ const ServiceDetail  = () => {
           </div>
       </section>
 
+
       {/* Video Section */}
+      {serviceData?.video_url?.trim() && ( 
       <section className="py-1">
         <div className="max-w-full mx-auto px-4">
           <div className="bg-white/50 rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
@@ -107,6 +106,7 @@ const ServiceDetail  = () => {
             </div>
         </div>
       </section>
+     )}
 
       {/* Description Section */}
       <section className="py-16 bg-white">
@@ -137,6 +137,7 @@ const ServiceDetail  = () => {
 
 
       {/* 10 Pictures Section */}
+      {Images?.length > 0 && Images.some(img => img?.image_url?.trim()) && (
       <section className="py-20 items-center justify-center">
         <div className="space-y-8 px-4">
       {Images.map((img, index) => (
@@ -146,6 +147,7 @@ const ServiceDetail  = () => {
       ))}
       </div>
       </section>
+      )}
 
     
       {/* CTA Section */}

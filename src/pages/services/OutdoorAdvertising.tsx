@@ -1,18 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone, Globe, ArrowRight, MonitorPlay } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getServiceById } from "../../services/fetchServices";
 import ContactSection from "../../components/ContactSection";
 import '../../styles/globals.css';
 import Breadcrumb from "../../components/Breadcrumb";
+import fetchImagesByService from "../../services/fetchImagesByService";
 
 
 
 const OutdoorAdvertising = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [showContact, setShowContact] = useState(false);
+  const [serviceData, setServiceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [Images, setImages] = useState([]);
+  const { slug } = useParams();
+  const effectiveSlug = slug ?? "outdoor-advertising"; // fallback
+
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -21,45 +29,48 @@ const OutdoorAdvertising = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const marketingImages = [
-    {
-      id: 1,
-      title: "Social Media Campaign",
-      description: "Engaging social media campaigns across multiple platforms",
-      gradient: "from-[#C30010] to-[#D40011]"
-    },
-    {
-      id: 2,
-      title: "Email Marketing",
-      description: "Automated email marketing sequences and newsletters",
-      gradient: "from-[#D40011] to-[#E50012]"
-    },
-    {
-      id: 3,
-      title: "PPC Advertising",
-      description: "Pay-per-click advertising on Google and social platforms",
-      gradient: "from-[#E50012] to-[#F60013]"
-    },
-    {
-      id: 4,
-      title: "Content Marketing",
-      description: "Blog posts, articles, and educational content",
-      gradient: "from-[#F60013] to-[#FF0014]"
-    },
-    {
-      id: 5,
-      title: "SEO Optimization",
-      description: "Search engine optimization for better rankings",
-      gradient: "from-[#B2000F] to-[#C30010]"
-    },
-    {
-      id: 6,
-      title: "Influencer Marketing",
-      description: "Strategic partnerships with industry influencers",
-      gradient: "from-[#A1000E] to-[#B2000F]"
-    }
-  ];
+  useEffect(() => {
+    console.log("🟢 useEffect start, effectiveSlug =", effectiveSlug);
+  
+    const loadAllData = async () => {
+      console.log("🟢 loadAllData called");
+      try {
+        setLoading(true);
+  
+        if (!effectiveSlug) {
+          console.warn("⚠️ effectiveSlug is falsy, returning early", effectiveSlug);
+          setLoading(false);
+          return;
+        }
+  
+        console.log("➡️ Calling getServiceById with slug:", effectiveSlug);
+        const service = await getServiceById(effectiveSlug);
+        console.log("⬅️ getServiceById returned:", service);
+  
+        setServiceData(service);
+        console.log("✅ service (local):", service, " type:", typeof service?.id);
+  
+        if (service?.id) {
+          console.log("➡️ Fetching images for service id:", service.id);
+          const imagesRes = await fetchImagesByService(service.id);
+          console.log("⬅️ imagesRes:", imagesRes);
+          setImages(imagesRes);
+        } else {
+          console.warn("⚠️ service has no id:", service);
+        }
+      } catch (err) {
+        console.error("❌ loadAllData error:", err);
+      } finally {
+        setLoading(false);
+        console.log("✅ Loading finished (finally)");
+      }
+    };
+  
+    loadAllData();
+  }, [effectiveSlug]);
+  
+  
+  
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -242,18 +253,29 @@ const OutdoorAdvertising = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {marketingImages.slice(3, 6).map((image) => (
-                  <Card key={image.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-gray-50">
-                    <CardContent className="p-0">
-                      <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
-                        <div className="text-center text-gray-900">
-                          <div className="text-2xl font-bold mb-2">{image.title}</div>
-                          <div className="text-sm opacity-90">{image.description}</div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              {Images.slice(3, 6).map((image, idx) => {
+  const key = image.id ?? `static-${idx}-${(image.image_url || "").slice(-8)}`;
+  const src = image.url || image.image_url;
+  return (
+    <Card key={key} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-gray-50">
+      <CardContent className="p-0">
+        {src ? (
+          <div className="aspect-[4/3] w-full">
+            <img src={src} alt={image.title || `Static ${idx + 1}`} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
+            <div className="text-center text-gray-900">
+              <div className="text-2xl font-bold mb-2">{image.title}</div>
+              <div className="text-sm opacity-90">{image.description}</div>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+})}
+
               </div>
 
               {/* Navigation Button for Static Section */}
@@ -346,19 +368,27 @@ const OutdoorAdvertising = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {marketingImages.slice(0, 3).map((image) => (
-              <Card key={image.id} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
-                <CardContent className="p-0">
-                  <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
-                    <div className="text-center text-gray-900">
-                      <div className="text-2xl font-bold mb-2">{image.title}</div>
-                      <div className="text-sm opacity-90">{image.description}</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+  {(Images && Images.length > 0 ? Images.slice(0, 3) : []).map((image, idx) => {
+    const key = image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
+    const src = image.url || image.image_url;
+    return (
+      <Card key={key} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
+        <CardContent className="p-0">
+          {src ? (
+            <div className="aspect-[4/3] w-full">
+              <img src={src} alt={image.title || `Screen ${idx + 1}`} className="w-full h-full object-cover" />
+            </div>
+          ) : (
+            <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+              <p className="text-center text-gray-500">No image available</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  })}
+</div>
+
 
           {/* Navigation Button for Screens Section */}
           <div className="text-center mt-12">

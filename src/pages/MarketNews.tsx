@@ -78,7 +78,7 @@ const Blog = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
               {allMarketNews.map((post) => (
                 <Link key={post.id} to={`/MarketNews/${post.id}`}>
-                  <Card className="overflow-hidden hover:shadow-2xl shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-200 bg-white hover:bg-gray-100 rounded-2xl">
+                  <Card className=" overflow-hidden hover:shadow-2xl shadow-lg transition-all duration-300 hover:-translate-y-2 cursor-pointer border border-gray-200 bg-white hover:bg-gray-100 rounded-2xl">
                     <CardHeader className="p-0">
                       <div className={`h-48 ${post.image} flex items-center justify-center rounded-t-2xl`}>
                         <div className="text-center text-white drop-shadow-lg">

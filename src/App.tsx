@@ -66,7 +66,7 @@ return  (
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
-              <Route path="/services/Outdoor-Advertising" element={<OutdoorAdvertising />} />
+              <Route path="/services/outdoor-advertising" element={<OutdoorAdvertising />} />
               <Route path="/our-locations/:type" element={<OurLocations />} />
               <Route path="/clients" element={<Clients />} />
               <Route path="/about" element={<AboutUs />} />
