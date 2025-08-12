@@ -80,7 +80,7 @@ const MetricsPanel = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="bg-gradient-to-r from-[#ffb88e] to-[#ea5753] bg-opacity-50 py-12">
+    <section ref={sectionRef} className="bg-gradient-to-r from-[#e53935] to-[#e35d5b] bg-opacity-50 py-12">
   <div className="max-w-7xl mx-auto px-2">
     <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 lg:gap-8">
       {metrics.map((metric, index) => (

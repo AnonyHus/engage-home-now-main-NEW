@@ -53,7 +53,7 @@ const AboutUs = () => {
               </div>
               {/* Text Side */}
               <div className="flex-1 p-8 flex flex-col justify-center bg-transparent">
-                <span className="inline-block bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 text-[#C30010] font-semibold px-4 py-2 rounded-full text-sm tracking-wider border border-[#C30010]/20 mb-4">
+                <span className="inline-block bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10 text-[#C30010] font-bold px-4 py-2 rounded-full text-lg tracking-wider border border-[#C30010]/20 mb-4">
                   Since 2021
                 </span>
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -70,7 +70,7 @@ const AboutUs = () => {
                     Our company continues to grow and expand successfully, providing clients throughout Egypt with quality service. We've continued to think unconventionally about advertising to unlock the potential of our clients' brands.
                   </p>
                 </div>
-                <div className="mt-4 p-4 bg-gradient-to-r from-[#C30010]/5 to-[#D40011]/5 border-l-4 border-[#C30010] rounded-lg text-gray-700 text-sm">
+                <div className="mt-10 p-4 bg-gradient-to-r from-[#C30010]/5 to-[#D40011]/5 border-l-4 border-[#C30010] rounded-lg text-gray-700 text-sm">
                   <strong>Founded in 2021:</strong> By a team with 20+ years of experience in the media & advertising field. Our team has a variety of media experience, and each member comes from a different background.
                 </div>
               </div>
@@ -125,7 +125,7 @@ const AboutUs = () => {
       </section>
     
       {/* Stats */}
-      <section className="py-20 bg-gradient-to-r from-[#C30010]/10 to-[#D40011]/10">
+      <section className="py-20 bg-gradient-to-r from-[#e53935] to-[#e35d5b] bg-opacity-50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             {[{
@@ -142,8 +142,8 @@ const AboutUs = () => {
               label: "Support Available"
             }].map((stat, idx) => (
               <motion.div key={stat.label} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: idx * 0.08 }} className="text-gray-900">
-                <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-gray-500">{stat.label}</div>
+                <div className=" text-white text-5xl font-bold mb-2">{stat.value}</div>
+                <div className="text-white">{stat.label}</div>
               </motion.div>
             ))}
           </div>

@@ -1,6 +1,9 @@
+import { FaBullseye, FaPlay, FaCog } from 'react-icons/fa';
+import { MdDesignServices } from 'react-icons/md';
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Globe, Palette, BarChart3, Smartphone, ShoppingCart, Cloud, Users, ArrowRight, Sparkles, Zap, Target, Rocket, Code, Monitor } from "lucide-react";
+import { ArrowLeft, Globe, Palette, Settings , ArrowRight, Sparkles, Zap, Target, Rocket, Code, Monitor, Brush, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
@@ -209,53 +212,53 @@ const Services = () => {
             <div className="text-center group">
               <div className="relative mb-8">
                 <div className="w-20 h-20 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
-                  <Target className="h-8 w-8 text-white" />
+                  <FaBullseye  className="h-8 w-8 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   1
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Discovery</h3>
-              <p className="text-gray-300 leading-relaxed">We start by understanding your business goals, target audience, and project requirements.</p>
+              <h3 className="text-xl font-bold text-white mb-4">Strategy</h3>
+              <p className="text-gray-300 leading-relaxed">We analyze your brand, audience, and goals to create targeted marketing campaigns. </p>
             </div>
             
             <div className="text-center group">
               <div className="relative mb-8">
                 <div className="w-20 h-20 bg-gradient-to-r from-[#D40011] to-[#E50012] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
-                  <Rocket className="h-8 w-8 text-white" />
+                  <MdDesignServices   className="h-8 w-8 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   2
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Planning</h3>
-              <p className="text-gray-300 leading-relaxed">We create a detailed roadmap and strategy to achieve your objectives effectively.</p>
+              <h3 className="text-xl font-bold text-white mb-4">Design</h3>
+              <p className="text-gray-300 leading-relaxed">Our creative team develops compelling visuals and content for all advertising platforms. </p>
             </div>
             
             <div className="text-center group">
               <div className="relative mb-8">
                 <div className="w-20 h-20 bg-gradient-to-r from-[#E50012] to-[#F60013] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
-                  <Zap className="h-8 w-8 text-white" />
+                  <FaPlay className="h-8 w-8 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   3
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Development</h3>
-              <p className="text-gray-300 leading-relaxed">Our expert team builds your solution using the latest technologies and best practices.</p>
+              <h3 className="text-xl font-bold text-white mb-4">Execute</h3>
+              <p className="text-gray-300 leading-relaxed">We launch coordinated campaigns across outdoor, indoor, and social media channels effectively.</p>
             </div>
             
             <div className="text-center group">
               <div className="relative mb-8">
                 <div className="w-20 h-20 bg-gradient-to-r from-[#F60013] to-[#FF0014] rounded-3xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-500 shadow-lg backdrop-blur-sm">
-                  <Sparkles className="h-8 w-8 text-white" />
+                  <FaCog  className="h-8 w-8 text-white" />
                 </div>
                 <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-[#C30010] to-[#D40011] rounded-full flex items-center justify-center text-white font-bold text-sm backdrop-blur-sm">
                   4
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-white mb-4">Launch</h3>
-              <p className="text-gray-300 leading-relaxed">We deploy your solution and provide ongoing support to ensure continued success.</p>
+              <h3 className="text-xl font-bold text-white mb-4">Optimize</h3>
+              <p className="text-gray-300 leading-relaxed">We monitor performance metrics and continuously improve campaigns for maximum return investment.</p>
             </div>
           </div>
         </div>

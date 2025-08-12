@@ -42,7 +42,7 @@ const ServicesGrid = () => {
                   <img 
                     src={service.service_logo} 
                     alt="Service Logo" 
-                    className="h-8 w-8 object-contain"
+                    className="h-20 w-20 object-contain"
                   />
                 )
                 : (

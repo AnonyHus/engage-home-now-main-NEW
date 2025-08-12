@@ -52,7 +52,7 @@ const Navigation = () => {
 
       <nav className={`fixed bg-black flex justify-between items-center
         py-1 px-5 left-1/2 translate-x-[-50%] top-[20px] rounded-full backdrop-blur-md
-        bg-opacity-10 text-white shadow-lg z-10 w-full max-w-[95vw] transition-all duration-300
+        bg-opacity-10 text-white shadow-lg z-50 w-full max-w-[95vw] transition-all duration-300
         ${isMenuOpen ? '!top-0 !rounded-b-none !max-w-full' : ''}
         ${isScrolled ? '!top-0' : ''}`}>
 
@@ -123,7 +123,12 @@ const Navigation = () => {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={(e) => {
+              e.stopPropagation(); // prevent backdrop click from reopening
+              setIsMenuOpen(!isMenuOpen)
+              setMobileServicesOpen(false);
+            }}
+
             className="p-2 text-gray-700 hover:text-[#C30010]"
           >
             {isMenuOpen ? (
@@ -142,18 +147,38 @@ const Navigation = () => {
             {navItems.map((item) =>
               item.name === "Services" ? (
                 <div key={item.name}>
-                  <button
-                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                    className={`flex items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                      isActive(item.path)
-                        ? "text-[#C30010] bg-[#C30010]/10"
-                        : "text-gray-700 hover:text-[#C30010] hover:bg-gray-100"
-                    }`}
-                    type="button"
-                  >
-                    Services
-                    <ChevronDown className={`h-4 w-4 ml-1 transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
-                  </button>
+                <div
+  className={`flex items-center justify-between w-full px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+    isActive(item.path)
+      ? "text-[#C30010] bg-[#C30010]/10"
+      : "text-gray-700 hover:text-[#C30010] hover:bg-gray-100"
+  }`}
+>
+  {/* Clicking text navigates to /services */}
+  <Link
+    to="/services"
+    className="flex-1"
+    onClick={() => {
+      setIsMenuOpen(false);
+      setMobileServicesOpen(false);
+    }}
+  >
+    Services
+  </Link>
+
+  {/* Clicking arrow toggles submenu */}
+  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      setMobileServicesOpen(!mobileServicesOpen);
+    }}
+    type="button"
+    className="p-1"
+  >
+    <ChevronDown className={`h-4 w-4 transform ${mobileServicesOpen ? "rotate-180" : ""}`} />
+  </button>
+</div>
+
                   {mobileServicesOpen && (
                     <ul className="pl-4 space-y-1 mt-1">
                       {services.map((service) => (
