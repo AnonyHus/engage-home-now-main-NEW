@@ -141,7 +141,7 @@ const ServiceDetail  = () => {
       {/* 10 Pictures Section */}
       {Images?.length > 0 && Images.some(img => img?.image_url?.trim()) && (
       <section className="py-20 items-center justify-center">
-        <div className="space-y-8 px-4">
+        <div className="space-y-0 px-4">
       {Images.map((img, index) => (
         <img className="w-full max-w-full mx-auto rounded shadow-md" key={index} 
         src={img.image_url} 

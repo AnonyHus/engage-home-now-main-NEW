@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRightToLine } from "lucide-react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams,useNavigate } from "react-router-dom";
 import { act, useEffect, useState } from "react";
 import Footer from "@/components/Footer";
 import { supabase } from "@/services/supabaseClient";
@@ -31,6 +31,8 @@ export default function OurLocations() {
   const [locations, setLocations] = useState<OutdoorLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     fetchLocations();
@@ -97,13 +99,21 @@ export default function OurLocations() {
       <div className="max-w-7xl mx-auto px-4 py-6 flex justify-center gap-4">
         <Button
           variant={activeTab === "static" ? "default" : "outline"}
-          onClick={() => setActiveTab("static")}
+          onClick={() => {
+          setActiveTab("static")
+          navigate("/our-locations/static");
+        }
+        }
         >
           Static Locations
         </Button>
         <Button
           variant={activeTab === "screen" ? "default" : "outline"}
-          onClick={() => setActiveTab("screen")}
+          onClick={() => {
+            setActiveTab("screen")
+            navigate("/our-locations/screen");
+          }
+          }
         >
           Screen Locations
         </Button>

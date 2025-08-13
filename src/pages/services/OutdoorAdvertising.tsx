@@ -3,12 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone, Globe, ArrowRight, MonitorPlay } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { getServiceById } from "../../services/fetchServices";
 import ContactSection from "../../components/ContactSection";
 import '../../styles/globals.css';
 import Breadcrumb from "../../components/Breadcrumb";
 import fetchImagesByService from "../../services/fetchImagesByService";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 
@@ -20,6 +21,32 @@ const OutdoorAdvertising = () => {
   const [Images, setImages] = useState([]);
   const { slug } = useParams();
   const effectiveSlug = slug ?? "outdoor-advertising"; // fallback
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const startX = useRef(0);
+  const isDragging = useRef(false);
+  
+  const handleTouchStart = (e) => {
+    startX.current = e.touches[0].clientX;
+    isDragging.current = true;
+  };
+  
+  const handleTouchMove = (e) => {
+    if (!isDragging.current) return;
+    const diff = startX.current - e.touches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setCurrentIndex((prev) => (prev >= Images.length - 3 ? 0 : prev + 1));
+      } else {
+        setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1));
+      }
+      isDragging.current = false; // Prevent multiple triggers
+    }
+  };
+  
+  const handleTouchEnd = () => {
+    isDragging.current = false;
+  };
+  
 
 
   const scrollToSection = (sectionId: string) => {
@@ -252,31 +279,74 @@ const OutdoorAdvertising = () => {
                 <p className="text-lg text-gray-600">Examples of our Static Billboards</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {Images.slice(3, 6).map((image, idx) => {
-  const key = image.id ?? `static-${idx}-${(image.image_url || "").slice(-8)}`;
-  const src = image.url || image.image_url;
-  return (
-    <Card key={key} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-gray-50">
-      <CardContent className="p-0">
-        {src ? (
-          <div className="aspect-[4/3] w-full">
-            <img src={src} alt={image.title || `Static ${idx + 1}`} className="w-full h-full object-cover" />
-          </div>
-        ) : (
-          <div className={`aspect-[4/3] bg-gradient-to-br ${image.gradient} flex items-center justify-center`}>
-            <div className="text-center text-gray-900">
-              <div className="text-2xl font-bold mb-2">{image.title}</div>
-              <div className="text-sm opacity-90">{image.description}</div>
+              <div className="w-full flex items-center">
+                {/* Left arrow - OUTSIDE carousel */}
+              <div className="flex justify-between items-center mb-4">
+              <button
+                onClick={() =>
+                  setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1))
+                }
+                className="p-3 bg-white shadow rounded-full hover:bg-gray-100 mr-4"
+              >
+                <ChevronLeft size={24} />
+              </button>
+          {/* Carousel */}
+          <div className="overflow-hidden">
+                <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{
+          transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {Images?.map((image, idx) => {
+          const key =
+            image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
+          const src = image.url || image.image_url;
+          return (
+            <div key={key} className="w-1/3 flex-shrink-0 p-2">
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
+                    <CardContent className="p-0">
+                      {src ? (
+                        <div className="aspect-[4/3] w-full">
+                          <img
+                            src={src}
+                            alt={image.title || `Screen ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+                          <p className="text-center text-gray-500">
+                            No image available
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
-  );
-})}
 
+                {/* Right arrow - OUTSIDE carousel */}
+                <button
+                  onClick={() =>
+                    setCurrentIndex((prev) =>
+                      prev >= Images.length - 3 ? 0 : prev + 1
+                    )
+                  }
+                  className="p-3 bg-white shadow rounded-full hover:bg-gray-100 ml-4"
+                >
+                  <ChevronRight size={24} />
+                </button>
               </div>
+
+      
+            </div>
 
               {/* Navigation Button for Static Section */}
               <div className="text-center mt-12">
@@ -367,28 +437,74 @@ const OutdoorAdvertising = () => {
             <p className="text-lg text-gray-700">Examples of our Digital Screens campaigns</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-  {(Images && Images.length > 0 ? Images.slice(0, 3) : []).map((image, idx) => {
-    const key = image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
-    const src = image.url || image.image_url;
-    return (
-      <Card key={key} className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
-        <CardContent className="p-0">
-          {src ? (
-            <div className="aspect-[4/3] w-full">
-              <img src={src} alt={image.title || `Screen ${idx + 1}`} className="w-full h-full object-cover" />
+          <div className="w-full flex items-center">
+    {/* Left arrow - OUTSIDE carousel */}
+    <div className="flex justify-between items-center mb-4">
+    <button
+      onClick={() =>
+        setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1))
+      }
+      className="p-3 bg-white shadow rounded-full hover:bg-gray-100 mr-4"
+    >
+      <ChevronLeft size={24} />
+    </button>
+ {/* Carousel */}
+ <div className="overflow-hidden">
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
+        style={{
+          transform: `translateX(-${currentIndex * (100 / 3)}%)`,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        {Images?.map((image, idx) => {
+          const key =
+            image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
+          const src = image.url || image.image_url;
+          return (
+            <div key={key} className="w-1/3 flex-shrink-0 p-2">
+              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
+                <CardContent className="p-0">
+                  {src ? (
+                    <div className="aspect-[4/3] w-full">
+                      <img
+                        src={src}
+                        alt={image.title || `Screen ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+                      <p className="text-center text-gray-500">
+                        No image available
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             </div>
-          ) : (
-            <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-              <p className="text-center text-gray-500">No image available</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    );
-  })}
-</div>
+          );
+        })}
+      </div>
+    </div>
 
+        {/* Right arrow - OUTSIDE carousel */}
+      <button
+        onClick={() =>
+          setCurrentIndex((prev) =>
+            prev >= Images.length - 3 ? 0 : prev + 1
+          )
+        }
+        className="p-3 bg-white shadow rounded-full hover:bg-gray-100 ml-4"
+      >
+        <ChevronRight size={24} />
+      </button>
+    </div>
+
+   
+         </div>
 
           {/* Navigation Button for Screens Section */}
           <div className="text-center mt-12">

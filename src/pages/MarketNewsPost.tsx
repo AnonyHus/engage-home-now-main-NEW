@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { getMarketNewsById } from "../services/fetchMarketNews"; // Import your fetch function
 import Breadcrumb from "../components/Breadcrumb";
+import LoadingComp from "../components/Loading"
 
 
 const BlogPost = () => {
@@ -31,23 +32,20 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Loading...</h1>
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#C30010] mx-auto"></div>
-        </div>
+      <div className="col-span-full text-center py-10">
+          <LoadingComp/>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-white flex it;ems-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{error}</h1>
           <Link to="/MarketNews">
             <Button variant="ghost" className="text-gray-700 hover:text-[#C30010]">
-              Back to Blog
+              Back to MarketNews
             </Button>
           </Link>
         </div>
@@ -60,35 +58,29 @@ const BlogPost = () => {
               <Breadcrumb 
         items={[
           { label: "Home", to: "/" },
-          { label: "Services", to:"/services" }, 
+          { label: "Market News", to:"/MarketNews" }, 
           { label: post?.title  }, 
         ]}
       />
       {/* Header */}
-      <section className="py-20 bg-white">
+      <section className="pt-10 bg-white">
         
         <div className="max-w-4xl mx-auto px-4">          
           <div className="text-center mb-8">
             <div className="inline-block bg-[#C30010]/20 text-[#C30010] px-4 py-2 rounded-full text-sm font-medium mb-4 border border-[#C30010]/30">
               <Tag className="h-4 w-4 inline mr-2" />
-              {post.category}
+                Opz-Optimize
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               {post.title}
             </h1>
             <div className="flex items-center justify-center gap-6 text-gray-700 mb-6">
-              <div className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                <span>{post.author}</span>
-              </div>
+             
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 <span>{new Date(post.event_date).toLocaleDateString()}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                <span>{post.readTime}</span>
-              </div>
+             
             </div>
           </div>
         </div>

@@ -51,3 +51,30 @@ export const getMarketNewsById = async (id) => {
     return null;
   }
 };
+
+
+export const fetchMarketNewsPG = async () => {
+  console.log("Starting fetchMarketNewsPG..."); // Debug log
+  
+  try {
+    const { data, error } = await supabase
+      .from("Market_news")
+      .select("id, title, event_date, desc, created_at,view_homepage,hidden")
+      .eq("hidden", false)
+      .order("event_date", { ascending: false });
+
+
+    console.log("Supabase response:", { data, error }); // Debug log
+
+    if (error) {
+      console.error("Error fetching market news:", error.message);
+      return [];
+    }
+
+    console.log("Returning data:", data); // Debug log
+    return data || [];
+  } catch (err) {
+    console.error("Exception in fetchMarketNews:", err);
+    return [];
+  }
+};

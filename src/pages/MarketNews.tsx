@@ -3,8 +3,9 @@ import { ArrowLeft, Calendar, User, Search, Filter, Sparkles } from "lucide-reac
 import { Link } from "react-router-dom";
 import Footer from "@/components/Footer";
 import Breadcrumb from "../components/Breadcrumb";
-import { fetchMarketNews } from "../services/fetchMarketNews";
+import { fetchMarketNews, fetchMarketNewsPG } from "../services/fetchMarketNews";
 import { useEffect, useState } from "react";
+import LoadingComp from "../components/Loading"
 
 const Blog = () => {
   const [allMarketNews, setMarketNews] = useState([]);
@@ -16,7 +17,7 @@ const Blog = () => {
       try {
         setLoading(true);
         console.log("Starting to load market news..."); // Debug log
-        const data = await fetchMarketNews();
+        const data = await fetchMarketNewsPG();
         console.log("Fetched market news data:", data); // Debug log
         setMarketNews(Array.isArray(data) ? data : []);
       } catch (err) {
@@ -63,9 +64,9 @@ const Blog = () => {
       <section className="py-14 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4">
           {loading ? (
-            <div className="text-center py-16">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Loading articles...</h3>
-            </div>
+                    <div className="col-span-full text-center py-10">
+                    <LoadingComp/>
+                </div>
           ) : error ? (
             <div className="text-center py-16">
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Error: {error}</h3>
@@ -89,10 +90,7 @@ const Blog = () => {
                     </CardHeader>
                     <CardContent className="p-7">
                       <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
-                        <div className="flex items-center gap-1">
-                          <User className="h-4 w-4" />
-                          <span>{post.author || "Unknown Author"}</span>
-                        </div>
+                     
                         <div className="flex items-center gap-1">
                           <Calendar className="h-4 w-4" />
                           <span>{new Date(post.event_date).toLocaleDateString()}</span>
@@ -102,10 +100,10 @@ const Blog = () => {
                         {post.title}
                       </CardTitle>
                       <p className="text-gray-700 mb-4 line-clamp-3 text-base">
-                        {post.desc || "No description available."}
+                        {post.desc || ""}
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-500">{post.readTime || "N/A"}</span>
+                        <span className="text-sm text-gray-500">{post.readTime || ""}</span>
                         <span className="text-[#C30010] hover:text-[#D40011] text-sm font-semibold transition-colors duration-200">
                           Read More →
                         </span>
