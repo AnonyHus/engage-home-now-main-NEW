@@ -65,15 +65,6 @@ const NavbarWrapper = () => {
   );
 };
 
-// Layout that renders the navbars + the child page via <Outlet />
-const Shell = () => (
-  <>
-    <NavbarWrapper />
-    <div className="pt-0">
-      <Outlet />
-    </div>
-  </>
-);
 
 const App = () => {
   return (
@@ -84,6 +75,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
+            <NavbarWrapper/>
             <Suspense
               fallback={
                 <div className="w-full flex justify-center items-center py-5 text-xl text-gray-600">
@@ -92,8 +84,6 @@ const App = () => {
               }
             >
               <Routes>
-                {/* ===== Public site (with navbars) ===== */}
-                <Route element={<Shell />}>
                   <Route path="/" element={<Index />} />
                   <Route path="/services" element={<Services />} />
                   <Route path="/services/:slug" element={<ServiceDetail />} />
@@ -103,11 +93,8 @@ const App = () => {
                   <Route path="/about" element={<AboutUs />} />
                   <Route path="/MarketNews" element={<MarketNews />} />
                   <Route path="/MarketNews/:id" element={<MarketNewsPost />} />
-                </Route>
 
-                {/* ===== Admin (protected) with navbars via Shell ===== */}
                 <Route path="/admin" element={<AdminProtectedRoute />}>
-                  <Route element={<Shell />}>
                     <Route index element={<Navigate to="upload" replace />} />
                     <Route path="upload" element={<ImageUploadPage />} />
                     <Route path="OutdoorImageUploadPage" element={<OutdoorImageUploadPage />} />
@@ -115,13 +102,10 @@ const App = () => {
                     <Route path="outdoorDisplay" element={<OutdoorDisplayPage />} />
                     <Route path="CreateMarketNews" element={<CreateMarketNews />} />
                     <Route path="ManageMarketNews" element={<ManageMarketNews />} />
-                  </Route>
                 </Route>
 
-                {/* Admin login outside Shell so it never shows navbars */}
                 <Route path="/admin/login" element={<AdminLoginPage />} />
 
-                {/* ===== 404: standalone, no navbar ===== */}
                 <Route path="/notfound" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/notfound" replace />} />
               </Routes>

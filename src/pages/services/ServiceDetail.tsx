@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Play, Globe, Code, Smartphone, Database, Shield, Zap, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { getServiceById } from "../../services/fetchServices";
@@ -10,7 +10,7 @@ import LoadingComp from "../../components/Loading"
 import Breadcrumb from "../../components/Breadcrumb";
 
 const ServiceDetail  = () => {
-  const [serviceData, setServiceData] = useState(null);
+  const [serviceData, setServiceData] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
   const [Images, setImages] = useState([]);
@@ -27,7 +27,11 @@ const ServiceDetail  = () => {
     
         // 1. Get service data (including id)
         const serviceData = await getServiceById(slug);
-        setServiceData(serviceData);
+        if (serviceData) {
+          setServiceData(serviceData);
+        } else {
+          setServiceData(null);
+        } 
   
         console.error("❌ id: ", serviceData.id);
 
@@ -41,6 +45,7 @@ const ServiceDetail  = () => {
   
       } catch (error) {
         console.error("❌ Error loading data:", error);
+        setServiceData(null)
       } finally {
         setLoading(false);
         console.log("✅ Loading finished");
@@ -65,6 +70,8 @@ const ServiceDetail  = () => {
   console.log("🔍 Current serviceData:", serviceData);
   console.log("🔍 Service name:", serviceData?.name);
   console.log("🔍 Service headline:", serviceData?.headline);
+
+  if (!serviceData) return <Navigate to="/notfound" replace />;
 
   return (
     <div className="min-h-screen bg-white">
