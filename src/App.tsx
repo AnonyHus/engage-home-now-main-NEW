@@ -77,11 +77,11 @@ const App = () => {
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <ScrollToTop />
-        <NavbarWrapper />         
+        <ScrollToTop />         
           <div className="pt-0">
           <Suspense fallback={<div className="w-full flex justify-center items-center py-5 text-xl text-gray-600">Loading...</div>}>
             <Routes>
+            <Route element={<><NavbarWrapper /></>}>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />
               <Route path="/services/:slug" element={<ServiceDetail />} />
@@ -91,16 +91,17 @@ const App = () => {
               <Route path="/about" element={<AboutUs />} />
               <Route path="/MarketNews" element={<MarketNews />} />
               <Route path="/MarketNews/:id" element={<MarketNewsPost />} />
+            </Route>
 
-              // inside your App.tsx Routes
+
               <Route path="/admin" element={<AdminProtectedRoute />}>
               <Route index element={<Navigate to="upload" replace />} />
-                <Route path="upload" element={<ImageUploadPage />} />
-                <Route path="OutdoorImageUploadPage" element={<OutdoorImageUploadPage />} />
-                <Route path="OutdoorOrderManagement" element={<OutdoorOrderPage />} />
-                <Route path="outdoorDisplay" element={<OutdoorDisplayPage />} />
-                <Route path="CreateMarketNews" element={<CreateMarketNews />} />
-                <Route path="ManageMarketNews" element={<ManageMarketNews />} />
+                <Route path="upload" element={ <><NavbarWrapper /> <ImageUploadPage /></>} />
+                <Route path="OutdoorImageUploadPage" element={ <><NavbarWrapper /> <OutdoorImageUploadPage /></>} />
+                <Route path="OutdoorOrderManagement" element={ <><NavbarWrapper /> <OutdoorOrderPage /></>} />
+                <Route path="outdoorDisplay" element={ <><NavbarWrapper /> <OutdoorDisplayPage /></>} />
+                <Route path="CreateMarketNews" element={ <><NavbarWrapper /> <CreateMarketNews /></>} />
+                <Route path="ManageMarketNews" element={ <><NavbarWrapper /> <ManageMarketNews /></>} />
               </Route>
 
               {/* leave login outside */}
@@ -110,7 +111,9 @@ const App = () => {
 
 
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/notfound" replace />} />
+              <Route path="/" element={<NotFound />} />
+
             </Routes>
           </Suspense>
         </div>

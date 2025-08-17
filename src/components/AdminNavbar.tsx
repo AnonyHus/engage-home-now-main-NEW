@@ -66,10 +66,21 @@ const AdminNavbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 px-8">
-          {navItems.map((item) => (
+          {navItems.map((item) =>
+          item.name === "Logout" ? (
+            <button
+              key={item.name}
+              onClick={handleSignOut}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
+              }`}
+            >
+              {item.name}
+            </button>
+          ) : (
             <Link
               key={item.name}
-              to={item.path}
+              to={item.path!}
               className={`text-sm font-medium transition-colors duration-200 ${
                 isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
               }`}
@@ -96,17 +107,27 @@ const AdminNavbar = () => {
       {isMenuOpen && (
         <div className="sticky  top-0 left-0 w-fit z-50 pt-[90px] md:hidden">
           <div className="px-5 pb-5 space-y-1 bg-white border-t border-gray-200 shadow-lg">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                  isActive(item.path) ? "text-[#C30010] bg-[#C30010]/10" : "text-gray-700 hover:text-[#C30010] hover:bg-gray-100"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
+          {navItems.map((item) =>
+          item.name === "Logout" ? (
+            <button
+              key={item.name}
+              onClick={handleSignOut}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
+              }`}
+            >
+              {item.name}
+            </button>
+          ) : (
+            <Link
+              key={item.name}
+              to={item.path!}
+              className={`text-sm font-medium transition-colors duration-200 ${
+                isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
+              }`}
+            >
+              {item.name}
+            </Link>
             ))}
           </div>
         </div>
