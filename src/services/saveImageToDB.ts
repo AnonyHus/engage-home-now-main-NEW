@@ -1,10 +1,10 @@
 import { title } from "process";
 import { supabase } from "./supabaseClient";
 
-const saveImageToDB = async (imageUrl, serviceid,title) => {
+const saveImageToDB = async (imageUrl, serviceid,title,is_screen) => {
   const { data, error } = await supabase
     .from("Images")
-    .insert([{ image_url: imageUrl, title: title,service_id: serviceid }]);
+    .insert([{ image_url: imageUrl, title: title,service_id: serviceid,is_screen }]);
 
     if (error) {
       

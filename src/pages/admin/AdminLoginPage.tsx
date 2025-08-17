@@ -1,89 +1,102 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// AdminLoginPage.tsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../services/supabaseClient";
+import "../../styles/Login.css";
 
 const AdminLoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string>("");
+  const [email, setEmail] = useState("");        // use email to avoid pre-auth DB reads
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
-  const login = async () => {
-    setLoading(true);
+  const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter both email and password");
+      return;
+    }
     setError("");
-  
+    setLoading(true);
+
     try {
-      // Static credentials
-      const validUsername = "admin";
-      const validPassword = "123456"; // <-- your static password
-  
-      if (username === validUsername && password === validPassword) {
-        // Simulate a token
-        const fakeToken = "fake-jwt-token-123";
-        localStorage.setItem("token", fakeToken);
-        nav("/admin/upload");
-      } else {
-        setError("Invalid username or password.");
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (loginError) {
+        setError(loginError.message || "Login failed");
+        return;
       }
-    } catch (e) {
-      setError("Unexpected error.");
+
+      const user = data.session?.user;
+      if (!user) {
+        setError("No session created");
+        return;
+      }
+
+      // 1) Fast path: check user_metadata.is_admin
+      if (user.user_metadata?.is_admin) {
+        nav("/admin/upload");
+        return;
+      }
+
+      // 2) Fallback: check your users table AFTER auth
+      const { data: row, error: adminErr } = await supabase
+        .from("users")
+        .select("is_admin")
+        .eq("email", user.email)
+        .maybeSingle();
+
+      if (adminErr) {
+        setError("Unable to verify admin role");
+        return;
+      }
+
+      if (!row?.is_admin) {
+        setError("Access denied. Admin privileges required.");
+        await supabase.auth.signOut();
+        return;
+      }
+
+      nav("/admin/upload");
+    } catch (err: any) {
+      setError(err.message || "Unexpected error");
     } finally {
       setLoading(false);
     }
   };
-  
-  return (
-    
 
-    <div style={{ maxWidth: 320, margin: "40px auto", padding: 24, border: "1px solid #eee", borderRadius: 8 }}>
-      
-      <h2 style={{ textAlign: "center", marginBottom: 24 }}>Admin Login</h2>
-      <div style={{ marginBottom: 12 }}>
-       
-        <label>
-          Username
-          <input 
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            placeholder="Admin"
-            style={{ width: "100%", padding: 8, marginTop: 4 }}
-            autoComplete="username"
-            disabled={loading}
-          />
-        </label>
+  return (
+    <div className="login-container">
+      <div className="login-form">
+        <h2 className="login-title">Admin Sign In</h2>
+
+        <input
+          className="login-input"
+          type="email"
+          placeholder="Email (admin)"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+        />
+
+        <input
+          className="login-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={loading}
+        />
+
+        <button className="login-button" onClick={handleLogin} disabled={loading}>
+          {loading ? "Signing in..." : "Sign In"}
+        </button>
       </div>
-      <div style={{ marginBottom: 12 }}>
-        <label>
-          Password
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            style={{ width: "100%", padding: 8, marginTop: 4 }}
-            autoComplete="current-password"
-            disabled={loading}
-          />
-        </label>
-        <div style={{ marginTop: 4 }}>
-          <input
-            type="checkbox"
-            checked={showPassword}
-            onChange={() => setShowPassword(!showPassword)}
-            id="showPassword"
-            disabled={loading}
-          />
-          <label htmlFor="showPassword" style={{ marginLeft: 4 }}>Show Password</label>
-        </div>
-      </div>
-      {error && <div style={{ color: "red", marginBottom: 12 }}>{error}</div>}
-      <button
-        onClick={login}
-        style={{ width: "100%", padding: 10, fontWeight: 600, background: "#222", color: "#fff", border: "none", borderRadius: 4, cursor: loading ? "not-allowed" : "pointer" }}
-        disabled={loading}
-      >
-        {loading ? "Logging in..." : "Login"}
-      </button>
+
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };

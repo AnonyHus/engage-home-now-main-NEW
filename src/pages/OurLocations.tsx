@@ -26,8 +26,10 @@ export default function OurLocations() {
   const { type } = useParams(); // static or screen
 
   const locationHook = useLocation();
-  const defaultTab = (locationHook.state?.activeTab as TabType) || "static";
+const pathTab = locationHook.pathname.split("/").pop() as TabType;
+const defaultTab = pathTab || "static";
 
+  
   const [locations, setLocations] = useState<OutdoorLocation[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabType>(defaultTab);
@@ -155,8 +157,9 @@ export default function OurLocations() {
                         {loc.type}
                       </div>
                     </div>
-                    <CardContent className="p-6 flex flex-col items-center text-center">
+                    <CardContent className="p-6 flex flex-col items-center text-center h-full">
                       <h3 className="text-2xl font-bold text-primary mb-2">{loc.location}</h3>
+                      
                       <div className="flex flex-wrap gap-2 justify-center mb-3">
                         {loc.size && (
                           <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">

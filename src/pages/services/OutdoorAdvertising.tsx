@@ -25,6 +25,10 @@ const OutdoorAdvertising = () => {
   const startX = useRef(0);
   const isDragging = useRef(false);
   
+  const [staticImages, setStaticImages] = useState([]);
+const [screenImages, setScreenImages] = useState([]);
+
+
   const handleTouchStart = (e) => {
     startX.current = e.touches[0].clientX;
     isDragging.current = true;
@@ -78,10 +82,12 @@ const OutdoorAdvertising = () => {
         console.log("✅ service (local):", service, " type:", typeof service?.id);
   
         if (service?.id) {
-          console.log("➡️ Fetching images for service id:", service.id);
           const imagesRes = await fetchImagesByService(service.id);
-          console.log("⬅️ imagesRes:", imagesRes);
-          setImages(imagesRes);
+          const staticImgs = imagesRes.filter((img) => !img.is_screen); 
+          const screenImgs = imagesRes.filter((img) => img.is_screen);
+  
+          setStaticImages(staticImgs);
+          setScreenImages(screenImgs);
         } else {
           console.warn("⚠️ service has no id:", service);
         }
@@ -301,7 +307,7 @@ const OutdoorAdvertising = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {Images?.map((image, idx) => {
+        {staticImages?.map((image, idx) => {
           const key =
             image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
           const src = image.url || image.image_url;
@@ -459,7 +465,7 @@ const OutdoorAdvertising = () => {
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {Images?.map((image, idx) => {
+        {screenImages?.map((image, idx) => {
           const key =
             image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
           const src = image.url || image.image_url;

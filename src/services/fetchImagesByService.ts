@@ -5,7 +5,7 @@ import { supabase } from "./supabaseClient";
   const fetchImagesByServiceId = async (serviceId) => {
     const { data, error } = await supabase
       .from("Images")
-      .select("image_url")
+      .select("image_url,is_screen")
       .eq("service_id", serviceId);
   
     if (error) {

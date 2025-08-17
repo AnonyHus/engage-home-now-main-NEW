@@ -7,8 +7,11 @@ import { useEffect, Suspense, lazy } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Navigation from "./components/Navigation";
-import { RequireAuth } from "./components/RequireAuth";
+import { useAuth } from "./components/AuthContext";
+
 import AdminNav from "./components/AdminNavbar";
+import { AuthProvider } from "./components/AuthContext";
+import { AdminProtectedRoute } from "./components/ProtectedRoute";
 
 import ServiceDetail from "./pages/services/ServiceDetail";
 import CreateMarketNews from "./pages/admin/CreateMarketNews";
@@ -34,6 +37,7 @@ const OutdoorOrderPage = lazy(() => import("./pages/admin/SortableImage"));
 
 const queryClient = new QueryClient();
 
+
 // ScrollToTop component to scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,22 +49,29 @@ const ScrollToTop = () => {
   return null;
 };
 
+
+
 const App = () => {
-  const isAdminPage = location.pathname.startsWith("/admin");
-return  (
+
+  const { user } = useAuth();
+
+  const isAdminPage = window.location.pathname.startsWith("/admin");
+
+  return  (
+  <AuthProvider>
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-
-        {!isAdminPage ? <Navigation /> : <AdminNav />}
-
-
-
-        
-        <div className="pt-0">
+        <>
+      {!isAdminPage ? (
+        <Navigation />
+      ) : user ? ( // ✅ only show AdminNavbar if signed in
+        <AdminNav />
+      ) : null}
+     </>        <div className="pt-0">
           <Suspense fallback={<div className="w-full flex justify-center items-center py-5 text-xl text-gray-600">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
@@ -73,14 +84,19 @@ return  (
               <Route path="/MarketNews" element={<MarketNews />} />
               <Route path="/MarketNews/:id" element={<MarketNewsPost />} />
 
-              <Route path="/admin/login" element={<AdminLoginPage />} />
-              <Route path="/admin/upload" element={<RequireAuth><ImageUploadPage /></RequireAuth> }/>
-              <Route path="/admin/OutdoorImageUploadPage" element={<OutdoorImageUploadPage/>} />
-              <Route path="/admin/OutdoorOrderManagement" element={<OutdoorOrderPage/>} />
-              <Route path="/admin/outdoorDisplay" element={<OutdoorDisplayPage/>} />
-              <Route path="/admin/CreateMarketNews" element={<CreateMarketNews/>} />
-              <Route path="/admin/ManageMarketNews" element={<ManageMarketNews/>} />
+              // inside your App.tsx Routes
+              <Route path="/admin" element={<AdminProtectedRoute />}>
+              <Route index element={<Navigate to="upload" replace />} />
+                <Route path="upload" element={<ImageUploadPage />} />
+                <Route path="OutdoorImageUploadPage" element={<OutdoorImageUploadPage />} />
+                <Route path="OutdoorOrderManagement" element={<OutdoorOrderPage />} />
+                <Route path="outdoorDisplay" element={<OutdoorDisplayPage />} />
+                <Route path="CreateMarketNews" element={<CreateMarketNews />} />
+                <Route path="ManageMarketNews" element={<ManageMarketNews />} />
+              </Route>
 
+              {/* leave login outside */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
 
 
 
@@ -95,6 +111,8 @@ return  (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
+  </AuthProvider>
+
 );
 };
 

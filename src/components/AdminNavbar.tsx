@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { useAuth } from "./AuthContext";
+
 
 const AdminNavbar = () => {
+  const { isAdmin, loading, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
+  const nav = useNavigate();
+
+  if (loading) return null;
+  if (!isAdmin) return null; // HIDE nav if not admin
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,12 +31,21 @@ const AdminNavbar = () => {
     { name: "Outdoor Display", path: "/admin/outdoorDisplay" },
     { name: "Add Market News", path: "/admin/CreateMarketNews" },
     { name: "Manage Market News", path: "/admin/ManageMarketNews" },
-    { name: "Logout", path: "/logout" },
+    { name: "Logout", path: null },
   ];
 
-  const isActive = (path) => {
-    return location.pathname === path;
+  const isActive = (path: string | null) => {
+    return path ? location.pathname === path : false;
   };
+
+  async function handleSignOut() {
+    try {
+      await signOut();        // from AuthProvider -> calls supabase.auth.signOut()
+    } finally {
+      setIsMenuOpen(false);
+      nav("/admin/login");    // redirect to login
+    }
+  }
 
   return (
     <>
