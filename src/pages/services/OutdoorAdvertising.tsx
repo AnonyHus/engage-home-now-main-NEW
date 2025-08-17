@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone, Globe, ArrowRight, MonitorPlay } from "lucide-react";
+import { ArrowLeft, Play, BarChart3, Target, TrendingUp, Users, Megaphone, Zap, Monitor, Smartphone, Globe, ArrowRight, MonitorPlay, Eye } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "@/components/Footer";
 import { useEffect, useState,useRef } from "react";
@@ -9,7 +9,7 @@ import ContactSection from "../../components/ContactSection";
 import '../../styles/globals.css';
 import Breadcrumb from "../../components/Breadcrumb";
 import fetchImagesByService from "../../services/fetchImagesByService";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ZoomIn,ChevronLeft, ChevronRight } from "lucide-react";
 
 
 
@@ -18,32 +18,37 @@ const OutdoorAdvertising = () => {
   const [showContact, setShowContact] = useState(false);
   const [serviceData, setServiceData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [Images, setImages] = useState([]);
   const { slug } = useParams();
   const effectiveSlug = slug ?? "outdoor-advertising"; // fallback
-  const [currentIndex, setCurrentIndex] = useState(0);
   const startX = useRef(0);
   const isDragging = useRef(false);
   
   const [staticImages, setStaticImages] = useState([]);
 const [screenImages, setScreenImages] = useState([]);
+const [currentStaticIndex, setCurrentStaticIndex] = useState(0);
+const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
+const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+const totalImages = staticImages.length;
+const dotsCount = Math.min(3, totalImages); // Show up to 5 dots
+const staticCarouselRef = useRef(null);
+const screenCarouselRef = useRef(null);
 
 
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent)=> {
     startX.current = e.touches[0].clientX;
     isDragging.current = true;
   };
   
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: React.TouchEvent, setIndex: React.Dispatch<React.SetStateAction<number>>, images: any[]) => {
     if (!isDragging.current) return;
     const diff = startX.current - e.touches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        setCurrentIndex((prev) => (prev >= Images.length - 3 ? 0 : prev + 1));
-      } else {
-        setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1));
-      }
-      isDragging.current = false; // Prevent multiple triggers
+      setIndex(prev => {
+        if (diff > 0) return prev >= images.length - 3 ? 0 : prev + 1;
+        return prev <= 0 ? images.length - 3 : prev - 1;
+      });
+      isDragging.current = false;
     }
   };
   
@@ -52,6 +57,23 @@ const [screenImages, setScreenImages] = useState([]);
   };
   
 
+  const handleDotScreenClick = (index) => {
+    setCurrentScreenIndex(index);
+    // Logic to scroll to the corresponding image
+    if (screenCarouselRef.current) {
+      const scrollToIndex = index * (100 / dotsCount); // Calculate the scroll position
+      screenCarouselRef.current.style.transform = `translateX(-${scrollToIndex}%)`;
+    }
+  };
+
+  const handleDotStaticClick = (index) => {
+    setCurrentStaticIndex(index);
+    // Logic to scroll to the corresponding image
+    if (staticCarouselRef.current) {
+      const scrollToIndex = index * (100 / dotsCount); // Calculate the scroll position
+      staticCarouselRef.current.style.transform = `translateX(-${scrollToIndex}%)`;
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -285,71 +307,93 @@ const [screenImages, setScreenImages] = useState([]);
                 <p className="text-lg text-gray-600">Examples of our Static Billboards</p>
               </div>
 
-              <div className="w-full flex items-center">
+              <div className="w-full flex flex-col items-center">
                 {/* Left arrow - OUTSIDE carousel */}
-              <div className="flex justify-between items-center mb-4">
-              <button
-                onClick={() =>
-                  setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1))
-                }
-                className="p-3 bg-white shadow rounded-full hover:bg-gray-100 mr-4"
-              >
-                <ChevronLeft size={24} />
-              </button>
-          {/* Carousel */}
-          <div className="overflow-hidden">
-                <div
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${currentIndex * (100 / 3)}%)`,
-        }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {staticImages?.map((image, idx) => {
-          const key =
-            image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
-          const src = image.url || image.image_url;
-          return (
-            <div key={key} className="w-1/3 flex-shrink-0 p-2">
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
-                    <CardContent className="p-0">
-                      {src ? (
-                        <div className="aspect-[4/3] w-full">
-                          <img
-                            src={src}
-                            alt={image.title || `Screen ${idx + 1}`}
-                            className="w-full h-full object-cover"
-                          />
+                <div className="w-full flex items-center">
+                <button
+                  onClick={() =>
+                    setCurrentStaticIndex(prev => 
+                      prev <= 0 ? staticImages.length - Math.min(3, staticImages.length) : prev - 1
+                      )
+                      }
+                  className="p-3 bg-white shadow rounded-full hover:bg-gray-100 mr-4"
+                >
+                  <ChevronLeft size={24} />
+                </button>
+                {/* Carousel */}
+                <div className="overflow-hidden">
+                      <div
+              className="flex transition-transform duration-500 ease-in-out"
+              ref={staticCarouselRef}
+              style={{
+                transform: `translateX(-${currentStaticIndex * (100 / Math.min(3, staticImages.length))}%)`,
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={(e) => handleTouchMove(e, setCurrentStaticIndex, staticImages)}
+              onTouchEnd={handleTouchEnd}
+            >
+              {staticImages?.map((image, idx) => {
+                const key =  image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
+                const src = image.url || image.image_url;
+                return (
+                  <div key={key} 
+                  className="w-1/3 sm:w-1/2 md:w-1/3 flex-shrink-0 p-2"
+                  >
+                    <Card
+                    className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white relative group cursor-pointer"
+                    onClick={() => src && setSelectedImage(src)}
+                    >
+                          <CardContent className="p-0">
+                            {src ? (
+                              <div className="aspect-[4/3] w-full relative">
+                                <img
+                                  src={src}
+                                  alt={image.title || `Screen ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Eye className="text-white w-12 h-12" />
                         </div>
-                      ) : (
-                        <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-                          <p className="text-center text-gray-500">
-                            No image available
-                          </p>
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                              </div>
+                            ) : (
+                              <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+                                <p className="text-center text-gray-500">
+                                  No image available
+                                </p>
+                              </div>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </div>
+                    );
+                  })}
+                  </div>
                 </div>
-              );
-            })}
-            </div>
-          </div>
 
                 {/* Right arrow - OUTSIDE carousel */}
                 <button
                   onClick={() =>
-                    setCurrentIndex((prev) =>
-                      prev >= Images.length - 3 ? 0 : prev + 1
-                    )
+                    setCurrentStaticIndex((prev) =>
+                      prev <= 0 ? staticImages.length - Math.min(3, staticImages.length) : prev + 1
+                )
                   }
                   className="p-3 bg-white shadow rounded-full hover:bg-gray-100 ml-4"
                 >
                   <ChevronRight size={24} />
                 </button>
-              </div>
+               </div>
+              {/* Dots indicator - BELOW the carousel */}
+              <div className="flex space-x-2 mt-4">
+            {Array.from({ length: Math.min(5, Math.ceil(staticImages.length / 3)) }).map((_, idx) => (
+              <button
+                key={idx}
+                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                  Math.floor(currentStaticIndex / 3) === idx ? 'bg-[#D40011]' : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                onClick={() => handleDotStaticClick(idx * 3)}
+              />
+            ))}
+          </div>
 
       
             </div>
@@ -443,73 +487,91 @@ const [screenImages, setScreenImages] = useState([]);
             <p className="text-lg text-gray-700">Examples of our Digital Screens campaigns</p>
           </div>
 
-          <div className="w-full flex items-center">
+          <div className="w-full flex flex-col items-center">
     {/* Left arrow - OUTSIDE carousel */}
-    <div className="flex justify-between items-center mb-4">
+    <div className="w-full flex items-center">
     <button
       onClick={() =>
-        setCurrentIndex((prev) => (prev <= 0 ? Images.length - 3 : prev - 1))
-      }
+        setCurrentScreenIndex(prev => 
+          prev <= 0 ? staticImages.length - Math.min(3, staticImages.length) : prev - 1
+  )}
       className="p-3 bg-white shadow rounded-full hover:bg-gray-100 mr-4"
     >
       <ChevronLeft size={24} />
     </button>
- {/* Carousel */}
- <div className="overflow-hidden">
-      <div
-        className="flex transition-transform duration-500 ease-in-out"
-        style={{
-          transform: `translateX(-${currentIndex * (100 / 3)}%)`,
-        }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {screenImages?.map((image, idx) => {
-          const key =
-            image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
-          const src = image.url || image.image_url;
-          return (
-            <div key={key} className="w-1/3 flex-shrink-0 p-2">
-              <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white">
-                <CardContent className="p-0">
-                  {src ? (
-                    <div className="aspect-[4/3] w-full">
-                      <img
-                        src={src}
-                        alt={image.title || `Screen ${idx + 1}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
-                      <p className="text-center text-gray-500">
-                        No image available
-                      </p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+      {/* Carousel */}
+      <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              ref={screenCarouselRef}
+              style={{
+                transform: `translateX(-${currentScreenIndex * (100 / 3)}%)`,
+              }}
+              onTouchStart={handleTouchStart}
+              onTouchMove={(e) => handleTouchMove(e, setCurrentScreenIndex, screenImages)}
+              onTouchEnd={handleTouchEnd}
+            >
+              {screenImages?.map((image, idx) => {
+                const key = image.id ?? `screen-${idx}-${(image.image_url || "").slice(-8)}`;
+                const src = image.url || image.image_url;
+                return (
+                  <div key={key} className="w-1/3 flex-shrink-0 p-2">
+                    <Card 
+                    className="overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white relative group cursor-pointer"
+                    onClick={() => src && setSelectedImage(src)}
+                    >
+                      <CardContent className="p-0">
+                        {src ? (
+                          <div className="aspect-[4/3] w-full relative">
+                            <img
+                              src={src}
+                              alt={image.title || `Screen ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <Eye className="text-white w-12 h-12" />
+                        </div>
+                          </div>
+                        ) : (
+                          <div className="aspect-[4/3] bg-gray-100 flex items-center justify-center">
+                            <p className="text-center text-gray-500">
+                              No image available
+                            </p>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
       </div>
-    </div>
 
         {/* Right arrow - OUTSIDE carousel */}
       <button
         onClick={() =>
-          setCurrentIndex((prev) =>
-            prev >= Images.length - 3 ? 0 : prev + 1
-          )
+          setCurrentScreenIndex((prev) =>
+            prev >= staticImages.length - Math.min(3, staticImages.length) ? 0 : prev + 1
+      )
         }
         className="p-3 bg-white shadow rounded-full hover:bg-gray-100 ml-4"
       >
         <ChevronRight size={24} />
       </button>
-    </div>
 
-   
+          </div>
+          {/* Dots indicator - BELOW the carousel */}
+          <div className="flex space-x-2 mt-4">
+            {Array.from({ length: Math.min(5, Math.ceil(screenImages.length / 3)) }).map((_, idx) => (
+              <button
+                key={idx}
+                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                  Math.floor(currentScreenIndex / 3) === idx ? 'bg-[#C30010]' : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                onClick={() => handleDotScreenClick(idx * 3)}
+              />
+            ))}
+          </div>
          </div>
 
           {/* Navigation Button for Screens Section */}
@@ -575,6 +637,23 @@ const [screenImages, setScreenImages] = useState([]);
 </div>
         </div>
       </section>
+
+
+      {selectedImage && (
+  <div 
+    className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 cursor-pointer"
+    onClick={() => setSelectedImage(null)}
+  >
+    <div className="w-full h-full flex items-center justify-center">
+      <img 
+        src={selectedImage} 
+        alt="Enlarged view" 
+        className="object-contain max-w-[95vw] max-h-[95vh]"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </div>
+  </div>
+)}
 
       <Footer />
     </div>

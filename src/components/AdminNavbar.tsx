@@ -12,8 +12,6 @@ const AdminNavbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const nav = useNavigate();
 
-  if (loading) return null;
-  if (!isAdmin) return null; // HIDE nav if not admin
 
   useEffect(() => {
     const handleScroll = () => {

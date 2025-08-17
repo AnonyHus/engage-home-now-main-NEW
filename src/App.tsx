@@ -49,13 +49,26 @@ const ScrollToTop = () => {
   return null;
 };
 
-
+const NavbarWrapper = () => {
+  const location = useLocation();
+  const { user } = useAuth();
+  
+  // Determine if we're on an admin page (excluding login)
+  const isAdminPage = location.pathname.startsWith("/admin") && 
+                      !location.pathname.includes("/login");
+  
+  // Determine if we should show the main navigation
+  const shouldShowMainNav = !location.pathname.startsWith("/admin");
+  
+  return (
+    <>
+      {isAdminPage && <AdminNav />}
+      {shouldShowMainNav && <Navigation />}
+    </>
+  );
+};
 
 const App = () => {
-
-  const { user } = useAuth();
-
-  const isAdminPage = window.location.pathname.startsWith("/admin");
 
   return  (
   <AuthProvider>
@@ -65,13 +78,8 @@ const App = () => {
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
-        <>
-      {!isAdminPage ? (
-        <Navigation />
-      ) : user ? ( // ✅ only show AdminNavbar if signed in
-        <AdminNav />
-      ) : null}
-     </>        <div className="pt-0">
+        <NavbarWrapper />         
+          <div className="pt-0">
           <Suspense fallback={<div className="w-full flex justify-center items-center py-5 text-xl text-gray-600">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
