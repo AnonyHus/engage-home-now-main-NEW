@@ -7,8 +7,22 @@ const saveOutdoorLocationImageToDB = async (
   size: string,
   type: string,
   outdoor_slug: "static" | "screen",
-  img_order: number
+  img_order: number,
+  pixel: string,
+  duration: string
 ) => {
+
+  const { data: maxResult, error: maxErr } = await supabase
+  .from("outdoor_locations")
+  .select("img_order")
+  .eq("outdoor_slug", outdoor_slug)
+  .order("img_order", { ascending: false })
+  .limit(1);
+
+if (maxErr) return { success: false, error: maxErr };
+
+const nextOrder = (maxResult?.[0]?.img_order || 0) + 1;
+
   const { data, error } = await supabase.from("outdoor_locations").insert([
     {
       img_url: imageUrl,
@@ -16,7 +30,9 @@ const saveOutdoorLocationImageToDB = async (
       size,
       type,
       outdoor_slug,
-      img_order,
+      img_order: nextOrder,
+      pixel,
+      duration
     },
   ]);
 

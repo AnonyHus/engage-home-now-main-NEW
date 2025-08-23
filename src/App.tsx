@@ -17,6 +17,7 @@ import Navigation from "./components/Navigation";
 import { useAuth, AuthProvider } from "./components/AuthContext";
 import AdminNav from "./components/AdminNavbar";
 import { AdminProtectedRoute } from "./components/ProtectedRoute";
+import ManageMediaPage from "./pages/admin/ManageMediaPage";
 
 import ServiceDetail from "./pages/services/ServiceDetail";
 import CreateMarketNews from "./pages/admin/CreateMarketNews";
@@ -36,7 +37,6 @@ const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
 const OutdoorImageUploadPage = lazy(() => import("./pages/admin/OutdoorImageUploadPage"));
 const OutdoorDisplayPage = lazy(() => import("./pages/admin/outdoorDisplayPage"));
 const OutdoorOrderPage = lazy(() => import("./pages/admin/SortableImage"));
-
 const queryClient = new QueryClient();
 
 // ScrollToTop on route change
@@ -101,7 +101,9 @@ const App = () => {
                     <Route path="OutdoorOrderManagement" element={<OutdoorOrderPage />} />
                     <Route path="outdoorDisplay" element={<OutdoorDisplayPage />} />
                     <Route path="CreateMarketNews" element={<CreateMarketNews />} />
+                    <Route path="CreateMarketNews/:id" element={<CreateMarketNews />} /> 
                     <Route path="ManageMarketNews" element={<ManageMarketNews />} />
+                    <Route path="ManageServicesMedia" element={<ManageMediaPage />} />
                 </Route>
 
                 <Route path="/admin/login" element={<AdminLoginPage />} />

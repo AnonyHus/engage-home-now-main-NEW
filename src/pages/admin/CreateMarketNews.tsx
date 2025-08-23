@@ -1,6 +1,5 @@
-import { useState,useEffect } from 'react';
-import { useParams, Link } from "react-router-dom";
-import { createMarketNewsPost } from '../../services/marketNewsService'; 
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
 import { supabase } from "../../services/supabaseClient";
@@ -13,18 +12,31 @@ const CreateMarketNews = () => {
   const [error, setError] = useState('');
   const [viewHomepage, setViewHomepage] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (id) {
+      setIsEdit(true);
       (async () => {
-        const { data } = await supabase.from("Market_news").select("*").eq("id", id).single();
-        if (data) {
+        setLoading(true);
+        const { data, error } = await supabase.from("Market_news").select("*").eq("id", id).single();
+        setLoading(false);
+        if (error || !data) {
+          setError("Market news item not found.");
+        } else {
           setTitle(data.title);
           setEventDate(data.event_date);
           setDescription(data.desc);
           setViewHomepage(data.view_homepage);
           setHidden(data.hidden);
+          if (data.event_date) {
+            const formattedDate = new Date(data.event_date).toISOString().split("T")[0];
+            setEventDate(formattedDate);
+          }
+
         }
       })();
     }
@@ -33,28 +45,47 @@ const CreateMarketNews = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     let result;
-    if (id) {
-      result = await supabase.from("Market_news").update({
-        title, event_date: eventDate, desc: description,
-        view_homepage: viewHomepage, hidden
-      }).eq("id", id);
+    if (isEdit) {
+      result = await supabase
+        .from("Market_news")
+        .update({
+          title,
+          event_date: eventDate,
+          desc: description,
+          view_homepage: viewHomepage,
+          hidden: hidden,
+        })
+        .eq("id", id);
     } else {
-      result = await supabase.from("Market_news").insert([{
-        title, event_date: eventDate, desc: description,
-        view_homepage: viewHomepage, hidden
-      }]);
+      result = await supabase
+        .from("Market_news")
+        .insert([{
+          title,
+          event_date: eventDate,
+          desc: description,
+          view_homepage: viewHomepage,
+          hidden : hidden,
+        }]);
     }
-  
+
     setLoading(false);
-    if (result.error) Swal.fire("Error", result.error.message, "error");
-    else Swal.fire("Success", id ? "News updated!" : "News created!", "success");
+    if (result.error) {
+      Swal.fire("Error", result.error.message, "error");
+    } else {
+      Swal.fire("Success", isEdit ? "News updated!" : "News created!", "success")
+      .then(() => navigate("/admin/ManageMarketNews")); // redirect back
+    }
   };
+
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
+
   return (
     <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Create Market News Post</h1>
-      {error && <p className="text-red-500">{error}</p>}
+      <h1 className="text-2xl font-bold mb-4">{isEdit ? "Edit Market News Post" : "Create Market News Post"}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block mb-2">Title</label>
@@ -70,7 +101,7 @@ const CreateMarketNews = () => {
           <label className="block mb-2">Event Date</label>
           <input
             type="date"
-            value={eventDate}
+            value={eventDate||""}
             onChange={(e) => setEventDate(e.target.value)}
             required
             className="border rounded w-full p-2"
@@ -85,7 +116,7 @@ const CreateMarketNews = () => {
             className="border rounded w-full p-2"
           />
         </div>
-              <div className="mb-4">
+        <div className="mb-4">
           <label className="inline-flex items-center">
             <input type="checkbox" checked={viewHomepage} onChange={(e) => setViewHomepage(e.target.checked)} />
             <span className="ml-2">Show on Homepage</span>
@@ -98,8 +129,9 @@ const CreateMarketNews = () => {
           </label>
         </div>
         <Button type="submit" disabled={loading}>
-          {loading ? 'Creating...' : 'Create Post'}
-        </Button>
+       {loading ? (id ? "Updating..." : "Creating...") : (id ? "Update" : "Create")}
+      </Button>
+
       </form>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import saveOutdoorLocationImageToDB from "../../services/saveOutdoorLocationImageToDB";
+import {getNextImageOrder} from "../../services/getNextImageOrder";
 
 const OutdoorImageUploadPage = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -11,28 +12,30 @@ const OutdoorImageUploadPage = () => {
   const [size, setSize] = useState("");
   const [type, setType] = useState("");
   const [outdoorSlug, setOutdoorSlug] = useState<"static" | "screen" | "">("");
-  const [imgOrder, setImgOrder] = useState<number>(1);
+  const [imgOrder, setImgOrder] = useState<number | null>(null);
+  const [orderLoading, setOrderLoading] = useState(false);
+
+  const [pixel, setPixel] = useState("");
+  const [duration, setDuration] = useState("");
 
   const CLOUD_NAME = "dtvdu1fqj";
   const UPLOAD_PRESET = "uploads";
 
 
-    // Fetch current maximum order value
-    useEffect(() => {
-      const fetchMaxOrder = async () => {
-        try {
-          // Replace with your actual API call to get the max order value
-          const response = await fetch('/api/getMaxOrder'); // Example endpoint
-          const data = await response.json();
-          const maxOrder = data.maxOrder || 0; // Assuming the response has a maxOrder field
-          setImgOrder(maxOrder + 1); // Set imgOrder to maxOrder + 1
-        } catch (error) {
-          console.error("Error fetching max order:", error);
-        }
-      };
+  useEffect(() => {
+    if (outdoorSlug) {
+      setOrderLoading(true);
+      getNextImageOrder(outdoorSlug).then(res => {
+        if (res.success) setImgOrder(res.nextOrder);
+        else setImgOrder(1); // fallback
+        setOrderLoading(false);
+      });
+    } else {
+      setImgOrder(null);
+    }
+  }, [outdoorSlug]);
+
   
-      fetchMaxOrder();
-    }, []);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -44,6 +47,11 @@ const OutdoorImageUploadPage = () => {
   const uploadToCloudinaryAndSave = async () => {
     if (!selectedFile || !location || !size || !type || !outdoorSlug) {
       Swal.fire("Please fill in all fields and select an image.");
+      return;
+    }
+    // If slug is screen, ensure pixel and duration are filled
+    if (outdoorSlug === "screen" && (!pixel || !duration)) {
+      Swal.fire("Please provide pixel and duration for screen type.");
       return;
     }
 
@@ -68,7 +76,9 @@ const OutdoorImageUploadPage = () => {
         size,
         type,
         outdoorSlug,
-        imgOrder
+        imgOrder,
+        outdoorSlug === "screen" ? pixel : null,
+        outdoorSlug === "screen" ? duration : null
       );
 
       if (result.success) {
@@ -79,8 +89,13 @@ const OutdoorImageUploadPage = () => {
         setSize("");
         setType("");
         setOutdoorSlug("");
-        setImgOrder(1);
-      } else {
+        setPixel("");
+        setDuration("");
+        if (outdoorSlug) {
+          const res = await getNextImageOrder(outdoorSlug);
+          if (res.success) setImgOrder(res.nextOrder);
+        }
+        } else {
         throw new Error("Saving to DB failed.");
       }
     } catch (err) {
@@ -96,6 +111,17 @@ const OutdoorImageUploadPage = () => {
         <h2 className="text-2xl font-bold mb-6 text-center text-[#C30010]">Upload Outdoor Location Image</h2>
 
         <div className="space-y-4">
+
+        <select
+            value={outdoorSlug}
+            onChange={(e) => setOutdoorSlug(e.target.value as "static" | "screen")}
+            className="w-full p-3 border border-gray-300 rounded-lg"
+          >
+            <option value="">-- Select Slug --</option>
+            <option value="static">Static</option>
+            <option value="screen">Screen</option>
+          </select>
+          
           <input
             type="text"
             placeholder="Location"
@@ -120,24 +146,34 @@ const OutdoorImageUploadPage = () => {
             className="w-full p-3 border border-gray-300 rounded-lg"
           />
 
-          <select
-            value={outdoorSlug}
-            onChange={(e) => setOutdoorSlug(e.target.value as "static" | "screen")}
-            className="w-full p-3 border border-gray-300 rounded-lg"
-          >
-            <option value="">-- Select Slug --</option>
-            <option value="static">Static</option>
-            <option value="screen">Screen</option>
-          </select>
-
+          {outdoorSlug === "screen" && (
+            <>
+              <input
+                type="text"
+                placeholder="Pixel"
+                value={pixel}
+                onChange={(e) => setPixel(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+              <input
+                type="text"
+                placeholder="Duration"
+                value={duration}
+                onChange={(e) => setDuration(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg"
+              />
+            </>
+          )}
           <input
             type="number"
             placeholder="Image Order"
             value={imgOrder}
             readOnly
+            disabled={orderLoading || !outdoorSlug}
             onChange={(e) => setImgOrder(Number(e.target.value))}
             className="w-full p-3 border border-gray-300 rounded-lg"
           />
+          {orderLoading && <p className="text-sm text-gray-500">Loading order...</p>}
 
           <label className="block w-full cursor-pointer bg-[#C30010] text-white text-center py-3 rounded-lg hover:bg-red-700 transition">
             {uploading ? "Uploading..." : "Choose Image"}
@@ -152,8 +188,16 @@ const OutdoorImageUploadPage = () => {
 
           <button
             onClick={uploadToCloudinaryAndSave}
-            disabled={uploading}
-            className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
+            disabled={
+              uploading ||
+              !selectedFile ||
+              !location ||
+              !size ||
+              !type ||
+              !outdoorSlug ||
+              (outdoorSlug === "screen" && (!pixel || !duration))
+            }
+              className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition"
           >
             {uploading ? "Uploading..." : "Submit"}
           </button>
