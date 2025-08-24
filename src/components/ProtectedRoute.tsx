@@ -1,24 +1,20 @@
-// ProtectedRoute.tsx
-import React from "react";
+// AdminProtectedRoute.tsx
+import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-
+import { useAutoLogout } from "../services/useAutoLogout"; // custom hook
 
 export function AdminProtectedRoute() {
-    const { loading, session, isAdmin, user } = useAuth();
-  
-    if (loading) {
-      return null; 
-    }
-  
-    if (!user) {
-      return <Navigate to="/admin/login" replace />;
-    }
-  
-    if (user.email !== import.meta.env.VITE_ADMIN_EMAIL) {
-        return <Navigate to="/" replace />;
-      }
-  
-    return <Outlet />;
+  const { loading, user, signOut } = useAuth();
+
+  // Auto logout after 15 mins (900 seconds)
+  useAutoLogout(900, signOut);
+
+  if (loading) return null;
+
+  if (!user) {
+    return <Navigate to="/admin/login" replace />;
   }
-  
+
+  return <Outlet />;
+}

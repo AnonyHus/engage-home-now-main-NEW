@@ -11,8 +11,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
 console.log("Supabase URL:", supabaseUrl);
 console.log("Supabase Anon Key:", supabaseAnonKey ? "✅ Set" : "❌ Missing");
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      persistSession: true,    // keep session in localStorage
+      autoRefreshToken: true,  // refresh JWT automatically
+      detectSessionInUrl: true
+    },
+  });
 // Test the connection
 supabase.auth.getSession().then(({ data, error }) => {
     if (error) {
