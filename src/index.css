@@ -99,7 +99,17 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Explicitly set Open Sans for all text elements - override typography plugin */
+  h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select, a, li, td, th, .prose, .prose * {
+    font-family: 'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif !important;
+  }
+
+  /* Override typography plugin specifically */
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6, .prose p, .prose li, .prose strong, .prose em {
+    font-family: 'Open Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif !important;
   }
 }
 

@@ -68,9 +68,6 @@ const ManageMarketNews = () => {
               <td className="text-center">{item.view_homepage ? "✅" : "❌"}</td>
               <td className="text-center">{item.hidden ? "✅" : "❌"}</td>
               <td className="p-2 flex gap-2 justify-center w-full">
-                <Button size="lg" variant="outline" onClick={() => toggleHidden(item.id, item.hidden)}>
-                  {item.hidden ? "Unhide" : "Hide"}
-                </Button>
                 <Button size="lg" variant="destructive" onClick={() => deleteNews(item.id)}>
                   Delete
                 </Button>

@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden bg-white">
+    <section className="relative min-h-[110vh] flex items-center justify-center overflow-hidden bg-white">
       {/* Animated background elements */}
           <video
           className="absolute top-0 left-0 w-full h-full object-cover"
@@ -12,7 +12,7 @@ const Hero = () => {
           loop
           playsInline
         >
-          <source src="/videos/HOME-PAGE-FINAL.mp4" type="video/mp4" />
+          <source src="/videos/hero-vid.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 

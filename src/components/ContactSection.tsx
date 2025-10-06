@@ -137,9 +137,10 @@ const handleSubmit = async (e) => {
                 <CardContent className="flex-1 flex flex-col"> {/* Grow to fill space */}
                   {/* Map */}
                   <div className="flex-1 min-h-[16rem] mb-4 md:mb-6"> {/* Flexible height */}
-                    <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6908.761179008308!2d31.44023917104557!3d30.025937311320078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145822d3598ade7b%3A0x4c2aa11b0b3f4c38!2sKSC%20%E2%80%A2%20Katameya%20Petrosport%20Sporting%20Club!5e0!3m2!1sen!2seg!4v1753592917373!5m2!1sen!2seg" 
-                      width="100%" 
+                   
+                 <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11469.256805175171!2d31.450448266389717!3d30.019684563949557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145822d82cb89ffb%3A0xedd5abb09d3399a!2s2F94%2BHX%2C%20New%20Cairo%201%2C%20Cairo%20Governorate%204724213!5e0!3m2!1sen!2seg!4v1756294355599!5m2!1sen!2seg"
+                    width="100%" 
                       height="100%" 
                       style={{ border: 0 }} 
                       allowFullScreen 
@@ -153,7 +154,7 @@ const handleSubmit = async (e) => {
                     <div>
                       <h4 className="font-semibold text-gray-900 mb-2">Address</h4>
                       <p className="text-gray-700">
-                        34 Beram El Tunsi from 90th South, New Cairo <br />
+                        34 Beram El Tunsi From 90th South, New Cairo <br />
                         Cairo, Egypt
                       </p>
                     </div>
