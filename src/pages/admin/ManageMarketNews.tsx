@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { db } from "../../services/sqliteClient";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom"; 
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
+import { Trash2, Pencil } from "lucide-react"; 
 
 const ManageMarketNews = () => {
   const [news, setNews] = useState([]);
@@ -50,39 +51,51 @@ const ManageMarketNews = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Manage Market News</h1>
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-2">Title</th>
-            <th>Homepage?</th>
-            <th>Hidden?</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {news.map((item) => (
-            <tr key={item.id} className="border-t">
-              <td className="p-2">{item.title}</td>
-              <td className="text-center">{item.view_homepage ? "✅" : "❌"}</td>
-              <td className="text-center">{item.hidden ? "✅" : "❌"}</td>
-              <td className="p-2 flex gap-2 justify-center w-full">
-                <Button size="lg" variant="destructive" onClick={() => deleteNews(item.id)}>
-                  Delete
-                </Button>
-                <Button
-                size="lg"
-                variant="secondary"
-                onClick={() => navigate(`/admin/CreateMarketNews/${item.id}`)}
-                >
-                Edit
-              </Button>
-              </td>
+    <div className="p-4 md:p-6">
+      <h1 className="text-xl md:text-2xl font-bold mb-4">Manage Market News</h1>
+      <div className="overflow-x-auto">
+        <table className="w-full border min-w-[600px]">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-2 text-left">Title</th>
+              <th className="p-2 text-center">Homepage</th>
+              <th className="p-2 text-center">Hidden</th>
+              <th className="p-2 text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {news.map((item) => (
+              <tr key={item.id} className="border-t">
+                <td className="p-2">{item.title}</td>
+                <td className="text-center">{item.view_homepage ? "✅" : "❌"}</td>
+                <td className="text-center">{item.hidden ? "✅" : "❌"}</td>
+                <td className="p-2">
+                  <div className="flex gap-2 justify-center">
+                    <Button 
+                      size="sm" 
+                      variant="destructive" 
+                      onClick={() => deleteNews(item.id)}
+                      className="px-3"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      <span className="ml-2 hidden sm:inline">Delete</span>
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => navigate(`/admin/CreateMarketNews/${item.id}`)}
+                      className="px-3"
+                    >
+                      <Pencil className="h-4 w-4" />
+                      <span className="ml-2 hidden sm:inline">Edit</span>
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

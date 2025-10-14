@@ -5,8 +5,14 @@ import Swal from "sweetalert2";
 import { db } from "../../services/sqliteClient";
 
 const CreateMarketNews = () => {
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
   const [title, setTitle] = useState('');
-  const [eventDate, setEventDate] = useState('');
+  const [eventDate, setEventDate] = useState(getTodayDate());
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -84,51 +90,51 @@ const CreateMarketNews = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{isEdit ? "Edit Market News Post" : "Create Market News Post"}</h1>
+    <div className="max-w-md mx-auto p-4 md:p-6">
+      <h1 className="text-xl md:text-2xl font-bold mb-4">{isEdit ? "Edit Market News Post" : "Create Market News Post"}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block mb-2">Title</label>
+          <label className="block mb-2 text-sm md:text-base">Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="border rounded w-full p-2"
+            className="border rounded w-full p-2 text-sm md:text-base"
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2">Event Date</label>
+          <label className="block mb-2 text-sm md:text-base">Event Date</label>
           <input
             type="date"
             value={eventDate||""}
             onChange={(e) => setEventDate(e.target.value)}
             required
-            className="border rounded w-full p-2"
+            className="border rounded w-full p-2 text-sm md:text-base"
           />
         </div>
         <div className="mb-4">
-          <label className="block mb-2">Description</label>
+          <label className="block mb-2 text-sm md:text-base">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className="border rounded w-full p-2"
+            className="border rounded w-full p-2 text-sm md:text-base min-h-[100px]"
           />
         </div>
         <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input type="checkbox" checked={viewHomepage} onChange={(e) => setViewHomepage(e.target.checked)} />
+          <label className="inline-flex items-center text-sm md:text-base">
+            <input type="checkbox" checked={viewHomepage} onChange={(e) => setViewHomepage(e.target.checked)} className="w-4 h-4" />
             <span className="ml-2">Show on Homepage</span>
           </label>
         </div>
         <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input type="checkbox" checked={hidden} onChange={(e) => setHidden(e.target.checked)} />
+          <label className="inline-flex items-center text-sm md:text-base">
+            <input type="checkbox" checked={hidden} onChange={(e) => setHidden(e.target.checked)} className="w-4 h-4" />
             <span className="ml-2">Hidden</span>
           </label>
         </div>
-        <Button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading} className="w-full md:w-auto">
        {loading ? (id ? "Updating..." : "Creating...") : (id ? "Update" : "Create")}
       </Button>
 

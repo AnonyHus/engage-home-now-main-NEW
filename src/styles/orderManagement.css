@@ -6,16 +6,25 @@
 
 .header-section {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #eaeaea;
 }
 
+@media (min-width: 768px) {
+  .header-section {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
 .save-order-btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.8rem 1.5rem;
   background: #4f46e5;
@@ -25,6 +34,13 @@
   font-weight: 500;
   cursor: pointer;
   transition: background 0.3s;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .save-order-btn {
+    width: auto;
+  }
 }
 
 .save-order-btn:hover:not(:disabled) {
@@ -154,9 +170,11 @@
 /* Tab Navigation Styles */
 .tab-navigation {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 24px;
   border-bottom: 2px solid #e5e7eb;
+  width: 100%;
 }
 
 .tab-btn {

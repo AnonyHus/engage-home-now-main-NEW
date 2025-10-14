@@ -69,24 +69,24 @@ const AdminNavbar = () => {
       const isOpen = openSubmenu === item.name;
 
       return (
-        <div key={item.name} className="relative">
+        <div key={item.name} className={`relative ${isMobile ? 'block w-full' : ''}`}>
           <button
             type="button"
             onClick={() => setOpenSubmenu(isOpen ? null : item.name)}
-            className={`flex items-center text-sm font-medium transition-colors duration-200 ${
+            className={`flex items-center ${isMobile ? 'text-base py-2 w-full' : 'text-sm'} font-medium transition-colors duration-200 ${
               isOpen || item.subItems.some((sub: any) => isActive(sub.path))
                 ? "text-[#C30010]"
                 : "text-gray-700 hover:text-[#C30010]"
             }`}
           >
             {item.name}
-            <ChevronDown className={`ml-1 h-4 w-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+            <ChevronDown className={`ml-1 ${isMobile ? 'h-5 w-5' : 'h-4 w-4'} transition-transform ${isOpen ? "rotate-180" : ""}`} />
           </button>
 
           {isOpen && (
             <div
               className={`${
-                isMobile ? "pl-4 space-y-1" : "absolute left-0 mt-2 w-48 bg-white border shadow-md rounded-md"
+                isMobile ? "pl-4 space-y-2 mt-2" : "absolute left-0 mt-2 w-48 bg-white border shadow-md rounded-md"
               }`}
             >
               {item.subItems.map((sub: any) => (
@@ -94,7 +94,7 @@ const AdminNavbar = () => {
                   key={sub.name}
                   to={sub.path}
                   onClick={handleSubItemClick}
-                  className={`block text-sm px-3 py-1 transition-colors duration-200 ${
+                  className={`block ${isMobile ? 'text-base py-2' : 'text-sm'} px-3 py-1 transition-colors duration-200 ${
                     isActive(sub.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
                   }`}
                 >
@@ -112,7 +112,7 @@ const AdminNavbar = () => {
         <button
           key={item.name}
           onClick={handleSignOut}
-          className={`text-sm font-medium transition-colors duration-200 ${
+          className={`${isMobile ? 'text-base py-2 block w-full text-left' : 'text-sm'} font-medium transition-colors duration-200 ${
             isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
           }`}
         >
@@ -126,7 +126,7 @@ const AdminNavbar = () => {
         key={item.name}
         to={item.path!}
         onClick={() => { setIsMenuOpen(false); setOpenSubmenu(null); }}
-        className={`text-sm font-medium transition-colors duration-200 ${
+        className={`${isMobile ? 'text-base py-2 block w-full' : 'text-sm'} font-medium transition-colors duration-200 ${
           isActive(item.path) ? "text-[#C30010]" : "text-gray-700 hover:text-[#C30010]"
         }`}
       >
@@ -173,8 +173,8 @@ const AdminNavbar = () => {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="sticky top-0 left-0 w-fit z-50 pt-[90px] md:hidden">
-          <div className="px-5 pb-5 space-y-1 bg-white border-t border-gray-200 shadow-lg">
+        <div className="fixed top-[72px] left-0 w-full z-50 md:hidden">
+          <div className="px-5 py-4 space-y-3 bg-white border-t border-gray-200 shadow-lg max-h-[calc(100vh-72px)] overflow-y-auto">
             {navItems.map((item) => renderNavItem(item, true))}
           </div>
         </div>

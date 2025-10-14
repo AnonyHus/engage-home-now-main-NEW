@@ -144,13 +144,13 @@ const saveAllOrders = async () => {
   
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col gap-4 mb-6 md:flex-row md:justify-between md:items-center">
         <h1 className="text-3xl font-bold">Manage Uploaded Media</h1>
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 w-full md:w-auto md:flex-row">
           <select
             value={serviceId}
             onChange={(e) => setServiceId(e.target.value)}
-            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full md:w-auto"
           >
             <option value="">Select Service</option>
             {services.map((s) => (
@@ -165,7 +165,7 @@ const saveAllOrders = async () => {
               onChange={(e) =>
                 setIsScreen(e.target.value === "" ? null : e.target.value === "true")
               }
-              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 w-full md:w-auto"
             >
               <option value="">Select</option>
               <option value="true">Screens</option>
@@ -181,6 +181,7 @@ const saveAllOrders = async () => {
         <p className="text-gray-500">No media found.</p>
       ) : (
         <>
+          <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-300 bg-white shadow rounded">
             <thead className="bg-gray-200">
               <tr>
@@ -236,12 +237,13 @@ const saveAllOrders = async () => {
               ))}
             </tbody>
           </table>
+          </div>
 
           <div className="mt-4 flex justify-end">
           <button
   onClick={saveAllOrders}
   disabled={saving}
-  className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-2 ${saving ? 'opacity-50 cursor-not-allowed' : ''}`}
+  className={`bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center justify-center gap-2 w-full md:w-auto ${saving ? 'opacity-50 cursor-not-allowed' : ''}`}
 >
   {saving ? (
     <>

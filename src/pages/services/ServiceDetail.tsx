@@ -85,11 +85,11 @@ const ServiceDetail  = () => {
         ]}
       />
           
-          <div className="text-center mb-2">
+          <div className="text-center mb-2 px-4">
           <div className="inline-block bg-[#C30010] text-white px-4 py-2 rounded-full text-sm font-medium ">
              {serviceData?.name || "  "}
             </div>
-            <h1 className="pt-5 text-5xl md:text-6xl sm:text-md font-bold text-gray-900 mb-1">
+            <h1 className="pt-5 text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-1">
                {serviceData?.headline || ""}
             </h1>
           </div>
@@ -105,7 +105,8 @@ const ServiceDetail  = () => {
                   autoPlay
                   muted
                   loop
-                  playsInline 
+                  playsInline
+                  preload="auto"
                   >
                     <source src={serviceData.video_url}  type="video/mp4" /> 
                     Your browser does not support the video tag.
@@ -118,25 +119,25 @@ const ServiceDetail  = () => {
       {/* Description Section */}
       <section className="py-16 bg-white">
 
-      <div className="w-full px-10 text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Service Descreption</h2>
-            <p className="text-xl text-gray-700 leading-relaxed max-w-full px-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Service Descreption</h2>
+            <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed">
               {serviceData?.headline_desc || "" }
                </p>
           </div>
 
 
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="text-3xl font-bold text-gray-900 mb-4 text-center">{serviceData?.headline1 || "Custom Solutions"}</h4>
-              <p className="text-gray-700 leading-relaxed">
+              <h4 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-center">{serviceData?.headline1 || "Custom Solutions"}</h4>
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 {serviceData?.headline1_desc || "Every project is unique, and we believe in creating custom solutions tailored to your specific needs. From simple landing pages to complex web applications, we build solutions that scale with your business."}
               </p>
             </div>
             <div>
-              <h4 className="text-3xl font-bold text-gray-900 mb-4 text-center">{serviceData?.headline2 || "Modern Technologies"}</h4>
-              <p className="text-gray-700 leading-relaxed ">
+              <h4 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 text-center">{serviceData?.headline2 || "Modern Technologies"}</h4>
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                 {serviceData?.headline2_desc || "We use the latest technologies and frameworks including React, Vue.js, Node.js, and more to ensure your website is fast, secure, and future-proof. Our development process follows industry best practices."}
               </p>
             </div>
@@ -162,10 +163,10 @@ const ServiceDetail  = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-[#C30010] to-[#D40011]">
         <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-6">
             Ready to Your Next Campaign?
           </h2>
-          <p className="text-xl text-red-100 mb-8 leading-relaxed">
+          <p className="text-base md:text-lg lg:text-xl text-red-100 mb-8 leading-relaxed">
             Let's discuss your web development needs and create something extraordinary together.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
