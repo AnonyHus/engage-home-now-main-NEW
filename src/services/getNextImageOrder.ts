@@ -1,13 +1,13 @@
 // services/getNextImageOrder.ts
-import { supabase } from "./supabaseClient";
+import { db } from "./sqliteClient";
 
 export const getNextImageOrder = async (outdoor_slug: "static" | "screen") => {
-  const { data, error } = await supabase
+  const { data, error } = await (db
     .from("outdoor_locations")
     .select("img_order")
     .eq("outdoor_slug", outdoor_slug)
     .order("img_order", { ascending: false })
-    .limit(1);
+    .limit(1) as any);
 
   if (error) return { success: false, error };
 

@@ -1,17 +1,17 @@
-import { supabase } from "./supabaseClient";
+import { db } from "./sqliteClient";
 
 export const fetchServices = async () => {
   console.log("Starting fetchServices..."); // Debug log
   
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (db
       .from("services")
-      .select("id,name,slug,Home_Desc,Services_page_desc,features,show_home_page,service_logo");
+      .select("id,name,slug,Home_Desc,Services_page_desc,features,show_home_page,service_logo") as any);
 
-    console.log("Supabase response:", { data, error }); // Debug log
+    console.log("SQLite response:", { data, error }); // Debug log
 
     if (error) {
-      console.error("Error fetching services:", error.message);
+      console.error("Error fetching services:", error);
       return [];
     }
 
@@ -23,11 +23,11 @@ export const fetchServices = async () => {
   }
 };
 
-export const getServiceById = async (slug: string ) => {
-  console.log("Starting getServiceById for ID:", slug); // Debug log
+export const getServiceById = async (slug: string) => {
+  console.log("Starting getServiceById for slug:", slug); // Debug log
   
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (db
       .from("services")
       .select(` 
         id,
@@ -45,12 +45,12 @@ export const getServiceById = async (slug: string ) => {
         video_url
       `)
       .eq("slug", slug)
-      .single();
+      .maybeSingle() as any);
 
-    console.log("Supabase getServiceById response:", { data, error }); // Debug log
+    console.log("SQLite getServiceById response:", { data, error }); // Debug log
 
     if (error) {
-      console.error("Error fetching service by ID:", error.message);
+      console.error("Error fetching service by slug:", error);
       return null;
     }
 

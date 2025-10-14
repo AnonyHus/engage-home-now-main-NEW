@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { FaArrowUp, FaArrowDown, FaSave, FaImage, FaDesktop } from "react-icons/fa";
 import "../../styles/orderManagement.css";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 
 interface OutdoorLocation {
   id: number;
@@ -37,10 +37,10 @@ const OutdoorOrderManagement = () => {
     if (!confirm.isConfirmed) return;
   
     try {
-      const { error } = await supabase
+      const { error } = await (db
         .from("outdoor_locations")
         .delete()
-        .eq("id", id);
+        .eq("id", id) as any);
   
       if (error) throw error;
   
@@ -57,10 +57,10 @@ const OutdoorOrderManagement = () => {
   const fetchLocations = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (db
         .from("outdoor_locations")
         .select("id, img_url, location, outdoor_slug, img_order")
-        .order("img_order", { ascending: true });
+        .order("img_order", { ascending: true }) as any);
 
       if (error) throw error;
       setLocations(data || []);
@@ -109,11 +109,11 @@ const OutdoorOrderManagement = () => {
 
       // Update both items in database
       const updates = [
-        supabase
+        db
           .from("outdoor_locations")
           .update({ img_order: currentItem.img_order })
           .eq("id", currentItem.id),
-        supabase
+        db
           .from("outdoor_locations")
           .update({ img_order: targetItem.img_order })
           .eq("id", targetItem.id)
@@ -147,7 +147,7 @@ const OutdoorOrderManagement = () => {
     try {
       const currentTypeLocations = filteredLocations;
       const updates = currentTypeLocations.map((loc, index) =>
-        supabase
+        db
           .from("outdoor_locations")
           .update({ img_order: index + 1 })
           .eq("id", loc.id)

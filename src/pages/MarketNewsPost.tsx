@@ -17,14 +17,32 @@ const BlogPost = () => {
 
   useEffect(() => {
     const fetchPost = async () => {
-      setLoading(true);
-      const data = await getMarketNewsById(id);
-      if (data) {
-        setPost(data);
-      } else {
-        setError("Post not found");
+      try {
+        setLoading(true);
+        console.log("Fetching post with ID:", id);
+        
+        // Convert id to number
+        const numericId = parseInt(id, 10);
+        if (isNaN(numericId)) {
+          setError("Invalid post ID");
+          setLoading(false);
+          return;
+        }
+        
+        const data = await getMarketNewsById(numericId);
+        console.log("Fetched post data:", data);
+        
+        if (data) {
+          setPost(data);
+        } else {
+          setError("Post not found");
+        }
+      } catch (err) {
+        console.error("Error fetching post:", err);
+        setError("Failed to load post");
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchPost();

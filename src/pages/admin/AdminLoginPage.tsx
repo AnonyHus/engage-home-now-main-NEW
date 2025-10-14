@@ -1,15 +1,17 @@
 // AdminLoginPage.tsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../services/supabaseClient";
+import { useAuth } from "../../components/AuthContext";
+import { db } from "../../services/sqliteClient";
 import "../../styles/Login.css";
 
 const AdminLoginPage: React.FC = () => {
-  const [email, setEmail] = useState("");        // use email to avoid pre-auth DB reads
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const { signIn } = useAuth();
 
   const handleLogin = async () => {
     if (!email.trim() || !password.trim()) {
@@ -20,43 +22,27 @@ const AdminLoginPage: React.FC = () => {
     setLoading(true);
 
     try {
-      const { data, error: loginError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const result = await signIn(email, password);
 
-      if (loginError) {
-        setError(loginError.message || "Login failed");
+      if (!result.success) {
+        setError(result.error || "Login failed");
         return;
       }
 
-      const user = data.session?.user;
-      if (!user) {
-        setError("No session created");
-        return;
-      }
-
-      // 1) Fast path: check user_metadata.is_admin
-      if (user.user_metadata?.is_admin) {
-        nav("/admin/upload");
-        return;
-      }
-
-      // 2) Fallback: check your users table AFTER auth
-      const { data: row, error: adminErr } = await supabase
+      // Check if user is admin
+      const { data: userData, error: adminErr } = await (db
         .from("users")
         .select("is_admin")
-        .eq("email", user.email)
-        .maybeSingle();
+        .eq("email", email)
+        .maybeSingle() as any);
 
       if (adminErr) {
         setError("Unable to verify admin role");
         return;
       }
 
-      if (!row?.is_admin) {
+      if (!userData?.is_admin) {
         setError("Access denied. Admin privileges required.");
-        await supabase.auth.signOut();
         return;
       }
 

@@ -171,9 +171,9 @@ export default function MediaUploadPage() {
       }
 
       const dbRes = mediaType === "image"
-        ? await saveImageToDB(result.secure_url, serviceId, title, isScreen)
-        : await saveServiceVideoToDB(result.secure_url, serviceId);
-
+        ? await saveImageToDB(result.secure_url, Number(serviceId), title, isScreen)
+        : await saveServiceVideoToDB(result.secure_url, Number(serviceId));
+ 
       if (!dbRes || !dbRes.success) {
         throw new Error("DB save failed");
       }

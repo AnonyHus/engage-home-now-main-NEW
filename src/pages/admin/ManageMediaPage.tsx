@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 import Swal from "sweetalert2";
 import { ArrowUp, ArrowDown } from "lucide-react"; // install lucide-react or use any icon
 
@@ -17,7 +17,7 @@ export default function ManageMediaPage() {
   const [saving, setSaving] = useState(false);
 
   const loadServices = async () => {
-    const { data, error } = await supabase.from("services").select("id, name").order("name");
+    const { data, error } = await (db.from("services").select("id, name").order("name") as any);
     if (!error && data) setServices(data);
   };
 
@@ -26,17 +26,37 @@ export default function ManageMediaPage() {
       setMedia([]);
       return;
     }
-    setLoading(true);
-    let query = supabase.from("Images").select("*").order("image_order", { ascending: true });
-    query = query.eq("service_id", Number(serviceId));
-    if (serviceId === "6" && isScreen !== null) query = query.eq("is_screen", isScreen);
-    const { data, error } = await query;
-    if (error) {
-      Swal.fire("Error", error.message, "error");
-    } else {
-      setMedia(data || []);
+    
+    // Don't load if outdoor service is selected but no screen type chosen
+    if (serviceId === "6" && isScreen === null) {
+      setMedia([]);
+      return;
     }
-    setLoading(false);
+    
+    setLoading(true);
+    
+    try {
+      // Build query with conditions first, then order
+      let query = db.from("Images").select("*").eq("service_id", Number(serviceId));
+      
+      if (serviceId === "6" && isScreen !== null) {
+        query = query.eq("is_screen", isScreen) as any;
+      }
+      
+      // Apply ordering last
+      const { data, error } = await (query.order("image_order", { ascending: true }) as any);
+      
+      if (error) {
+        Swal.fire("Error", typeof error === 'string' ? error : (error as any).message || "Failed to load media", "error");
+      } else {
+        setMedia(data || []);
+      }
+    } catch (err) {
+      console.error("Error loading media:", err);
+      Swal.fire("Error", "Failed to load media", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -56,9 +76,9 @@ export default function ManageMediaPage() {
       confirmButtonColor: "#d33",
     });
     if (confirm.isConfirmed) {
-      const { error } = await supabase.from("Images").delete().eq("id", id);
+      const { error } = await (db.from("Images").delete().eq("id", id) as any);
       if (error) {
-        Swal.fire("Error", error.message, "error");
+        Swal.fire("Error", typeof error === 'string' ? error : (error as any)?.message || "Failed to delete", "error");
       } else {
         Swal.fire("Deleted!", "Media deleted successfully.", "success");
         loadMedia();
@@ -88,26 +108,30 @@ const saveAllOrders = async () => {
   
     const ids = updates.map(img => img.id);
   
-    // 1st step: set all selected image_order to null
-    const { error: nullifyError } = await supabase
-      .from("Images")
-      .update({ image_order: null })
-      .in("id", ids);
-  
-    if (nullifyError) {
-      Swal.fire("Error", nullifyError.message, "error");
-      return;
+    // 1st step: set all selected image_order to null (update each one)
+    for (const id of ids) {
+      const { error: nullifyError } = await (db
+        .from("Images")
+        .update({ image_order: null })
+        .eq("id", id) as any);
+    
+      if (nullifyError) {
+        Swal.fire("Error", typeof nullifyError === 'string' ? nullifyError : (nullifyError as any)?.message || "Failed to nullify order", "error");
+        setSaving(false);
+        return;
+      }
     }
   
     // 2nd step: set new orders one by one
     for (const img of updates) {
-      const { error } = await supabase
+      const { error } = await (db
         .from("Images")
         .update({ image_order: img.order })
-        .eq("id", img.id);
+        .eq("id", img.id) as any);
   
       if (error) {
-        Swal.fire("Error", error.message, "error");
+        Swal.fire("Error", typeof error === 'string' ? error : (error as any)?.message || "Failed to update order", "error");
+        setSaving(false);
         return;
       }
     }
@@ -198,7 +222,7 @@ const saveAllOrders = async () => {
                     </div>
                   </td>
                   <td className="border p-2 text-center">
-                    {new Date(item.uploaded_at).toLocaleString()}
+                    {item.created_at ? new Date(item.created_at).toLocaleString() : '-'}
                   </td>
                   <td className="border p-2 text-center">
                     <button

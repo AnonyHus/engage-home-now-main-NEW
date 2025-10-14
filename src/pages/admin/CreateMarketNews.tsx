@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Swal from "sweetalert2";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 
 const CreateMarketNews = () => {
   const [title, setTitle] = useState('');
@@ -22,7 +22,7 @@ const CreateMarketNews = () => {
       setIsEdit(true);
       (async () => {
         setLoading(true);
-        const { data, error } = await supabase.from("Market_news").select("*").eq("id", id).single();
+        const { data, error } = await (db.from("Market_news").select("*").eq("id", id).maybeSingle() as any);
         setLoading(false);
         if (error || !data) {
           setError("Market news item not found.");
@@ -48,7 +48,7 @@ const CreateMarketNews = () => {
 
     let result;
     if (isEdit) {
-      result = await supabase
+      result = await (db
         .from("Market_news")
         .update({
           title,
@@ -57,9 +57,9 @@ const CreateMarketNews = () => {
           view_homepage: viewHomepage,
           hidden: hidden,
         })
-        .eq("id", id);
+        .eq("id", id) as any);
     } else {
-      result = await supabase
+      result = await (db
         .from("Market_news")
         .insert([{
           title,
@@ -67,12 +67,12 @@ const CreateMarketNews = () => {
           desc: description,
           view_homepage: viewHomepage,
           hidden : hidden,
-        }]);
+        }]) as any);
     }
 
     setLoading(false);
     if (result.error) {
-      Swal.fire("Error", result.error.message, "error");
+      Swal.fire("Error", typeof result.error === 'string' ? result.error : (result.error as any)?.message || "Failed to save", "error");
     } else {
       Swal.fire("Success", isEdit ? "News updated!" : "News created!", "success")
       .then(() => navigate("/admin/ManageMarketNews")); // redirect back

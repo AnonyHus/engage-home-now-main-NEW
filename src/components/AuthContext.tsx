@@ -1,13 +1,26 @@
 // components/AuthContext.tsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { supabase } from "@/services/supabaseClient";
+import { db } from "@/services/sqliteClient";
+
+type User = {
+  id: number;
+  email: string;
+  is_admin: boolean;
+};
+
+type Session = {
+  user: User;
+  access_token: string;
+  expires_at: number;
+};
 
 type Ctx = {
   loading: boolean;
-  session: import("@supabase/supabase-js").Session | null;
-  user: import("@supabase/supabase-js").User | null;
+  session: Session | null;
+  user: User | null;
   isAdmin: boolean;
   signOut: () => Promise<void>;
+  signIn: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   touchActivity: () => void; // optional helper to bump idle timer
 };
 
@@ -17,6 +30,7 @@ const AuthContext = createContext<Ctx>({
   user: null,
   isAdmin: false,
   signOut: async () => {},
+  signIn: async () => ({ success: false }),
   touchActivity: () => {},
 });
 
@@ -28,8 +42,8 @@ const LAST_ACTIVITY_KEY = "adminLastActivity";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState<import("@supabase/supabase-js").Session | null>(null);
-  const [user, setUser] = useState<import("@supabase/supabase-js").User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
   // Activity tracker
@@ -37,16 +51,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
   };
 
-  // Fetch admin role from YOUR users table (fallback to auth metadata if you ever use it)
+  // Fetch admin role from users table
   const loadAdminRole = async (email: string | null | undefined) => {
     if (!email) return setIsAdmin(false);
-    const { data, error } = await supabase
-      .from("users")                 // <-- YOUR table
+    const { data, error } = await (db
+      .from("users")
       .select("is_admin")
-      .eq("email", email)
+      .eq("email", email) as any)
       .maybeSingle();
     if (error) {
-      console.warn("is_admin lookup failed:", error.message);
+      console.warn("is_admin lookup failed:", error);
       setIsAdmin(false);
       return;
     }
@@ -63,10 +77,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return absoluteExpired || idleExpired;
   };
 
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { data, error } = await db.auth.signIn(email, password);
+      if (error) {
+        return { success: false, error };
+      }
+      
+      if (data) {
+        // Store session in localStorage
+        localStorage.setItem('session', JSON.stringify(data.session));
+        localStorage.setItem(LOGIN_START_KEY, Date.now().toString());
+        localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
+        
+        setSession(data.session);
+        setUser(data.user);
+        await loadAdminRole(data.user.email);
+        
+        return { success: true };
+      }
+      
+      return { success: false, error: 'Login failed' };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
+  };
+
   const signOut = async () => {
-    await supabase.auth.signOut();
+    await db.auth.signOut();
     localStorage.removeItem(LOGIN_START_KEY);
     localStorage.removeItem(LAST_ACTIVITY_KEY);
+    localStorage.removeItem('session'); // Clear stored session
     setSession(null);
     setUser(null);
     setIsAdmin(false);
@@ -77,44 +118,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let mounted = true;
 
     (async () => {
-      const { data } = await supabase.auth.getSession();
-      if (!mounted) return;
-
-      setSession(data.session ?? null);
-      setUser(data.session?.user ?? null);
-
-      if (data.session?.user?.email) {
-        // (Re)start timers on initial load if not present
-        if (!localStorage.getItem(LOGIN_START_KEY)) {
-          localStorage.setItem(LOGIN_START_KEY, Date.now().toString());
+      // Check for stored session in localStorage
+      const storedSession = localStorage.getItem('session');
+      if (storedSession) {
+        try {
+          const sessionData = JSON.parse(storedSession);
+          if (sessionData.expires_at > Date.now()) {
+            setSession(sessionData);
+            setUser(sessionData.user);
+            await loadAdminRole(sessionData.user.email);
+          } else {
+            // Session expired
+            localStorage.removeItem('session');
+          }
+        } catch (error) {
+          console.error('Error parsing stored session:', error);
+          localStorage.removeItem('session');
         }
-        if (!localStorage.getItem(LAST_ACTIVITY_KEY)) {
-          localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
-        }
-        await loadAdminRole(data.session.user.email);
-      } else {
-        setIsAdmin(false);
       }
 
       setLoading(false);
     })();
 
-    const { data: sub } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
-      setSession(newSession);
-      setUser(newSession?.user ?? null);
-
-      if (newSession?.user?.email) {
-        // Reset timers on new login
-        localStorage.setItem(LOGIN_START_KEY, Date.now().toString());
-        localStorage.setItem(LAST_ACTIVITY_KEY, Date.now().toString());
-        await loadAdminRole(newSession.user.email);
-      } else {
-        // logged out
-        localStorage.removeItem(LOGIN_START_KEY);
-        localStorage.removeItem(LAST_ACTIVITY_KEY);
-        setIsAdmin(false);
+    // Mock auth state change subscription
+    const mockSubscription = {
+      subscription: {
+        unsubscribe: () => {}
       }
-    });
+    };
 
     // Global activity listeners to refresh idle timer
     const bump = () => touchActivity();
@@ -126,7 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => {
       mounted = false;
-      sub.subscription.unsubscribe();
+      mockSubscription.subscription.unsubscribe();
       window.removeEventListener("click", bump);
       window.removeEventListener("keydown", bump);
       window.removeEventListener("mousemove", bump);
@@ -150,6 +181,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     isAdmin,
     signOut,
+    signIn,
     touchActivity,
   }), [loading, session, user, isAdmin]);
 

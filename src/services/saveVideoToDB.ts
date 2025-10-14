@@ -1,20 +1,17 @@
-import { title } from "process";
-import { supabase } from "./supabaseClient";
+import { db } from "./sqliteClient";
 
-
-const saveServiceVideoToDB = async (videoUrl,serviceId) => {
-  const { data, error } = await supabase
+const saveServiceVideoToDB = async (videoUrl: string, serviceId: number) => {
+  const { data, error } = await db
     .from("services")
     .update({ video_url: videoUrl })
     .eq('id', serviceId);
 
     if (error) {
-      
-      console.error("update error:",  error.message, error.details);
+      console.error("update error:", error);
       return { success: false, error };
     }
     
     return { success: true, data };
-  };
+};
 
 export default saveServiceVideoToDB;

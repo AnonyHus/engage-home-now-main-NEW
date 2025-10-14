@@ -1,5 +1,6 @@
 // services/saveOutdoorLocationImageToDB.ts
-import { supabase } from "./supabaseClient";
+import { db } from "./sqliteClient";
+
 
 const saveOutdoorLocationImageToDB = async (
   imageUrl: string,
@@ -12,18 +13,18 @@ const saveOutdoorLocationImageToDB = async (
   duration: string
 ) => {
 
-  const { data: maxResult, error: maxErr } = await supabase
+  const { data: maxResult, error: maxErr } = await (db
   .from("outdoor_locations")
   .select("img_order")
   .eq("outdoor_slug", outdoor_slug)
   .order("img_order", { ascending: false })
-  .limit(1);
+  .limit(1) as any);
 
 if (maxErr) return { success: false, error: maxErr };
 
 const nextOrder = (maxResult?.[0]?.img_order || 0) + 1;
 
-  const { data, error } = await supabase.from("outdoor_locations").insert([
+  const { data, error } = await db.from("outdoor_locations").insert([
     {
       img_url: imageUrl,
       location,

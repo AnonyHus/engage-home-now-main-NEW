@@ -1,21 +1,20 @@
-import { supabase } from "./supabaseClient";
+import { db } from "./sqliteClient";
 
 export const fetchMarketNews = async () => {
   console.log("Starting fetchMarketNews..."); // Debug log
   
   try {
-    const { data, error } = await supabase
+    const { data, error } = await db
       .from("Market_news")
-      .select("id, title, event_date, desc, created_at,view_homepage,hidden")
+      .select("id, title, event_date, desc, created_at, view_homepage, hidden")
       .eq("view_homepage", true)
       .eq("hidden", false)
       .order("event_date", { ascending: false });
 
-
-    console.log("Supabase response:", { data, error }); // Debug log
+    console.log("SQLite response:", { data, error }); // Debug log
 
     if (error) {
-      console.error("Error fetching market news:", error.message);
+      console.error("Error fetching market news:", error);
       return [];
     }
 
@@ -27,20 +26,20 @@ export const fetchMarketNews = async () => {
   }
 };
 
-export const getMarketNewsById = async (id) => {
+export const getMarketNewsById = async (id: number) => {
   console.log("Starting getMarketNewsById for ID:", id); // Debug log
   
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (db
       .from("Market_news")
       .select("id, title, event_date, desc, created_at")
       .eq("id", id)
-      .single();
+      .maybeSingle() as any);
 
-    console.log("Supabase getMarketNewsById response:", { data, error }); // Debug log
+    console.log("SQLite getMarketNewsById response:", { data, error }); // Debug log
 
     if (error) {
-      console.error("Error fetching market news by ID:", error.message);
+      console.error("Error fetching market news by ID:", error);
       return null;
     }
 
@@ -52,22 +51,20 @@ export const getMarketNewsById = async (id) => {
   }
 };
 
-
 export const fetchMarketNewsPG = async () => {
   console.log("Starting fetchMarketNewsPG..."); // Debug log
   
   try {
-    const { data, error } = await supabase
+    const { data, error } = await (db
       .from("Market_news")
-      .select("id, title, event_date, desc, created_at,view_homepage,hidden")
+      .select("id, title, event_date, desc, created_at, view_homepage, hidden")
       .eq("hidden", false)
-      .order("event_date", { ascending: false });
+      .order("event_date", { ascending: false }) as any);
 
-
-    console.log("Supabase response:", { data, error }); // Debug log
+    console.log("SQLite response:", { data, error }); // Debug log
 
     if (error) {
-      console.error("Error fetching market news:", error.message);
+      console.error("Error fetching market news:", error);
       return [];
     }
 

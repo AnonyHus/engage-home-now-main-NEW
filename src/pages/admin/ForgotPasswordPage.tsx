@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
 
   const submit = async () => {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + "/admin/reset-password", // optional redirect
-    });
-    if (error) setMsg(error.message);
-    else setMsg("If that email exists, a reset link was sent.");
+    // Note: Password reset is not implemented in localStorage mode
+    // This would require a backend API
+    setMsg("Password reset is not available in the current configuration. Please contact an administrator.");
   };
 
   return (

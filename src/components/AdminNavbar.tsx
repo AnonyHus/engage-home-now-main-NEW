@@ -42,6 +42,7 @@ const AdminNavbar = () => {
         { name: "Manage Market News", path: "/admin/ManageMarketNews" },
       ],
     },
+    { name: "Contact Requests", path: "/admin/ManageContactRequests" },
     { name: "Logout", path: null },
   ];
 

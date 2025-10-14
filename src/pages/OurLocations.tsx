@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRightToLine } from "lucide-react";
 import { Link, useLocation, useParams,useNavigate } from "react-router-dom";
 import { act, useEffect, useState } from "react";
 import Footer from "@/components/Footer";
-import { supabase } from "@/services/supabaseClient";
+import { db } from "@/services/sqliteClient";
 import Breadcrumb from "@/components/Breadcrumb";
 
 interface OutdoorLocation {
@@ -43,11 +43,11 @@ const defaultTab = pathTab || "static";
   const fetchLocations = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (db
         .from("outdoor_locations")
         .select("*")
         .eq("outdoor_slug", activeTab) // Only fetch the category we want
-        .order("img_order", { ascending: true });
+        .order("img_order", { ascending: true }) as any);
 
       if (error) throw error;
       setLocations(data || []);

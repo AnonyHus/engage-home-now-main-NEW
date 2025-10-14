@@ -33,19 +33,19 @@ const ServiceDetail  = () => {
           setServiceData(null);
         } 
   
-        console.error("❌ id: ", serviceData.id);
+        console.log("✅ Service ID: ", serviceData?.id);
 
         // 2. Then fetch images using service ID
         if (serviceData?.id) {
           const Images = await fetchImagesByService(serviceData.id);
-        console.error("❌ images: ", Images);
+          console.log("✅ Images fetched: ", Images);
 
           setImages(Images);
         }
   
       } catch (error) {
         console.error("❌ Error loading data:", error);
-        setServiceData(null)
+        setServiceData(null);
       } finally {
         setLoading(false);
         console.log("✅ Loading finished");

@@ -18,10 +18,14 @@ import { useAuth, AuthProvider } from "./components/AuthContext";
 import AdminNav from "./components/AdminNavbar";
 import { AdminProtectedRoute } from "./components/ProtectedRoute";
 import ManageMediaPage from "./pages/admin/ManageMediaPage";
+import ManageContactRequests from "./pages/admin/ManageContactRequests";
 
 import ServiceDetail from "./pages/services/ServiceDetail";
 import CreateMarketNews from "./pages/admin/CreateMarketNews";
 import ManageMarketNews from "./pages/admin/ManageMarketNews";
+
+// Load SQLite data utility
+import "./utils/load-sqlite-data.js";
 
 const Index = lazy(() => import("./pages/Index"));
 const Services = lazy(() => import("./pages/Services"));
@@ -37,6 +41,7 @@ const AdminLoginPage = lazy(() => import("./pages/admin/AdminLoginPage"));
 const OutdoorImageUploadPage = lazy(() => import("./pages/admin/OutdoorImageUploadPage"));
 const OutdoorDisplayPage = lazy(() => import("./pages/admin/outdoorDisplayPage"));
 const OutdoorOrderPage = lazy(() => import("./pages/admin/SortableImage"));
+const DataSyncPage = lazy(() => import("./pages/admin/DataSyncPage"));
 const queryClient = new QueryClient();
 
 // ScrollToTop on route change
@@ -73,7 +78,12 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true
+            }}
+          >
             <ScrollToTop />
             <NavbarWrapper/>
             <Suspense
@@ -104,6 +114,8 @@ const App = () => {
                     <Route path="CreateMarketNews/:id" element={<CreateMarketNews />} /> 
                     <Route path="ManageMarketNews" element={<ManageMarketNews />} />
                     <Route path="ManageServicesMedia" element={<ManageMediaPage />} />
+                    <Route path="ManageContactRequests" element={<ManageContactRequests />} />
+                    <Route path="data-sync" element={<DataSyncPage />} />
                 </Route>
 
                 <Route path="/admin/login" element={<AdminLoginPage />} />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../styles/OutdoorDisplayPage.css";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 import { FaImage, FaDesktop } from "react-icons/fa";
 
 interface OutdoorLocation {
@@ -27,10 +27,10 @@ const OutdoorDisplayPage = () => {
   const fetchLocations = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (db
         .from("outdoor_locations")
         .select("*")
-        .order("img_order", { ascending: true });
+        .order("img_order", { ascending: true }) as any);
 
       if (error) throw error;
       setLocations(data || []);

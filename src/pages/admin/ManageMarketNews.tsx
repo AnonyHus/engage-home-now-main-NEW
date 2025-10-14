@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../services/supabaseClient";
+import { db } from "../../services/sqliteClient";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom"; 
 import Swal from "sweetalert2"; 
@@ -9,15 +9,15 @@ const ManageMarketNews = () => {
   const navigate = useNavigate(); 
 
   const load = async () => {
-    const { data } = await supabase
+    const { data } = await (db
       .from("Market_news")
       .select("*")
-      .order("event_date", { ascending: false });
+      .order("event_date", { ascending: false }) as any);
     setNews(data || []);
   };
 
   const toggleHidden = async (id, value) => {
-    await supabase.from("Market_news").update({ hidden: !value }).eq("id", id);
+    await (db.from("Market_news").update({ hidden: !value }).eq("id", id) as any);
     load();
   };
 
@@ -34,7 +34,7 @@ const ManageMarketNews = () => {
     if (result.isConfirmed) {
       try {
    
-    await supabase.from("Market_news").delete().eq("id", id);
+    await (db.from("Market_news").delete().eq("id", id) as any);
     Swal.fire("Deleted!", "The record has been deleted.", "success");
 
     load();

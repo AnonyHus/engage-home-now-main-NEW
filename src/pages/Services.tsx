@@ -27,10 +27,16 @@ const Services = () => {
         console.log("Starting to load services..."); // Debug log
         const data = await fetchServices();
         console.log("Fetched services data:", data); // Debug log
-        console.log("Data type:", typeof data); // Debug log
-        console.log("Is array:", Array.isArray(data)); // Debug log
-        console.log("Data length:", data?.length); // Debug log
-        setServices(Array.isArray(data) ? data : []);
+        
+        // Parse features from JSON string to array
+        const parsedData = Array.isArray(data) ? data.map(service => ({
+          ...service,
+          features: typeof service.features === 'string' 
+            ? JSON.parse(service.features) 
+            : service.features
+        })) : [];
+        
+        setServices(parsedData);
       } catch (err) {
         console.error("Error loading services:", err);
         setError(err.message);
