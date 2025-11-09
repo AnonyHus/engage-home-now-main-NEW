@@ -35,7 +35,13 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "${YELLOW}🔄 Restarting backend...${NC}"
-pm2 restart engage-backend
+if pm2 describe engage-backend > /dev/null 2>&1; then
+    pm2 restart engage-backend
+else
+    echo -e "${YELLOW}Backend not running, starting it...${NC}"
+    pm2 start ecosystem.config.cjs
+fi
+pm2 save
 
 echo -e "${YELLOW}🔄 Reloading Nginx...${NC}"
 sudo systemctl reload nginx

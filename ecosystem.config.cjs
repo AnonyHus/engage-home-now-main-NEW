@@ -19,12 +19,9 @@ module.exports = {
     autorestart: true,
     watch: false,
     max_memory_restart: '500M',
-    // Restart on crash
-    min_uptime: '10s',
+    // Don't restart too aggressively
+    min_uptime: '5s',
     max_restarts: 10,
-    // Graceful shutdown
-    kill_timeout: 5000,
-    listen_timeout: 3000,
-    shutdown_with_message: true
+    restart_delay: 4000
   }]
 };
