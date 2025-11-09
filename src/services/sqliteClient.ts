@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 
 // SQLite client that uses backend API for persistence (with localStorage fallback)
-// Backend API URL - change this if your server runs on a different port
-const API_URL = 'http://localhost:3001/api';
+// Backend API URL - uses relative path in production, localhost in development
+const API_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
 
 // Helper to convert boolean values to 0/1 for SQLite compatibility
 const convertBooleanForSQLite = (value: any): any => {

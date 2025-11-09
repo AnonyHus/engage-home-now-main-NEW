@@ -1,0 +1,61 @@
+# Nginx Configuration Template
+# Copy this to /etc/nginx/sites-available/myapp
+# 
+# INSTRUCTIONS:
+# 1. Replace YOUR_VPS_IP with your actual VPS IP address
+# 2. Replace /path/to/your/project with your actual project path
+# 3. Save and enable: sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/
+# 4. Test: sudo nginx -t
+# 5. Restart: sudo systemctl restart nginx
+
+server {
+    listen 80;
+    server_name YOUR_VPS_IP;  # Replace with your VPS IP (e.g., 123.45.67.89)
+
+    # Increase upload size limit for file uploads
+    client_max_body_size 50M;
+
+    # Frontend - Serve static files from dist folder
+    location / {
+        root /path/to/your/project/dist;  # Replace with actual path
+        try_files $uri $uri/ /index.html;
+        index index.html;
+        
+        # Cache static assets
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+    }
+
+    # Backend API - Proxy to Express server
+    location /api {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        
+        # Increase timeouts for long-running requests
+        proxy_connect_timeout 60s;
+        proxy_send_timeout 60s;
+        proxy_read_timeout 60s;
+    }
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_types text/plain text/css text/xml text/javascript application/x-javascript application/xml+rss application/json application/javascript;
+}
+
+# Optional: Redirect www to non-www (when you have a domain)
+# server {
+#     listen 80;
+#     server_name www.yourdomain.com;
+#     return 301 http://yourdomain.com$request_uri;
+# }
